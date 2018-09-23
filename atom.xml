@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://github.com/NoELIEKT/NoELIEKT.github.io/"/>
+  <link href="https://blog.z2e4o6.com/"/>
   <updated>2018-09-23T10:31:46.546Z</updated>
-  <id>https://github.com/NoELIEKT/NoELIEKT.github.io/</id>
+  <id>https://blog.z2e4o6.com/</id>
   
   <author>
     <name>K3el</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>gadget_searcher</title>
-    <link href="https://github.com/NoELIEKT/NoELIEKT.github.io/2018/09/23/gadget-searcher/"/>
-    <id>https://github.com/NoELIEKT/NoELIEKT.github.io/2018/09/23/gadget-searcher/</id>
+    <link href="https://blog.z2e4o6.com/2018/09/23/gadget-searcher/"/>
+    <id>https://blog.z2e4o6.com/2018/09/23/gadget-searcher/</id>
     <published>2018-09-23T09:46:45.000Z</published>
     <updated>2018-09-23T10:31:46.546Z</updated>
     
@@ -34,10 +34,10 @@
     
     </summary>
     
-      <category term="pwnable" scheme="https://github.com/NoELIEKT/NoELIEKT.github.io/categories/pwnable/"/>
+      <category term="pwnable" scheme="https://blog.z2e4o6.com/categories/pwnable/"/>
     
     
-      <category term="pwnable, tool" scheme="https://github.com/NoELIEKT/NoELIEKT.github.io/tags/pwnable-tool/"/>
+      <category term="pwnable, tool" scheme="https://blog.z2e4o6.com/tags/pwnable-tool/"/>
     
   </entry>
   
