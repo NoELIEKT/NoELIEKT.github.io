@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://blog.haklog.xyz/2019/10/23/post-1/</loc>
-    <lastmod>2019-10-23T13:55:32.148Z</lastmod>
-  </url>  <url>
     <loc>https://blog.haklog.xyz/2019/10/22/post/</loc>
-    <lastmod>2019-10-22T00:05:46.156Z</lastmod>
+    <lastmod>2019-10-30T04:51:47.415Z</lastmod>
+  </url>  <url>
+    <loc>https://blog.haklog.xyz/2019/10/23/post-1/</loc>
+    <lastmod>2019-10-30T00:59:57.128Z</lastmod>
+  </url>  <url>
+    <loc>https://blog.haklog.xyz/2018/09/24/babypwn/</loc>
+    <lastmod>2019-10-23T13:58:28.968Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2018/09/23/gadget-searcher/</loc>
     <lastmod>2019-10-22T00:03:35.964Z</lastmod>
@@ -24,9 +27,6 @@
   </url>  <url>
     <loc>https://blog.haklog.xyz/2018/09/23/exploit-exercise-fusion-00/</loc>
     <lastmod>2018-09-25T10:20:02.000Z</lastmod>
-  </url>  <url>
-    <loc>https://blog.haklog.xyz/2018/09/24/babypwn/</loc>
-    <lastmod>2018-09-25T10:19:52.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2018/09/25/0x00-ctf/</loc>
     <lastmod>2018-09-25T10:19:48.000Z</lastmod>
