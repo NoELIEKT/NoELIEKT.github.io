@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://blog.haklog.xyz/2019/10/22/post/</loc>
-    <lastmod>2019-10-30T04:51:47.415Z</lastmod>
+    <loc>https://blog.haklog.xyz/2019/10/30/post-3/</loc>
+    <lastmod>2019-10-31T02:58:54.031Z</lastmod>
+  </url>  <url>
+    <loc>https://blog.haklog.xyz/2019/07/12/post-2/</loc>
+    <lastmod>2019-10-30T13:54:15.430Z</lastmod>
+  </url>  <url>
+    <loc>https://blog.haklog.xyz/2019/10/30/post/</loc>
+    <lastmod>2019-10-30T13:28:36.192Z</lastmod>
+  </url>  <url>
+    <loc>https://blog.haklog.xyz/2019/09/29/babyheap/</loc>
+    <lastmod>2019-10-30T13:03:16.972Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/10/23/post-1/</loc>
     <lastmod>2019-10-30T00:59:57.128Z</lastmod>
@@ -15,6 +24,9 @@
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/07/21/DEFCON%202019%20speedrun010/</loc>
     <lastmod>2019-10-22T00:02:04.418Z</lastmod>
+  </url>  <url>
+    <loc>https://blog.haklog.xyz/2019/09/29/Hitcon-2016-babyheap/</loc>
+    <lastmod>2019-10-21T23:24:49.074Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/04/03/heapbabe/</loc>
     <lastmod>2019-05-04T12:55:23.198Z</lastmod>
