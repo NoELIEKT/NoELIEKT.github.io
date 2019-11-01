@@ -9,18 +9,18 @@
   
   <title>File Structure | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="12345struct _IO_FILE_plus&amp;#123;  _IO_FILE file;  const struct _IO_jump_t *vtable;&amp;#125;;  _IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다.  먼저 _IO_FILE file을 보면 1234567891011121314151617181920212223242526272829">
+  <meta name="description" content="_IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다.">
 <meta name="keywords" content="pwanble, ctf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="File Structure">
 <meta property="og:url" content="https://blog.haklog.xyz/2019/05/11/post-2/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="12345struct _IO_FILE_plus&amp;#123;  _IO_FILE file;  const struct _IO_jump_t *vtable;&amp;#125;;  _IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다.  먼저 _IO_FILE file을 보면 1234567891011121314151617181920212223242526272829">
+<meta property="og:description" content="_IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-01T02:22:09.778Z">
+<meta property="og:updated_time" content="2019-11-01T02:31:19.857Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="File Structure">
-<meta name="twitter:description" content="12345struct _IO_FILE_plus&amp;#123;  _IO_FILE file;  const struct _IO_jump_t *vtable;&amp;#125;;  _IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다.  먼저 _IO_FILE file을 보면 1234567891011121314151617181920212223242526272829">
+<meta name="twitter:description" content="_IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다.">
   
   
     <link rel="icon" href="/img/one.png">
@@ -183,7 +183,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/Ctf/" style="font-size: 10px;">Ctf</a> <a href="/tags/ctf-pwnable/" style="font-size: 15px;">ctf, pwnable</a> <a href="/tags/pwanble-ctf/" style="font-size: 10px;">pwanble, ctf</a> <a href="/tags/pwnable/" style="font-size: 20px;">pwnable</a> <a href="/tags/pwnable-ctf/" style="font-size: 10px;">pwnable, ctf</a> <a href="/tags/pwnable-ctf-heap-fake-chunk/" style="font-size: 10px;">pwnable, ctf, heap, fake_chunk</a> <a href="/tags/pwnable-kernel/" style="font-size: 10px;">pwnable, kernel</a> <a href="/tags/pwnable-tool/" style="font-size: 10px;">pwnable, tool</a>
+                        <a href="/tags/Ctf/" style="font-size: 10px;">Ctf</a> <a href="/tags/ctf-pwnable/" style="font-size: 15px;">ctf, pwnable</a> <a href="/tags/ctf-pwnable-kernel/" style="font-size: 10px;">ctf, pwnable, kernel</a> <a href="/tags/pwanble-ctf/" style="font-size: 10px;">pwanble, ctf</a> <a href="/tags/pwnable/" style="font-size: 20px;">pwnable</a> <a href="/tags/pwnable-ctf/" style="font-size: 10px;">pwnable, ctf</a> <a href="/tags/pwnable-ctf-heap-fake-chunk/" style="font-size: 10px;">pwnable, ctf, heap, fake_chunk</a> <a href="/tags/pwnable-kernel/" style="font-size: 10px;">pwnable, kernel</a> <a href="/tags/pwnable-tool/" style="font-size: 10px;">pwnable, tool</a>
                     </div>
                 </section>
                 
@@ -288,12 +288,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <a id="more"></a> 
+        <p>_IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다. </p>
+<a id="more"></a> 
 
 
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE_plus</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  _IO_FILE file;</span><br><span class="line">  <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IO_jump_t</span> *<span class="title">vtable</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>_IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다. </p>
 <p>먼저 _IO_FILE file을 보면</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> _flags;       <span class="comment">/* High-order word is _IO_MAGIC; rest is flags. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_file_flags _flags</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">/* The following pointers correspond to the C++ streambuf protocol. */</span></span><br><span class="line">  <span class="comment">/* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_read_ptr;   <span class="comment">/* Current read pointer */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_read_end;   <span class="comment">/* End of get area. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_read_base;  <span class="comment">/* Start of putback+get area. */</span></span><br><span class="line">  <span class="comment">//읽기 버퍼로써 사용된다. </span></span><br><span class="line">  <span class="keyword">char</span>* _IO_write_base; <span class="comment">/* Start of put area. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_write_ptr;  <span class="comment">/* Current put pointer. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_write_end;  <span class="comment">/* End of put area. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_buf_base;   <span class="comment">/* Start of reserve area. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_buf_end;    <span class="comment">/* End of reserve area. */</span></span><br><span class="line">  <span class="comment">/* The following fields are used to support backing up and undo. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_save_base; <span class="comment">/* Pointer to start of non-current get area. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_backup_base;  <span class="comment">/* Pointer to first valid character of backup area */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_save_end; <span class="comment">/* Pointer to end of non-current get area. */</span></span><br><span class="line"> </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_marker</span> *_<span class="title">markers</span>;</span></span><br><span class="line"> </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> *_<span class="title">chain</span>;</span> </span><br><span class="line"> </span><br><span class="line">  <span class="keyword">int</span> _fileno;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> 0</span></span><br><span class="line">  <span class="keyword">int</span> _blksize;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">  <span class="keyword">int</span> _flags2;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  _IO_off_t _old_offset; <span class="comment">/* This used to be _offset but it's too small.  */</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __HAVE_COLUMN <span class="comment">/* temporary */</span></span></span><br><span class="line">  <span class="comment">/* 1+column number of pbase(); 0 is unknown. */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">short</span> _cur_column;</span><br><span class="line">  <span class="keyword">signed</span> <span class="keyword">char</span> _vtable_offset;</span><br><span class="line">  <span class="keyword">char</span> _shortbuf[<span class="number">1</span>];</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/*  char* _save_gptr;  char* _save_egptr; */</span></span><br><span class="line"> </span><br><span class="line">  _IO_lock_t *_lock;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> _IO_USE_OLD_IO_FILE</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -323,18 +323,18 @@
         <p><span>제목:</span><a  href="/2019/05/11/post-2/">File Structure</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
         <p><span>발행 시간:</span>2019년05월11일 - 22시28분</p>
-        <p><span>마지막 업데이트:</span>2019년11월01일 - 11시22분</p>
+        <p><span>마지막 업데이트:</span>2019년11월01일 - 11시31분</p>
     </div>
 
 
 
 <nav id="article-nav">
   
-    <a  href="/2019/05/25/mmaloc/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a  href="/2019/05/16/post-3/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          Trust 2019 - mmalloc
+          fsop - basic
         
       </div>
     </a>
@@ -449,7 +449,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/2019/05/25/mmaloc/" title="上一篇: Trust 2019 - mmalloc">
+            <a  href="/2019/05/16/post-3/" title="上一篇: fsop - basic">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -460,7 +460,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/30/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/post/">LINUX KERNEL EXPLOIT - 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/16/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
     
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 

