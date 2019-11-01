@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://blog.haklog.xyz/2019/05/16/post-3/</loc>
+    <lastmod>2019-11-01T05:01:47.597Z</lastmod>
+  </url>  <url>
     <loc>https://blog.haklog.xyz/2019/11/01/post/</loc>
     <lastmod>2019-11-01T04:57:20.875Z</lastmod>
   </url>  <url>
@@ -12,9 +15,6 @@
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/05/25/mmaloc/</loc>
     <lastmod>2019-11-01T02:31:14.178Z</lastmod>
-  </url>  <url>
-    <loc>https://blog.haklog.xyz/2019/05/16/post-3/</loc>
-    <lastmod>2019-11-01T02:29:49.081Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/10/23/post-1/</loc>
     <lastmod>2019-10-30T00:59:57.128Z</lastmod>

