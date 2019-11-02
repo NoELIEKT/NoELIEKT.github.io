@@ -7,19 +7,19 @@
   
   
   
-  <title>LINUX KERNEL EXPLOIT - 1 | 귀찮다</title>
+  <title>LINUX KERNEL PREVILEGE | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="linux kernel의 기본적인 권한 상승">
 <meta name="keywords" content="ctf, pwnable, kernel">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LINUX KERNEL EXPLOIT - 1">
-<meta property="og:url" content="https://blog.haklog.xyz/2019/11/01/post/index.html">
+<meta property="og:title" content="LINUX KERNEL PREVILEGE">
+<meta property="og:url" content="https://blog.haklog.xyz/2019/11/01/linuxke/index.html">
 <meta property="og:site_name" content="귀찮다">
 <meta property="og:description" content="linux kernel의 기본적인 권한 상승">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-01T04:57:20.875Z">
+<meta property="og:updated_time" content="2019-11-01T13:46:24.584Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LINUX KERNEL EXPLOIT - 1">
+<meta name="twitter:title" content="LINUX KERNEL PREVILEGE">
 <meta name="twitter:description" content="linux kernel의 기본적인 권한 상승">
   
   
@@ -244,10 +244,10 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-post" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-linuxke" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a  href="/2019/11/01/post/" class="article-date">
+      <a  href="/2019/11/01/linuxke/" class="article-date">
       <time datetime="2019-11-01T02:42:59.000Z" itemprop="datePublished">2019-11-01</time>
 </a>
 
@@ -262,7 +262,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      LINUX KERNEL EXPLOIT - 1
+      LINUX KERNEL PREVILEGE
     </h1>
   
 
@@ -292,10 +292,10 @@
 <a id="more"></a>
 
 <h2 id="prepare-kernel-cred"><a href="#prepare-kernel-cred" class="headerlink" title="prepare_kernel_cred()"></a>prepare_kernel_cred()</h2><p>리눅스에서 커널을 통해 권한 상승을 하기 위해서는 먼저 를 통해 uid를 0으로 만들어 프로세스의 자격을 먼저 세팅할 필요가 있다.</p>
-<p>prepare_kernel_cred 함수의 전체 코드이다. 중요한 부분을 살펴보면</p>
+<p>prepare_kernel_cred 함수의 전체 코드중 중요한 부분을 살펴보면 다음과 같다.</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">cred</span> *<span class="title">old</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cred</span> *<span class="title">new</span>;</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">new</span> = kmem_cache_alloc(cred_jar, GFP_KERNEL);</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">new</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line"> </span><br><span class="line">kdebug(<span class="string">"prepare_kernel_cred() alloc %p"</span>, <span class="keyword">new</span>);</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> (daemon)</span><br><span class="line">    old = get_task_cred(daemon);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    old = get_cred(&amp;init_cred);</span><br><span class="line"> </span><br><span class="line">validate_creds(old);</span><br><span class="line">*<span class="keyword">new</span> = *old;</span><br><span class="line">atomic_set(&amp;<span class="keyword">new</span>-&gt;usage, <span class="number">1</span>);</span><br><span class="line">set_cred_subscribers(<span class="keyword">new</span>, <span class="number">0</span>);</span><br><span class="line">get_uid(<span class="keyword">new</span>-&gt;user);</span><br><span class="line">get_user_ns(<span class="keyword">new</span>-&gt;user_ns);</span><br><span class="line">get_group_info(<span class="keyword">new</span>-&gt;group_info);</span><br></pre></td></tr></table></figure>
 
-<p>cred는 프로세스의 자격 증명을 담고있는 구조체이다. prepare_kernel_cred는 인자로 받은 daemon에서 cred를 받아와서<br>다른 구조체에 새로운 자격 증명을 작성한다.</p>
+<p>cred는 프로세스의 자격 증명을 담고있는 구조체이다. prepare_kernel_cred는 인자로 받은 daemon에서 cred를 받아와서<br>다른 구조체에 새로운 자격 증명을 작성한다. cred의 각 구조체에 새로운 값을 쓰고 있는것을 볼 수 있다.</p>
 <p>cred 구조체는 다음과 같다.</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cred</span> <span class="title">init_cred</span> = &#123;</span></span><br><span class="line">    .usage          = ATOMIC_INIT(<span class="number">4</span>),</span><br><span class="line">#ifdef CONFIG_DEBUG_CREDENTIALS</span><br><span class="line">    .subscribers        = ATOMIC_INIT(<span class="number">2</span>),</span><br><span class="line">    .magic          = CRED_MAGIC,</span><br><span class="line">#endif</span><br><span class="line">    .uid            = GLOBAL_ROOT_UID,</span><br><span class="line">    .gid            = GLOBAL_ROOT_GID,</span><br><span class="line">    .suid           = GLOBAL_ROOT_UID,</span><br><span class="line">    .sgid           = GLOBAL_ROOT_GID,</span><br><span class="line">    .euid           = GLOBAL_ROOT_UID,</span><br><span class="line">    .egid           = GLOBAL_ROOT_GID,</span><br><span class="line">    .fsuid          = GLOBAL_ROOT_UID,</span><br><span class="line">    .fsgid          = GLOBAL_ROOT_GID,</span><br><span class="line">    .securebits     = SECUREBITS_DEFAULT,</span><br><span class="line">    .cap_inheritable    = CAP_EMPTY_SET,</span><br><span class="line">    .cap_permitted      = CAP_FULL_SET,</span><br><span class="line">    .cap_effective      = CAP_FULL_SET,</span><br><span class="line">    .cap_bset       = CAP_FULL_SET,</span><br><span class="line">    .user           = INIT_USER,</span><br><span class="line">    .user_ns        = &amp;init_user_ns,</span><br><span class="line">    .group_info     = &amp;init_groups,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -310,15 +310,24 @@
   
     
     <div class="copyright">
-        <p><span>제목:</span><a  href="/2019/11/01/post/">LINUX KERNEL EXPLOIT - 1</a></p>
+        <p><span>제목:</span><a  href="/2019/11/01/linuxke/">LINUX KERNEL PREVILEGE</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
         <p><span>발행 시간:</span>2019년11월01일 - 11시42분</p>
-        <p><span>마지막 업데이트:</span>2019년11월01일 - 13시57분</p>
+        <p><span>마지막 업데이트:</span>2019년11월01일 - 22시46분</p>
     </div>
 
 
 
 <nav id="article-nav">
+  
+    <a  href="/2019/11/01/kernelheap/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          CISCN 2017 - Babydriver
+        
+      </div>
+    </a>
   
   
     <a  href="/2019/10/23/post-1/" id="article-nav-older" class="article-nav-link-wrap">
@@ -430,7 +439,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/" title="HOME"><i class="fa fa-home"></i></a>
+            <a  href="/2019/11/01/kernelheap/" title="上一篇: CISCN 2017 - Babydriver">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
@@ -439,7 +450,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/post/">LINUX KERNEL EXPLOIT - 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/16/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/kernelheap/">CISCN 2017 - Babydriver</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/linuxke/">LINUX KERNEL PREVILEGE</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/16/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
     
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 

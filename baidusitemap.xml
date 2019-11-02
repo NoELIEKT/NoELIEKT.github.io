@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://blog.haklog.xyz/2019/05/16/post-3/</loc>
-    <lastmod>2019-11-01T05:01:47.597Z</lastmod>
+    <loc>https://blog.haklog.xyz/2019/11/01/kernelheap/</loc>
+    <lastmod>2019-11-02T02:26:06.970Z</lastmod>
   </url>  <url>
-    <loc>https://blog.haklog.xyz/2019/11/01/post/</loc>
-    <lastmod>2019-11-01T04:57:20.875Z</lastmod>
+    <loc>https://blog.haklog.xyz/2019/11/01/linuxke/</loc>
+    <lastmod>2019-11-01T13:46:24.584Z</lastmod>
+  </url>  <url>
+    <loc>https://blog.haklog.xyz/2019/05/16/post-3/</loc>
+    <lastmod>2019-11-01T05:04:20.921Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/10/01/Hitcon-2016-babyheap/</loc>
     <lastmod>2019-11-01T02:33:23.729Z</lastmod>
