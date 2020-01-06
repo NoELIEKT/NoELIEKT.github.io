@@ -57,28 +57,6 @@
   </entry>
   
   <entry>
-    <title>Codegate 2017 quals - JS WORLD</title>
-    <link href="https://blog.haklog.xyz/2019/11/02/codegate%202017%20quals%20-%20jsworld/"/>
-    <id>https://blog.haklog.xyz/2019/11/02/codegate 2017 quals - jsworld/</id>
-    <published>2019-11-02T11:35:01.000Z</published>
-    <updated>2020-01-06T02:15:44.889Z</updated>
-    
-    <content type="html"><![CDATA[<p>javascript engine exploit은 처음이라 아래 링크를 보고 공부했다.<br><a href="https://bpsecblog.wordpress.com/2017/04/27/javascript_engine_array_oob/" target="_blank" rel="noopener">https://bpsecblog.wordpress.com/2017/04/27/javascript_engine_array_oob/</a></p><a id="more"></a><h2 id="VULN"><a href="#VULN" class="headerlink" title="VULN"></a>VULN</h2><p>spider monkey의 소스코드를 수정하여 oob 취약점을 발생시킨 문제이다. 소스코드를 디핑떠보면 다음과 같다.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> [S] mozilla 2 diff jsarray.cpp mozjs-24.2.0/js/src/jsarray.cpp </span><br><span class="line">1947c1947,1950</span><br><span class="line">&lt; </span><br><span class="line">---</span><br><span class="line">&gt;     if (index == 0) &#123;</span><br><span class="line">&gt;         /* Step 4b. */</span><br><span class="line">&gt;         args.rval().setUndefined();</span><br><span class="line">&gt;     &#125; else &#123;</span><br><span class="line">1959c1962</span><br><span class="line">&lt; </span><br><span class="line">---</span><br><span class="line">&gt;     &#125;</span><br><span class="line">1964c1967</span><br><span class="line">&lt;     if (obj-&gt;isNative())</span><br><span class="line">---</span><br><span class="line">&gt;     if (obj-&gt;isNative() &amp;&amp; obj-&gt;getDenseInitializedLength() &gt; index)</span><br></pre></td></tr></table></figure><p>index가 0임을 체크하는 부분을 삭제함으로써 oob 취약점을 발생시켰다.</p><p>ARRAY 객체</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gef➤  x/10gx 0x7ffff6a44ac0</span><br><span class="line">0x7ffff6a44ac0:0x00007ffff6a475d80x00007ffff6a31820</span><br><span class="line">0x7ffff6a44ad0:0x00000000000000000x00007ffff6a44af0</span><br><span class="line">0x7ffff6a44ae0:0x00000003000000000xdeadbeef00000006</span><br><span class="line">0x7ffff6a44af0:0xfff88000414141410xfff8800051515151</span><br><span class="line">0x7ffff6a44b00:0xfff88000616161610x0000000000000000</span><br></pre></td></tr></table></figure><p>0x7ffff6a44ad8 부터 데이터의 주소, 실제 메모리의 배열 크기, 가상 배열 크기, 실제 데이터 등으로 이루어져있다.</p><hr><h2 id="EXPLOIT"><a href="#EXPLOIT" class="headerlink" title="EXPLOIT"></a>EXPLOIT</h2><p>공격 코드를 작성하기 전에 JIT에 대해 알아야한다. 통상 다른 컴파일은 미리 개발자가 작성한 코드를 기계어로 변환시켜놓지만, JIT(Just-in-time) 컴파일은 프로그램이 실행되는 시점에 바이트코드로 변환시키는 방법이다. </p><p>실행될때마다 메모리에 코드가 올라가있는데, 이 코드를 쉘코드로 덮어버린 후 실행해버리면 우리가 원하는 코드를 실행시킬 수 있을 것이다.</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;javascript engine exploit은 처음이라 아래 링크를 보고 공부했다.&lt;br&gt;&lt;a href=&quot;https://bpsecblog.wordpress.com/2017/04/27/javascript_engine_array_oob/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://bpsecblog.wordpress.com/2017/04/27/javascript_engine_array_oob/&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="pwanble" scheme="https://blog.haklog.xyz/categories/pwanble/"/>
-    
-    
-      <category term="pwnable, javascript" scheme="https://blog.haklog.xyz/tags/pwnable-javascript/"/>
-    
-  </entry>
-  
-  <entry>
     <title>CISCN 2017 - Babydriver</title>
     <link href="https://blog.haklog.xyz/2019/11/01/kernelheap/"/>
     <id>https://blog.haklog.xyz/2019/11/01/kernelheap/</id>
