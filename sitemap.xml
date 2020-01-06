@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.haklog.xyz/2019/12/26/post/</loc>
+    
+    <lastmod>2020-01-06T02:19:09.488Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.haklog.xyz/2019/12/01/tcalc/</loc>
+    
+    <lastmod>2020-01-06T02:17:44.849Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.haklog.xyz/2019/11/02/codegate%202017%20quals%20-%20jsworld/</loc>
+    
+    <lastmod>2020-01-06T02:15:44.889Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.haklog.xyz/2019/11/01/kernelheap/</loc>
     
     <lastmod>2019-11-02T02:26:06.970Z</lastmod>
