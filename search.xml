@@ -3,6 +3,34 @@
   
     
     <entry>
+      <title>winchecksec</title>
+      <link href="/2020/02/11/winchecksec/"/>
+      <url>/2020/02/11/winchecksec/</url>
+      
+        <content type="html"><![CDATA[<a id="more"></a><p>윈도우 실행파일의 경우 PE파일이라고 부르는데, 보호기법을 체크하고 싶다면 optional header에 있는 characteristic에 설정된 비트를 추출해보면 간단하게 확인할 수 있다.</p><p>아래코드는 PE파일뿐만 아니라 PE파일의 IAT에 있는 DLL 정보들을 가져와 보호기법을 확인하는 코드이다.</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pefile</span><br><span class="line"><span class="keyword">import</span> win32api</span><br><span class="line"></span><br><span class="line">filename = <span class="string">'C:\Windows\System32\calc.exe'</span></span><br><span class="line"></span><br><span class="line">pe = pefile.PE(filename)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ASLR = <span class="number">0x0040</span></span><br><span class="line">DEP = <span class="number">0x0100</span></span><br><span class="line">NO_SEH = <span class="number">0x0400</span></span><br><span class="line">GUARD_CF = <span class="number">0x4000</span></span><br><span class="line"></span><br><span class="line">chars = pe.OPTIONAL_HEADER.DllCharacteristics <span class="comment"># get info</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"########### BINARY ##############"</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"# ASLR : "</span> + str(bool(chars&amp;ASLR))</span><br><span class="line"><span class="keyword">print</span> <span class="string">"# DEP : "</span> + str(bool(chars&amp;DEP)) </span><br><span class="line"><span class="keyword">print</span> <span class="string">"# NO_SEH : "</span> + str(bool(chars&amp;NO_SEH))</span><br><span class="line"><span class="keyword">print</span> <span class="string">"# CONTROL FLOW GUARD : "</span> + str(bool(chars&amp;GUARD_CF))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> pe.DIRECTORY_ENTRY_IMPORT:</span><br><span class="line">    handle = win32api.GetModuleHandle(i.dll)</span><br><span class="line">    path = win32api.GetModuleFileName(handle)</span><br><span class="line">    p = pefile.PE(path)</span><br><span class="line">    chars = p.OPTIONAL_HEADER.DllCharacteristics</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"########### %s ##############"</span> % i.dll</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"# ASLR : "</span> + str(bool(chars&amp;ASLR))</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"# DEP : "</span> + str(bool(chars&amp;DEP)) </span><br><span class="line">    <span class="keyword">print</span> <span class="string">"# NO_SEH : "</span> + str(bool(chars&amp;NO_SEH))</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"# CONTROL FLOW GUARD : "</span> + str(bool(chars&amp;GUARD_CF))</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> pwnable </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>posts</title>
+      <link href="/2020/02/11/posts/"/>
+      <url>/2020/02/11/posts/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    <entry>
       <title>Chrismas CTF 2019 baby seccomp</title>
       <link href="/2019/12/26/post/"/>
       <url>/2019/12/26/post/</url>

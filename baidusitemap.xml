@@ -1,55 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://blog.haklog.xyz/2020/02/11/winchecksec/</loc>
+    <lastmod>2020-02-11T13:36:17.000Z</lastmod>
+  </url>  <url>
+    <loc>https://blog.haklog.xyz/2020/02/11/posts/</loc>
+    <lastmod>2020-02-11T13:32:23.677Z</lastmod>
+  </url>  <url>
     <loc>https://blog.haklog.xyz/2019/12/26/post/</loc>
-    <lastmod>2020-01-06T02:19:09.488Z</lastmod>
+    <lastmod>2020-01-06T11:19:08.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/12/01/tcalc/</loc>
-    <lastmod>2020-01-06T02:17:44.849Z</lastmod>
+    <lastmod>2020-01-06T11:17:44.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/11/01/kernelheap/</loc>
-    <lastmod>2019-11-02T02:26:06.970Z</lastmod>
+    <lastmod>2019-11-02T11:26:06.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/11/01/linuxke/</loc>
-    <lastmod>2019-11-01T13:46:24.584Z</lastmod>
+    <lastmod>2019-11-01T22:46:24.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/05/16/post-3/</loc>
-    <lastmod>2019-11-01T05:04:20.921Z</lastmod>
+    <lastmod>2019-11-01T14:04:20.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/10/01/Hitcon-2016-babyheap/</loc>
-    <lastmod>2019-11-01T02:33:23.729Z</lastmod>
+    <lastmod>2019-11-01T11:33:22.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/05/11/post-2/</loc>
-    <lastmod>2019-11-01T02:31:19.857Z</lastmod>
+    <lastmod>2019-11-01T11:31:18.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/05/25/mmaloc/</loc>
-    <lastmod>2019-11-01T02:31:14.178Z</lastmod>
+    <lastmod>2019-11-01T11:31:14.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/10/23/post-1/</loc>
-    <lastmod>2019-10-30T00:59:57.128Z</lastmod>
+    <lastmod>2019-10-30T09:59:56.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2018/09/24/babypwn/</loc>
-    <lastmod>2019-10-23T13:58:28.968Z</lastmod>
+    <lastmod>2019-10-23T22:58:28.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2018/09/23/gadget-searcher/</loc>
-    <lastmod>2019-10-22T00:03:35.964Z</lastmod>
+    <lastmod>2019-10-22T09:03:34.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/07/21/DEFCON%202019%20speedrun010/</loc>
-    <lastmod>2019-10-22T00:02:04.418Z</lastmod>
+    <lastmod>2019-10-22T09:02:04.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2019/04/03/heapbabe/</loc>
-    <lastmod>2019-05-04T12:55:23.198Z</lastmod>
+    <lastmod>2019-05-04T21:55:22.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2018/09/24/ropp/</loc>
-    <lastmod>2019-04-30T07:10:57.757Z</lastmod>
+    <lastmod>2019-04-30T16:10:56.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2018/09/24/exploit-exercise-fusion-01/</loc>
-    <lastmod>2018-09-25T10:20:06.000Z</lastmod>
+    <lastmod>2018-09-25T19:20:06.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2018/09/23/exploit-exercise-fusion-00/</loc>
-    <lastmod>2018-09-25T10:20:02.000Z</lastmod>
+    <lastmod>2018-09-25T19:20:02.000Z</lastmod>
   </url>  <url>
     <loc>https://blog.haklog.xyz/2018/09/25/0x00-ctf/</loc>
-    <lastmod>2018-09-25T10:19:48.000Z</lastmod>
+    <lastmod>2018-09-25T19:19:48.000Z</lastmod>
   </url>
 </urlset>
