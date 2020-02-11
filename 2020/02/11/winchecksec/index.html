@@ -9,18 +9,18 @@
   
   <title>winchecksec | 귀찮다</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="윈도우 실행파일의 경우 PE파일이라고 부르는데, 보호기법을 체크하고 싶다면 optional header에 있는 characteristic에 설정된 비트를 추출해보면 간단하게 확인할 수 있다. 아래코드는 PE파일뿐만 아니라 PE파일의 IAT에 있는 DLL 정보들을 가져와 보호기법을 확인하는 코드이다. 12345678910111213141516171819">
+  <meta name="description" content="윈도우">
 <meta name="keywords" content="pwnable">
 <meta property="og:type" content="article">
 <meta property="og:title" content="winchecksec">
 <meta property="og:url" content="https://blog.haklog.xyz/2020/02/11/winchecksec/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="윈도우 실행파일의 경우 PE파일이라고 부르는데, 보호기법을 체크하고 싶다면 optional header에 있는 characteristic에 설정된 비트를 추출해보면 간단하게 확인할 수 있다. 아래코드는 PE파일뿐만 아니라 PE파일의 IAT에 있는 DLL 정보들을 가져와 보호기법을 확인하는 코드이다. 12345678910111213141516171819">
+<meta property="og:description" content="윈도우">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-11T13:36:17.000Z">
+<meta property="og:updated_time" content="2020-02-11T13:39:34.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="winchecksec">
-<meta name="twitter:description" content="윈도우 실행파일의 경우 PE파일이라고 부르는데, 보호기법을 체크하고 싶다면 optional header에 있는 characteristic에 설정된 비트를 추출해보면 간단하게 확인할 수 있다. 아래코드는 PE파일뿐만 아니라 PE파일의 IAT에 있는 DLL 정보들을 가져와 보호기법을 확인하는 코드이다. 12345678910111213141516171819">
+<meta name="twitter:description" content="윈도우">
   
   
     <link rel="icon" href="/img/one.png">
@@ -66,7 +66,7 @@
             
         </a>
         <hgroup>
-          <h1 class="header-author"><a href="/">K4el</a></h1>
+          <h1 class="header-author"><a href="/">PUEL</a></h1>
         </hgroup>
         
         
@@ -205,7 +205,7 @@
       <nav id="mobile-nav">
       <div class="overlay">
           <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="HOME">K4el</a></h1>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="HOME">PUEL</a></h1>
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
@@ -215,7 +215,7 @@
                 
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/" title="HOME">K4el</a></h1>
+              <h1 class="header-author"><a href="/" title="HOME">PUEL</a></h1>
             </hgroup>
             
             <nav class="header-menu">
@@ -284,12 +284,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <a id="more"></a>
+        <p>윈도우</p>
+<a id="more"></a>
 
 
 <p>윈도우 실행파일의 경우 PE파일이라고 부르는데, 보호기법을 체크하고 싶다면 optional header에 있는 characteristic에 설정된 비트를 추출해보면 간단하게 확인할 수 있다.</p>
 <p>아래코드는 PE파일뿐만 아니라 PE파일의 IAT에 있는 DLL 정보들을 가져와 보호기법을 확인하는 코드이다.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pefile</span><br><span class="line"><span class="keyword">import</span> win32api</span><br><span class="line"></span><br><span class="line">filename = <span class="string">'C:\Windows\System32\calc.exe'</span></span><br><span class="line"></span><br><span class="line">pe = pefile.PE(filename)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ASLR = <span class="number">0x0040</span></span><br><span class="line">DEP = <span class="number">0x0100</span></span><br><span class="line">NO_SEH = <span class="number">0x0400</span></span><br><span class="line">GUARD_CF = <span class="number">0x4000</span></span><br><span class="line"></span><br><span class="line">chars = pe.OPTIONAL_HEADER.DllCharacteristics <span class="comment"># get info</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"########### BINARY ##############"</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"# ASLR : "</span> + str(bool(chars&amp;ASLR))</span><br><span class="line"><span class="keyword">print</span> <span class="string">"# DEP : "</span> + str(bool(chars&amp;DEP)) </span><br><span class="line"><span class="keyword">print</span> <span class="string">"# NO_SEH : "</span> + str(bool(chars&amp;NO_SEH))</span><br><span class="line"><span class="keyword">print</span> <span class="string">"# CONTROL FLOW GUARD : "</span> + str(bool(chars&amp;GUARD_CF))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> pe.DIRECTORY_ENTRY_IMPORT:</span><br><span class="line">    handle = win32api.GetModuleHandle(i.dll)</span><br><span class="line">    path = win32api.GetModuleFileName(handle)</span><br><span class="line">    p = pefile.PE(path)</span><br><span class="line">    chars = p.OPTIONAL_HEADER.DllCharacteristics</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"########### %s ##############"</span> % i.dll</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"# ASLR : "</span> + str(bool(chars&amp;ASLR))</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"# DEP : "</span> + str(bool(chars&amp;DEP)) </span><br><span class="line">    <span class="keyword">print</span> <span class="string">"# NO_SEH : "</span> + str(bool(chars&amp;NO_SEH))</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"# CONTROL FLOW GUARD : "</span> + str(bool(chars&amp;GUARD_CF))</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
     
@@ -298,9 +301,9 @@
     
     <div class="copyright">
         <p><span>제목:</span><a  href="/2020/02/11/winchecksec/">winchecksec</a></p>
-        <p><span>저자:</span><a  href="/" title="访问 K4el 的个人博客">K4el</a></p>
+        <p><span>저자:</span><a  href="/" title="访问 PUEL 的个人博客">PUEL</a></p>
         <p><span>발행 시간:</span>2020년02월11일 - 13시32분</p>
-        <p><span>마지막 업데이트:</span>2020년02월11일 - 13시36분</p>
+        <p><span>마지막 업데이트:</span>2020년02월11일 - 13시39분</p>
     </div>
 
 
@@ -308,8 +311,8 @@
 <nav id="article-nav">
   
   
-    <a  href="/2020/02/11/posts/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">posts</div>
+    <a  href="/2019/12/26/post/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Chrismas CTF 2019 baby seccomp</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -421,12 +424,12 @@
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a  href="/2020/02/11/posts/" title="下一篇: posts">
+            <a  href="/2019/12/26/post/" title="下一篇: Chrismas CTF 2019 baby seccomp">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/winchecksec/">winchecksec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/posts/">posts</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/post/">Chrismas CTF 2019 baby seccomp</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/01/tcalc/">hack.lu - tcalc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/kernelheap/">CISCN 2017 - Babydriver</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/linuxke/">LINUX KERNEL PREVILEGE</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/16/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/winchecksec/">winchecksec</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/post/">Chrismas CTF 2019 baby seccomp</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/01/tcalc/">hack.lu - tcalc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/kernelheap/">CISCN 2017 - Babydriver</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/linuxke/">LINUX KERNEL PREVILEGE</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/16/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
     
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 
@@ -463,7 +466,7 @@
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
-                &copy; 2020 K4el
+                &copy; 2020 PUEL
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
