@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>7amebox1 | 귀찮다</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="CODEGATE 2018 7amebox1">
+<meta name="keywords" content="pwnable, vm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7amebox1">
+<meta property="og:url" content="https://blog.haklog.xyz/2020/02/12/CODEGATE_2018_7amebox1/index.html">
+<meta property="og:site_name" content="귀찮다">
+<meta property="og:description" content="CODEGATE 2018 7amebox1">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-02-12T06:45:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7amebox1">
+<meta name="twitter:description" content="CODEGATE 2018 7amebox1">
+  
+  
+    <link rel="icon" href="/img/one.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/tanya.jpg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">PUEL</a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="검색" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>메뉴</li>
+                        <li>태그</li>
+                        
+                        
+                        <li>소개</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/categories/pwnable/">시스템 해킹(pwnable)</a></li>
+                        
+                            <li><a  href="/categories/web/">웹 해킹</a></li>
+                        
+                            <li><a  href="/categories/reversing/">리버싱</a></li>
+                        
+                            <li><a  href="/categories/wargame">wargame</a></li>
+                        
+                            <li><a  href="/categories/ctf/">CTF write up</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/NoELIEKT/" title="github">github</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Ctf/" style="font-size: 10px;">Ctf</a> <a href="/tags/ctf-pwnable/" style="font-size: 16.67px;">ctf, pwnable</a> <a href="/tags/ctf-pwnable-kernel/" style="font-size: 10px;">ctf, pwnable, kernel</a> <a href="/tags/pwanble-ctf/" style="font-size: 10px;">pwanble, ctf</a> <a href="/tags/pwnable/" style="font-size: 20px;">pwnable</a> <a href="/tags/pwnable-ctf/" style="font-size: 13.33px;">pwnable, ctf</a> <a href="/tags/pwnable-ctf-heap-fake-chunk/" style="font-size: 10px;">pwnable, ctf, heap, fake_chunk</a> <a href="/tags/pwnable-kernel/" style="font-size: 10px;">pwnable, kernel</a> <a href="/tags/pwnable-seccomp/" style="font-size: 10px;">pwnable, seccomp</a> <a href="/tags/pwnable-tool/" style="font-size: 10px;">pwnable, tool</a> <a href="/tags/pwnable-vm/" style="font-size: 10px;">pwnable, vm</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">귀차니즘 환자 fnfnfn121@gmail.com</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="HOME">PUEL</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/tanya.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="HOME">PUEL</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/categories/pwnable/">시스템 해킹(pwnable)</a></li>
+                
+                    <li><a href="/categories/web/">웹 해킹</a></li>
+                
+                    <li><a href="/categories/reversing/">리버싱</a></li>
+                
+                    <li><a href="/categories/wargame">wargame</a></li>
+                
+                    <li><a href="/categories/ctf/">CTF write up</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/NoELIEKT/" title="github">github</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-CODEGATE_2018_7amebox1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2020/02/12/CODEGATE_2018_7amebox1/" class="article-date">
+      <time datetime="2020-02-12T06:44:52.000Z" itemprop="datePublished">2020-02-12</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      7amebox1
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnable-vm/">pwnable, vm</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>CODEGATE 2018 7amebox1</p>
+<a id="more"></a>
+
+<p>flag - &gt; 플래그<br>_7amebox.py  -&gt; 에뮬레이터<br>mic_check.firm -&gt; 에뮬을 통해 구현한 프로그램<br>vm_name.py -&gt; 초기 설정 스크립트</p>
+<p>분석은 조금 어렵지만, 그 이후는 간단하게 해결할 수 있다.</p>
+<p>디스어셈블러를 구현하면 firmware 코드를 이해할 수 있다.</p>
+<p>귀찮아서 대충 알아볼 수 있게만 해놨다. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br></pre></td><td class="code"><pre><span class="line">PERM_MAPPED		= <span class="number">0b1000</span></span><br><span class="line">PERM_READ		= <span class="number">0b0100</span></span><br><span class="line">PERM_WRITE		= <span class="number">0b0010</span></span><br><span class="line">PERM_EXEC		= <span class="number">0b0001</span></span><br><span class="line"></span><br><span class="line">TYPE_R = <span class="number">0</span></span><br><span class="line">TYPE_I = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">FLAG_NF = <span class="number">0b0010</span></span><br><span class="line">FLAG_ZF = <span class="number">0b0001</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DISASM</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, firm)</span>:</span></span><br><span class="line">    </span><br><span class="line">        self.register_list = [<span class="string">'r0'</span>, <span class="string">'r1'</span>, <span class="string">'r2'</span>, <span class="string">'r3'</span>, <span class="string">'r4'</span>, <span class="string">'r5'</span>, <span class="string">'r6'</span>, <span class="string">'r7'</span>,<span class="string">'r8'</span>, <span class="string">'r9'</span>, <span class="string">'r10'</span>, <span class="string">'bp'</span>, <span class="string">'sp'</span>, <span class="string">'pc'</span>, <span class="string">'eflags'</span>, <span class="string">'zero'</span>]</span><br><span class="line">        self.firm = firm</span><br><span class="line">        self.memory     = Memory(<span class="number">2</span> ** <span class="number">20</span>)</span><br><span class="line">        self.idx = <span class="number">0</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">load_firm</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">with</span> open(self.firm, <span class="string">'rb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">                data = f.read()</span><br><span class="line"></span><br><span class="line">            self.firmware = [ord(byte) <span class="keyword">for</span> byte <span class="keyword">in</span> data]</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"A"</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dispatch</span><span class="params">(self, addr)</span>:</span></span><br><span class="line">        opcode = self.bit_concat(self.read_file(addr, <span class="number">2</span>))</span><br><span class="line">        op      = (opcode &amp; <span class="number">0b11111000000000</span>) &gt;&gt; <span class="number">9</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">        op_type = (opcode &amp; <span class="number">0b00000100000000</span>) &gt;&gt; <span class="number">8</span></span><br><span class="line">        opers   = []</span><br><span class="line">        <span class="keyword">if</span> op_type == TYPE_R:</span><br><span class="line">            opers.append((opcode &amp; <span class="number">0b00000011110000</span>) &gt;&gt; <span class="number">4</span>)</span><br><span class="line">            opers.append((opcode &amp; <span class="number">0b00000000001111</span>))</span><br><span class="line">            op_size = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">elif</span> op_type == TYPE_I:</span><br><span class="line">            opers.append((opcode &amp; <span class="number">0b00000011110000</span>) &gt;&gt; <span class="number">4</span>)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                opers.append(self.read_memory_tri(addr+<span class="number">2</span>, <span class="number">1</span>)[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">            op_size = <span class="number">5</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.terminate(<span class="string">"[VM] Invalid instruction"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> op, op_type, opers, op_size</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bit_concat</span><span class="params">(self, bit_list)</span>:</span></span><br><span class="line">        res = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> bit <span class="keyword">in</span> bit_list:</span><br><span class="line">            res &lt;&lt;= <span class="number">7</span></span><br><span class="line">            res += bit &amp; <span class="number">127</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read_file</span><span class="params">(self, addr, length)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.firmware[addr : addr + length]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read_memory_tri</span><span class="params">(self, addr, count)</span>:</span></span><br><span class="line">        res = []</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(count):</span><br><span class="line">            tri = <span class="number">0</span></span><br><span class="line">            tri |= self.firmware[addr + i*<span class="number">3</span>]</span><br><span class="line">            tri |= self.firmware[addr + i*<span class="number">3</span> + <span class="number">1</span>]  &lt;&lt; <span class="number">14</span></span><br><span class="line">            tri |= self.firmware[addr + i*<span class="number">3</span> + <span class="number">2</span>]  &lt;&lt; <span class="number">7</span></span><br><span class="line">            res.append(tri)</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">disasm</span><span class="params">(self)</span>:</span></span><br><span class="line">        reg = [<span class="string">'r0'</span>, <span class="string">'r1'</span>, <span class="string">'r2'</span>, <span class="string">'r3'</span>, <span class="string">'r4'</span>, <span class="string">'r5'</span>, <span class="string">'r6'</span>, <span class="string">'r7'</span>,<span class="string">'r8'</span>, <span class="string">'r9'</span>, <span class="string">'r10'</span>, <span class="string">'bp'</span>, <span class="string">'sp'</span>, <span class="string">'pc'</span>, <span class="string">'eflags'</span>, <span class="string">'zero'</span>]</span><br><span class="line">        addr = <span class="number">0</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"start:"</span></span><br><span class="line">        <span class="keyword">while</span> addr &lt;= len(self.firmware):</span><br><span class="line">            op, op_type, opers, op_size = self.dispatch(addr)</span><br><span class="line">            addr += op_size</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">            <span class="keyword">if</span> op_type == TYPE_I:</span><br><span class="line">                src = hex(opers[<span class="number">1</span>])</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                src = reg[opers[<span class="number">1</span>]]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            dst = reg[opers[<span class="number">0</span>]]</span><br><span class="line">        </span><br><span class="line">            <span class="keyword">if</span>(op == <span class="number">6</span> <span class="keyword">and</span> dst == <span class="string">'bp'</span>):</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'sub_%d:'</span> % addr</span><br><span class="line"></span><br><span class="line">         </span><br><span class="line">            <span class="keyword">print</span> <span class="string">'\t'</span>+hex(addr-op_size) + <span class="string">':'</span>,</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> op == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'mov '</span> + dst + <span class="string">', ['</span> + src+<span class="string">']'</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'movb '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'mov '</span> + src + <span class="string">', '</span> + dst</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">3</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'movb ['</span> + src + <span class="string">'], '</span> + dst</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">4</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'mov '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">5</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'xchg '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">6</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'push '</span> + dst</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">7</span>:</span><br><span class="line">                <span class="keyword">if</span> dst == <span class="string">'pc'</span>:</span><br><span class="line">                    <span class="keyword">print</span> <span class="string">'ret'</span></span><br><span class="line">                    <span class="keyword">print</span> <span class="string">'sub_%d :'</span> % addr</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">print</span> <span class="string">'pop '</span> + dst</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">8</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'syscall'</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">9</span>: </span><br><span class="line">                <span class="keyword">print</span> <span class="string">'add '</span> + dst + <span class="string">' '</span> + src     </span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">10</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'addl '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">11</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'sub '</span> + dst + <span class="string">' '</span> + src</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">12</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'subb '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">13</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'shr '</span> + dst + <span class="string">', '</span> + src </span><br><span class="line">            </span><br><span class="line">            <span class="keyword">elif</span> op== <span class="number">14</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'shl '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">15</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'mul '</span> + dst + <span class="string">', '</span> + src </span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">16</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'div '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">17</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'inc '</span> + dst+ <span class="string">', '</span> + src</span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">18</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'dec '</span> + dst + <span class="string">', '</span> + src </span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">19</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'and '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">20</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'or '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">21</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'xor '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">22</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'mod '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">23</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'cmp '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">24</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'cmb '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">25</span>:</span><br><span class="line">                <span class="keyword">if</span>(dst == <span class="string">'pc'</span>):</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">print</span> <span class="string">'jgt %s'</span>% hex(addr + int(src, <span class="number">16</span>)<span class="number">-0x200000</span>) </span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">print</span> <span class="string">'jgt '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">26</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'jne %s'</span>% hex(addr + int(src, <span class="number">16</span>)<span class="number">-0x200000</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">27</span>:</span><br><span class="line">        </span><br><span class="line">                add = addr + int(src, <span class="number">16</span>) </span><br><span class="line">                <span class="keyword">if</span>(add&gt; <span class="number">0x200000</span>):</span><br><span class="line">                    string = hex(add - <span class="number">0x200000</span>)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    string = hex(add)<span class="comment"># - 0x100000)</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">print</span> <span class="string">'jz '</span> + string</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">28</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'jnz %s'</span> % hex((addr + int(src, <span class="number">16</span>)) - <span class="number">0x200000</span>) </span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">29</span>:</span><br><span class="line">                <span class="keyword">print</span> <span class="string">'jmp %s'</span> % hex(addr + int(src, <span class="number">16</span>) - <span class="number">0x200000</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">elif</span> op == <span class="number">30</span>:</span><br><span class="line">                <span class="keyword">if</span>(op_type == TYPE_I):</span><br><span class="line">                    a = (addr+ int(src, <span class="number">16</span>))</span><br><span class="line">                    <span class="keyword">if</span>(a&gt;<span class="number">0x200000</span>):</span><br><span class="line">                        a -= <span class="number">0x200000</span></span><br><span class="line">                        <span class="keyword">print</span> <span class="string">'call '</span> + hex(a)</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        <span class="keyword">print</span> <span class="string">'call '</span> + hex(a)</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">print</span> <span class="string">'call '</span> + dst + <span class="string">', '</span> + src</span><br><span class="line"></span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">dis = DISASM(<span class="string">"mic_check.firm"</span>)</span><br><span class="line">dis.load_firm()</span><br><span class="line">dis.disasm()</span><br></pre></td></tr></table></figure>
+
+<p>ASSEMBLY CODE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">start:</span><br><span class="line">	0x0: call 0x9</span><br><span class="line">	0x5: xor r0, r0</span><br><span class="line">	0x7: syscall</span><br><span class="line">sub_11:</span><br><span class="line">	0x9: push bp</span><br><span class="line">	0xb: mov bp, sp</span><br><span class="line">	0xd: sub sp 0x3c</span><br><span class="line">	0x12: mov r5, bp</span><br><span class="line">	0x14: sub r5 0x3</span><br><span class="line">	0x19: mov r6, 0x12345</span><br><span class="line">	0x1e: mov r5, r6</span><br><span class="line">	0x20: mov r0, 0xcd</span><br><span class="line">	0x25: call 0x90</span><br><span class="line">	0x2a: mov r1, 0x42</span><br><span class="line">	0x2f: mov r5, bp</span><br><span class="line">	0x31: sub r5 0x3c # buf = [ebp-0x3c]</span><br><span class="line">	0x36: mov r0, r5</span><br><span class="line">	0x38: call 0x60    # read(0, buf, 0x42)    == &gt; buffer over flow!</span><br><span class="line">	0x3d: mov r0, 0xd3</span><br><span class="line">	0x42: call 0x90</span><br><span class="line">	0x47: mov r5, bp</span><br><span class="line">	0x49: sub r5 0x3</span><br><span class="line">	0x4e: mov r6, [r5]</span><br><span class="line">	0x50: cmp r6, 0x12345 # canary cmp</span><br><span class="line">	0x55: jnz 0x5 # abort ! ! ! !  !</span><br><span class="line">	0x5a: mov sp, bp</span><br><span class="line">	0x5c: pop bp</span><br><span class="line">	0x5e: ret</span><br><span class="line">sub_96 : ## read</span><br><span class="line">	0x60: mov r3, r1</span><br><span class="line">	0x62: mov r2, r0</span><br><span class="line">	0x64: mov r1, 0x0</span><br><span class="line">	0x69: mov r0, 0x3</span><br><span class="line">	0x6e: syscall</span><br><span class="line">	0x70: ret</span><br><span class="line">sub_114 : ### write </span><br><span class="line">	0x72: push r1</span><br><span class="line">	0x74: push r2</span><br><span class="line">	0x76: push r3</span><br><span class="line">	0x78: mov r3, r1</span><br><span class="line">	0x7a: mov r2, r0</span><br><span class="line">	0x7c: mov r1, 0x1</span><br><span class="line">	0x81: mov r0, 0x2</span><br><span class="line">	0x86: syscall</span><br><span class="line">	0x88: pop r3</span><br><span class="line">	0x8a: pop r2</span><br><span class="line">	0x8c: pop r1</span><br><span class="line">	0x8e: ret</span><br><span class="line">sub_144 :</span><br><span class="line">	0x90: push r0</span><br><span class="line">	0x92: push r1</span><br><span class="line">	0x94: mov r1, r0</span><br><span class="line">	0x96: call 0xa8</span><br><span class="line">	0x9b: xchg r0, r1</span><br><span class="line">	0x9d: call 0x72</span><br><span class="line">	0xa2: pop r1</span><br><span class="line">	0xa4: pop r0</span><br><span class="line">	0xa6: ret</span><br><span class="line">sub_168 :</span><br><span class="line">	0xa8: push r1</span><br><span class="line">	0xaa: push r2</span><br><span class="line">	0xac: xor r1, r1</span><br><span class="line">	0xae: xor r2, r2</span><br><span class="line">	0xb0: movb r2, r0</span><br><span class="line">	0xb2: cmb r2, 0x0</span><br><span class="line">	0xb7: jz 0xc5</span><br><span class="line">	0xbc: inc r0, r0</span><br><span class="line">	0xbe: inc r1, r0</span><br><span class="line">	0xc0: jmp 0xb0</span><br><span class="line">	0xc5: mov r0, r1</span><br><span class="line">	0xc7: pop r2</span><br><span class="line">	0xc9: pop r1</span><br><span class="line">	0xcb: ret</span><br><span class="line">sub_205 :</span><br><span class="line">	0xcd: jz 0x19603f</span><br><span class="line">	0xd2: mov r6, [r2]</span><br><span class="line">	0xd4: call eflags, r5</span><br></pre></td></tr></table></figure>
+
+<p>샾 치고 메모해준 부분이 취약점이다. 잘 분석해보면 0x12345가 카나리로써 배치되는걸 확인할 수 있다. </p>
+<p>스택 주소는 고정이므로, 에뮬레이터 코드를 수정하여 debug.py 를 제작하면 입력값이 배치되는 스택주소를 확인할 수 있고, 에뮬레이터 opcode에 맞추어 쉘코드를 만들고, pc를 덮을 수 있으니 쉘코드쪽으로 주소를 돌리면 플래그를 얻을 수 있다!</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>제목:</span><a  href="/2020/02/12/CODEGATE_2018_7amebox1/">7amebox1</a></p>
+        <p><span>저자:</span><a  href="/" title="访问 PUEL 的个人博客">PUEL</a></p>
+        <p><span>발행 시간:</span>2020년02월12일 - 06시44분</p>
+        <p><span>마지막 업데이트:</span>2020년02월12일 - 06시45분</p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a  href="/2020/02/11/winchecksec/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">winchecksec</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Article directory</strong>
+    
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="숨기기"  title="点击按钮隐藏或者显示Article directory">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "숨기기";
+    var valueShow = "펼치기";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'k4el'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+          <div id="disqus_thread"></div>
+          <script>
+          
+          /**
+          *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+          *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+          /*
+          var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+          };
+          */
+          (function() { // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          s.src = 'https://blog-z2e4o6-com.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+          })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/" title="HOME"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/2020/02/11/winchecksec/" title="下一篇: winchecksec">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/02/12/CODEGATE_2018_7amebox1/">7amebox1</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/02/11/winchecksec/">winchecksec</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/26/post/">Chrismas CTF 2019 baby seccomp</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/01/tcalc/">hack.lu - tcalc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/kernelheap/">CISCN 2017 - Babydriver</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/01/linuxke/">LINUX KERNEL PREVILEGE</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/23/post-1/">Kernel Module</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/01/Hitcon-2016-babyheap/">Hitcon 2016 babyheap</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/21/DEFCON 2019 speedrun010/">Defcon 2019 speedrun 010</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/25/mmaloc/">Trust 2019 - mmalloc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/16/post-3/">fsop - basic</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/11/post-2/">File Structure</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/03/heapbabe/">Codegate 2018 final heapbabe</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/25/0x00-ctf/">0x00_ctf_left</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/ropp/">Plaid CTF - ropasaurusrex</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/babypwn/">codegate 2017 CTF - babypwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/24/exploit-exercise-fusion-01/">exploit-exercise-fusion-01</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/exploit-exercise-fusion-00/">exploit_exercise_fusion_00</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/23/gadget-searcher/">gadget_searcher</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2020 PUEL
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">페이지 방문: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'k3el', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+
+  </div>
+</body>
+</html>
