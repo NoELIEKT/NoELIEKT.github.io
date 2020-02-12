@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="귀찮다">
 <meta property="og:description" content="CODEGATE 2018 7amebox1">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-12T06:45:31.000Z">
+<meta property="og:updated_time" content="2020-02-12T06:50:15.706Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="7amebox1">
 <meta name="twitter:description" content="CODEGATE 2018 7amebox1">
@@ -287,7 +287,8 @@
         <p>CODEGATE 2018 7amebox1</p>
 <a id="more"></a>
 
-<p>flag - &gt; 플래그<br>_7amebox.py  -&gt; 에뮬레이터<br>mic_check.firm -&gt; 에뮬을 통해 구현한 프로그램<br>vm_name.py -&gt; 초기 설정 스크립트</p>
+
+<h2 id="ANALYZE"><a href="#ANALYZE" class="headerlink" title="ANALYZE"></a>ANALYZE</h2><p>flag - &gt; 플래그<br>_7amebox.py  -&gt; 에뮬레이터<br>mic_check.firm -&gt; 에뮬을 통해 구현한 프로그램<br>vm_name.py -&gt; 초기 설정 스크립트</p>
 <p>분석은 조금 어렵지만, 그 이후는 간단하게 해결할 수 있다.</p>
 <p>디스어셈블러를 구현하면 firmware 코드를 이해할 수 있다.</p>
 <p>귀찮아서 대충 알아볼 수 있게만 해놨다. </p>
@@ -296,7 +297,7 @@
 <p>ASSEMBLY CODE</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">start:</span><br><span class="line">	0x0: call 0x9</span><br><span class="line">	0x5: xor r0, r0</span><br><span class="line">	0x7: syscall</span><br><span class="line">sub_11:</span><br><span class="line">	0x9: push bp</span><br><span class="line">	0xb: mov bp, sp</span><br><span class="line">	0xd: sub sp 0x3c</span><br><span class="line">	0x12: mov r5, bp</span><br><span class="line">	0x14: sub r5 0x3</span><br><span class="line">	0x19: mov r6, 0x12345</span><br><span class="line">	0x1e: mov r5, r6</span><br><span class="line">	0x20: mov r0, 0xcd</span><br><span class="line">	0x25: call 0x90</span><br><span class="line">	0x2a: mov r1, 0x42</span><br><span class="line">	0x2f: mov r5, bp</span><br><span class="line">	0x31: sub r5 0x3c # buf = [ebp-0x3c]</span><br><span class="line">	0x36: mov r0, r5</span><br><span class="line">	0x38: call 0x60    # read(0, buf, 0x42)    == &gt; buffer over flow!</span><br><span class="line">	0x3d: mov r0, 0xd3</span><br><span class="line">	0x42: call 0x90</span><br><span class="line">	0x47: mov r5, bp</span><br><span class="line">	0x49: sub r5 0x3</span><br><span class="line">	0x4e: mov r6, [r5]</span><br><span class="line">	0x50: cmp r6, 0x12345 # canary cmp</span><br><span class="line">	0x55: jnz 0x5 # abort ! ! ! !  !</span><br><span class="line">	0x5a: mov sp, bp</span><br><span class="line">	0x5c: pop bp</span><br><span class="line">	0x5e: ret</span><br><span class="line">sub_96 : ## read</span><br><span class="line">	0x60: mov r3, r1</span><br><span class="line">	0x62: mov r2, r0</span><br><span class="line">	0x64: mov r1, 0x0</span><br><span class="line">	0x69: mov r0, 0x3</span><br><span class="line">	0x6e: syscall</span><br><span class="line">	0x70: ret</span><br><span class="line">sub_114 : ### write </span><br><span class="line">	0x72: push r1</span><br><span class="line">	0x74: push r2</span><br><span class="line">	0x76: push r3</span><br><span class="line">	0x78: mov r3, r1</span><br><span class="line">	0x7a: mov r2, r0</span><br><span class="line">	0x7c: mov r1, 0x1</span><br><span class="line">	0x81: mov r0, 0x2</span><br><span class="line">	0x86: syscall</span><br><span class="line">	0x88: pop r3</span><br><span class="line">	0x8a: pop r2</span><br><span class="line">	0x8c: pop r1</span><br><span class="line">	0x8e: ret</span><br><span class="line">sub_144 :</span><br><span class="line">	0x90: push r0</span><br><span class="line">	0x92: push r1</span><br><span class="line">	0x94: mov r1, r0</span><br><span class="line">	0x96: call 0xa8</span><br><span class="line">	0x9b: xchg r0, r1</span><br><span class="line">	0x9d: call 0x72</span><br><span class="line">	0xa2: pop r1</span><br><span class="line">	0xa4: pop r0</span><br><span class="line">	0xa6: ret</span><br><span class="line">sub_168 :</span><br><span class="line">	0xa8: push r1</span><br><span class="line">	0xaa: push r2</span><br><span class="line">	0xac: xor r1, r1</span><br><span class="line">	0xae: xor r2, r2</span><br><span class="line">	0xb0: movb r2, r0</span><br><span class="line">	0xb2: cmb r2, 0x0</span><br><span class="line">	0xb7: jz 0xc5</span><br><span class="line">	0xbc: inc r0, r0</span><br><span class="line">	0xbe: inc r1, r0</span><br><span class="line">	0xc0: jmp 0xb0</span><br><span class="line">	0xc5: mov r0, r1</span><br><span class="line">	0xc7: pop r2</span><br><span class="line">	0xc9: pop r1</span><br><span class="line">	0xcb: ret</span><br><span class="line">sub_205 :</span><br><span class="line">	0xcd: jz 0x19603f</span><br><span class="line">	0xd2: mov r6, [r2]</span><br><span class="line">	0xd4: call eflags, r5</span><br></pre></td></tr></table></figure>
 
-<p>샾 치고 메모해준 부분이 취약점이다. 잘 분석해보면 0x12345가 카나리로써 배치되는걸 확인할 수 있다. </p>
+<h2 id="EXPLOIT"><a href="#EXPLOIT" class="headerlink" title="EXPLOIT"></a>EXPLOIT</h2><p>샾 치고 메모해준 부분이 취약점이다. 잘 분석해보면 0x12345가 카나리로써 배치되는걸 확인할 수 있다. </p>
 <p>스택 주소는 고정이므로, 에뮬레이터 코드를 수정하여 debug.py 를 제작하면 입력값이 배치되는 스택주소를 확인할 수 있고, 에뮬레이터 opcode에 맞추어 쉘코드를 만들고, pc를 덮을 수 있으니 쉘코드쪽으로 주소를 돌리면 플래그를 얻을 수 있다!</p>
 
       
@@ -309,7 +310,7 @@
         <p><span>제목:</span><a  href="/2020/02/12/CODEGATE_2018_7amebox1/">7amebox1</a></p>
         <p><span>저자:</span><a  href="/" title="访问 PUEL 的个人博客">PUEL</a></p>
         <p><span>발행 시간:</span>2020년02월12일 - 06시44분</p>
-        <p><span>마지막 업데이트:</span>2020년02월12일 - 06시45분</p>
+        <p><span>마지막 업데이트:</span>2020년02월12일 - 06시50분</p>
     </div>
 
 
@@ -330,7 +331,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">Article directory</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ANALYZE"><span class="toc-number">1.</span> <span class="toc-text">ANALYZE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EXPLOIT"><span class="toc-number">2.</span> <span class="toc-text">EXPLOIT</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
