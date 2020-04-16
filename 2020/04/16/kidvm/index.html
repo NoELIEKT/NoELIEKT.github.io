@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.haklog.xyz","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="REAL WORLD CTF 2018 - kidvmanalyzekvm으로 vm을 구현해놓았다.  kvm 으로 vm 제작kvm api의 예제는 해당링크를 참조.해당 주소들을 참고해서 vm 분석 처음에는 여러 초기화 과정을 거치며 vm을 위한 세팅을 하는 것을 볼 수 있다. 123456*v12 = qword_18E0[0];  *(v12 + 894) = *(&amp;am">
+<meta name="keywords" content="vm, pwn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="REAL WORLD CTF 2018 - kidvm">
+<meta property="og:url" content="https://blog.haklog.xyz/2020/04/16/kidvm/index.html">
+<meta property="og:site_name" content="귀찮다">
+<meta property="og:description" content="REAL WORLD CTF 2018 - kidvmanalyzekvm으로 vm을 구현해놓았다.  kvm 으로 vm 제작kvm api의 예제는 해당링크를 참조.해당 주소들을 참고해서 vm 분석 처음에는 여러 초기화 과정을 거치며 vm을 위한 세팅을 하는 것을 볼 수 있다. 123456*v12 = qword_18E0[0];  *(v12 + 894) = *(&amp;am">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-16T11:06:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="REAL WORLD CTF 2018 - kidvm">
+<meta name="twitter:description" content="REAL WORLD CTF 2018 - kidvmanalyzekvm으로 vm을 구현해놓았다.  kvm 으로 vm 제작kvm api의 예제는 해당링크를 참조.해당 주소들을 참고해서 vm 분석 처음에는 여러 초기화 과정을 거치며 vm을 위한 세팅을 하는 것을 볼 수 있다. 123456*v12 = qword_18E0[0];  *(v12 + 894) = *(&amp;am">
+
+<link rel="canonical" href="https://blog.haklog.xyz/2020/04/16/kidvm/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>REAL WORLD CTF 2018 - kidvm | 귀찮다</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">귀찮다</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.haklog.xyz/2020/04/16/kidvm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/kermit.png">
+      <meta itemprop="name" content="PUEL">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="귀찮다">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          REAL WORLD CTF 2018 - kidvm
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-04-16 11:05:31 / Modified: 11:06:58" itemprop="dateCreated datePublished" datetime="2020-04-16T11:05:31+00:00">2020-04-16</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2020/04/16/kidvm/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/04/16/kidvm/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="REAL-WORLD-CTF-2018-kidvm"><a href="#REAL-WORLD-CTF-2018-kidvm" class="headerlink" title="REAL WORLD CTF 2018 - kidvm"></a>REAL WORLD CTF 2018 - kidvm</h1><h2 id="analyze"><a href="#analyze" class="headerlink" title="analyze"></a>analyze</h2><p>kvm으로 vm을 구현해놓았다. </p>
+<p>kvm 으로 <a href="https://lwn.net/Articles/658511/" target="_blank" rel="noopener">vm 제작</a><br>kvm api의 예제는 <a href="https://github.com/dpw/kvm-hello-world/blob/master/kvm-hello-world.c" target="_blank" rel="noopener">해당링크</a>를 참조.<br>해당 주소들을 참고해서 vm 분석</p>
+<p>처음에는 여러 초기화 과정을 거치며 vm을 위한 세팅을 하는 것을 볼 수 있다.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*v12 = qword_18E0[<span class="number">0</span>];</span><br><span class="line">  *(v12 + <span class="number">894</span>) = *(&amp;qword_18E0[<span class="number">111</span>] + <span class="number">6</span>);</span><br><span class="line">  qmemcpy(</span><br><span class="line">    ((v12 + <span class="number">1</span>) &amp; <span class="number">0xFFFFFFFFFFFFFFF8</span>LL),</span><br><span class="line">    (qword_18E0 - (v12 - ((v12 + <span class="number">1</span>) &amp; <span class="number">0xFFFFFFFFFFFFFFF8</span>LL))),</span><br><span class="line">    <span class="number">8L</span>L * (((v12 - ((v12 + <span class="number">8</span>) &amp; <span class="number">0xFFFFFFF8</span>) + <span class="number">902</span>) &amp; <span class="number">0xFFFFFFF8</span>) &gt;&gt; <span class="number">3</span>));</span><br></pre></td></tr></table></figure>
+
+<p>가상 메모리를 할당하고 opcode를 복사하는 부분.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( versionb &lt;= <span class="number">0x92F</span> )</span><br><span class="line">&#123;</span><br><span class="line">  perror(<span class="string">"Fail"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1L</span>L;</span><br><span class="line">&#125;</span><br><span class="line">v13 = mmap(<span class="number">0L</span>L, versionb, <span class="number">3</span>, <span class="number">1</span>, v11, <span class="number">0L</span>L);</span><br><span class="line"><span class="keyword">if</span> ( !v13 )</span><br></pre></td></tr></table></figure>
+
+<p>kvm_run 구조체를 위해 메모리를 할당하는 과정이다. 다음 링크에서 kvm run 구조체를 꼭 등록해주자. </p>
+<p><a href="https://github.com/spotify/linux/blob/master/include/linux/kvm.h#L103" target="_blank" rel="noopener">https://github.com/spotify/linux/blob/master/include/linux/kvm.h#L103</a></p>
+<p>그다음 코드는 kvm 코드 실행 -&gt; 종료 -&gt; exit_reason에 따른 분기로 이루어진다. </p>
+<h2 id="VULN"><a href="#VULN" class="headerlink" title="VULN"></a>VULN</h2><p>guest 코드 상에서 mem을 할당하는 부분이다.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">seg000:<span class="number">006F</span></span><br><span class="line">seg000:<span class="number">006F</span></span><br><span class="line">seg000:<span class="number">006F</span> sub_6F          proc near               ; CODE XREF: sub_7:loc_4E↑p</span><br><span class="line">seg000:<span class="number">006F</span>                 push    ax</span><br><span class="line">seg000:<span class="number">0070</span>                 push    bx</span><br><span class="line">seg000:<span class="number">0071</span>                 push    cx</span><br><span class="line">seg000:<span class="number">0072</span>                 push    dx</span><br><span class="line">seg000:<span class="number">0073</span>                 push    si</span><br><span class="line">seg000:<span class="number">0074</span>                 push    di</span><br><span class="line">seg000:<span class="number">0075</span>                 mov     ax, <span class="number">2E7</span>h</span><br><span class="line">seg000:<span class="number">0078</span>                 mov     bx, <span class="number">5</span></span><br><span class="line">seg000:<span class="number">007B</span>                 call    write</span><br><span class="line">seg000:<span class="number">007</span>E                 mov     ax, <span class="number">340</span>h</span><br><span class="line">seg000:<span class="number">0081</span>                 mov     bx, <span class="number">2</span></span><br><span class="line">seg000:<span class="number">0084</span>                 call    read</span><br><span class="line">seg000:<span class="number">0087</span>                 mov     ax, ds:word_340 <span class="comment">// size 요청값</span></span><br><span class="line">seg000:<span class="number">008</span>A                 cmp     ax, <span class="number">1000</span>h</span><br><span class="line">seg000:<span class="number">008</span>D                 ja      <span class="keyword">short</span> loc_C2</span><br><span class="line">seg000:<span class="number">008F</span>                 mov     cx, ds:word_344 <span class="comment">// 현재 힙 size 누적 변수 </span></span><br><span class="line">seg000:<span class="number">0093</span>                 cmp     cx, <span class="number">0B</span>000h</span><br><span class="line">seg000:<span class="number">0097</span>                 ja      <span class="keyword">short</span> loc_CD</span><br><span class="line">seg000:<span class="number">0099</span>                 mov     si, ds:word_342 </span><br><span class="line">seg000:<span class="number">009</span>D                 cmp     si, <span class="number">10</span>h</span><br><span class="line">seg000:<span class="number">00</span>A0                 jnb     <span class="keyword">short</span> loc_D8</span><br><span class="line">seg000:<span class="number">00</span>A2                 mov     di, cx</span><br><span class="line">seg000:<span class="number">00</span>A4                 add     cx, <span class="number">5000</span>h <span class="comment">// heap offset </span></span><br><span class="line">seg000:<span class="number">00</span>A8                 add     si, si</span><br><span class="line">seg000:<span class="number">00</span>AA                 mov     [si+<span class="number">346</span>h], cx</span><br><span class="line">seg000:<span class="number">00</span>AE                 mov     [si+<span class="number">366</span>h], ax</span><br><span class="line">seg000:<span class="number">00B</span>2                 add     di, ax</span><br><span class="line">seg000:<span class="number">00B</span>4                 mov     ds:word_344, di</span><br><span class="line">seg000:<span class="number">00B</span>8                 mov     al, byte ptr ds:word_342</span><br><span class="line">seg000:<span class="number">00B</span>B                 inc     al</span><br><span class="line">seg000:<span class="number">00B</span>D                 mov     byte ptr ds:word_342, al</span><br><span class="line">seg000:<span class="number">00</span>C0                 jmp     <span class="keyword">short</span> loc_E1</span><br></pre></td></tr></table></figure>
+
+<p>최댓값이 0xb000 인데 heap offset은 0x5000이다. heap offset을 더하는데 값이 0xb000이라면 아키텍쳐가 16비트이므로</p>
+<p>0xb000 + 0x5000 == 0x100000가 된다. 할당 메모리 값이 0x0000 가 되는 것이다. guest code 를 수정할 수 있게 된다.</p>
+<p>host </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">4u</span>:</span><br><span class="line">  <span class="keyword">if</span> ( ioctl(v11, <span class="number">0x8090AE81</span>uLL, &amp;v18) == <span class="number">-1</span> )</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Error get regs!"</span>);</span><br><span class="line">  <span class="keyword">if</span> ( *(MEM + v22) == <span class="number">15</span> &amp;&amp; *(MEM + v22 + <span class="number">1</span>) == <span class="number">1</span> &amp;&amp; *(MEM + v22 + <span class="number">2</span>) == <span class="number">-63</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( ioctl(v11, <span class="number">0x8090AE81</span>uLL, &amp;v18) == <span class="number">-1</span> )</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">"Error get regs!"</span>);</span><br><span class="line">    <span class="keyword">switch</span> ( v18 )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x101</span>u:</span><br><span class="line">        FFREE(v19, v20);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x102</span>u:</span><br><span class="line">        INPUT(v19, v20, v21, MEM);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">0x100</span>u:</span><br><span class="line">        alloc(v19);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">"Function error!"</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __<span class="function">fastcall <span class="title">FFREE</span><span class="params">(__int16 a1, <span class="keyword">unsigned</span> __int16 a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> ( a2 &lt;= <span class="number">0x10</span>u )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">switch</span> ( a1 )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">free</span>(CHUNK_TABLE[a2]);</span><br><span class="line">        CHUNK_TABLE[a2] = <span class="number">0L</span>L;</span><br><span class="line">        --dword_20304C;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        <span class="built_in">free</span>(CHUNK_TABLE[a2]);</span><br><span class="line">        CHUNK_TABLE[a2] = <span class="number">0L</span>L;</span><br><span class="line">        SIZE_TABLE[a2] = <span class="number">0</span>;</span><br><span class="line">        --dword_20304C;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">free</span>(CHUNK_TABLE[a2]);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br></pre></td></tr></table></figure>
+
+<p>FREE메뉴 1번에서 힙 포인터를 초기화하지 않는다.</p>
+<h2 id="VMCALL"><a href="#VMCALL" class="headerlink" title="VMCALL"></a>VMCALL</h2><p>처음에는 vmcall이 무슨 인스트럭션인가 했는데, kvm에서 사용하는 인스트럭션이였다.<br>호스트 소스코드를 분석해보면 vmcall이 탐지되면 regs를 받아와 그에따라 분기하는걸 알 수 있다.</p>
+<p>그럼 이제 push 0x100  + popf + args + vmcall 이런식으로 guest code를 수정할 수 있다. </p>
+<h2 id="EXPLOIT"><a href="#EXPLOIT" class="headerlink" title="EXPLOIT"></a>EXPLOIT</h2><p>guest 코드를 수정할 수 있으니 어떻게 해야할지 생각해보자. guest 코드 상에서는 우리가 자유롭게 host 힙 메모리를 조작할 수 없으므로 우리가 쉘코드를 만들어야한다. </p>
+<p>호스트 머신에서 할당 가능 사이즈는 0x7f &lt; size &lt;= 0x1000이다. 대회에서는 16.04 의 환경에서 제공되어 fastbin dup을 사용할 수 없어 house of orange 등의 기법을 사용했던 모양이지만 필자는 18.04에서 문제를 풀었으므로 tcache dup으로 간단하게 문제를 해결할 수 있었다.  </p>
+<ul>
+<li>LIBC LEAK ==&gt; 0x501 이상의 사이즈를 할당 =&gt; uaf로 libc leak</li>
+<li>tcache dup으로 hook 을 overwrite</li>
+</ul>
+<p>익스 나중에 올림</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vm-pwn/" rel="tag"># vm, pwn</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/04/phpopcode/" rel="prev" title="PHP OPCODE">
+      <i class="fa fa-chevron-left"></i> PHP OPCODE
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#REAL-WORLD-CTF-2018-kidvm"><span class="nav-number">1.</span> <span class="nav-text">REAL WORLD CTF 2018 - kidvm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#analyze"><span class="nav-number">1.1.</span> <span class="nav-text">analyze</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VULN"><span class="nav-number">1.2.</span> <span class="nav-text">VULN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VMCALL"><span class="nav-number">1.3.</span> <span class="nav-text">VMCALL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXPLOIT"><span class="nav-number">1.4.</span> <span class="nav-text">EXPLOIT</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="PUEL"
+      src="/images/kermit.png">
+  <p class="site-author-name" itemprop="name">PUEL</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-PUEL"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PUEL</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://haklog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.haklog.xyz/2020/04/16/kidvm/";
+    this.page.identifier = "2020/04/16/kidvm/";
+    this.page.title = "REAL WORLD CTF 2018 - kidvm";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://haklog.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
