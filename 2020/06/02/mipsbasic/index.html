@@ -29,7 +29,7 @@
 <meta property="og:description" content="MIPS BASIC">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://go-madhat.github.io/images/chaem/mips/mips_02.png">
-<meta property="og:updated_time" content="2020-06-02T12:41:46.543Z">
+<meta property="og:updated_time" content="2020-06-02T12:51:34.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MIPS ARCH">
 <meta name="twitter:description" content="MIPS BASIC">
@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-06-02 12:38:18 / Modified: 12:41:46" itemprop="dateCreated datePublished" datetime="2020-06-02T12:38:18+00:00">2020-06-02</time>
+              <time title="Created: 2020-06-02 12:38:18 / Modified: 12:51:34" itemprop="dateCreated datePublished" datetime="2020-06-02T12:38:18+00:00">2020-06-02</time>
             </span>
 
           
@@ -271,7 +271,10 @@
 <li><p>address</p>
 <p>주소값을 담고있다.</p>
 <p>Q) MIPS는 명령어가 모든 타입이 4바이트의 크기를 가지고 있다. 그렇다면 32비트중 OP코드는 6비트, 어드레스는 26비트라서 모든 주소값을 담을 수 없다. 어떻게 된건가?</p>
-<p>A)</p>
+<p>A) 레지스터 간접 주소 지정 방식을 사용한다. </p>
+<blockquote>
+<p>레지스터 간접 주소 지정 방식이란 주소 필드에 오퍼랜드의 주소를 직접 저장하는 것을 말한다. MIPS에서는 R타입 명령어를 이용하여 OPCODE에 점프 명령, 첫번째 오퍼랜드에 레지스터의 주소를 담아준다. 이 레지스터는 우리가 가고자 하는 주소를 담고있다.</p>
+</blockquote>
 </li>
 </ul>
 </li>
