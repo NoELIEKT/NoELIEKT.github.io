@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.haklog.xyz/2020/06/02/mipsbasic/</loc>
+    
+    <lastmod>2020-06-02T12:41:46.543Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.haklog.xyz/2020/04/16/kidvm/</loc>
     
-    <lastmod>2020-04-16T11:06:58.000Z</lastmod>
+    <lastmod>2020-06-02T12:40:54.903Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.haklog.xyz/2020/04/04/phpopcode/</loc>
     
-    <lastmod>2020-04-04T11:03:55.996Z</lastmod>
+    <lastmod>2020-04-04T11:03:55.000Z</lastmod>
     
   </url>
   
@@ -32,28 +39,28 @@
   <url>
     <loc>https://blog.haklog.xyz/2020/02/12/CODEGATE_2018_7amebox1/</loc>
     
-    <lastmod>2020-02-23T16:27:43.824Z</lastmod>
+    <lastmod>2020-02-23T16:27:43.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.haklog.xyz/2019/05/11/post-2/</loc>
     
-    <lastmod>2020-02-11T13:39:42.242Z</lastmod>
+    <lastmod>2020-02-11T13:39:42.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.haklog.xyz/2020/02/11/winchecksec/</loc>
     
-    <lastmod>2020-02-11T13:39:34.306Z</lastmod>
+    <lastmod>2020-02-11T13:39:34.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.haklog.xyz/2018/09/24/babypwn/</loc>
     
-    <lastmod>2020-02-11T13:39:20.674Z</lastmod>
+    <lastmod>2020-02-11T13:39:20.000Z</lastmod>
     
   </url>
   

@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"blog.haklog.xyz","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="REAL WORLD CTF 2018 - kidvmanalyzekvm으로 vm을 구현해놓았다.  kvm 으로 vm 제작kvm api의 예제는 해당링크를 참조.해당 주소들을 참고해서 vm 분석 처음에는 여러 초기화 과정을 거치며 vm을 위한 세팅을 하는 것을 볼 수 있다. 123456*v12 = qword_18E0[0];  *(v12 + 894) = *(&amp;am">
+  <meta name="description" content="REAL WORLD CTF 2018 - kidvm">
 <meta name="keywords" content="vm, pwn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="REAL WORLD CTF 2018 - kidvm">
 <meta property="og:url" content="https://blog.haklog.xyz/2020/04/16/kidvm/index.html">
 <meta property="og:site_name" content="귀찮다">
-<meta property="og:description" content="REAL WORLD CTF 2018 - kidvmanalyzekvm으로 vm을 구현해놓았다.  kvm 으로 vm 제작kvm api의 예제는 해당링크를 참조.해당 주소들을 참고해서 vm 분석 처음에는 여러 초기화 과정을 거치며 vm을 위한 세팅을 하는 것을 볼 수 있다. 123456*v12 = qword_18E0[0];  *(v12 + 894) = *(&amp;am">
+<meta property="og:description" content="REAL WORLD CTF 2018 - kidvm">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-16T11:06:58.000Z">
+<meta property="og:updated_time" content="2020-06-02T12:40:54.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="REAL WORLD CTF 2018 - kidvm">
-<meta name="twitter:description" content="REAL WORLD CTF 2018 - kidvmanalyzekvm으로 vm을 구현해놓았다.  kvm 으로 vm 제작kvm api의 예제는 해당링크를 참조.해당 주소들을 참고해서 vm 분석 처음에는 여러 초기화 과정을 거치며 vm을 위한 세팅을 하는 것을 볼 수 있다. 123456*v12 = qword_18E0[0];  *(v12 + 894) = *(&amp;am">
+<meta name="twitter:description" content="REAL WORLD CTF 2018 - kidvm">
 
 <link rel="canonical" href="https://blog.haklog.xyz/2020/04/16/kidvm/">
 
@@ -181,10 +181,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-04-16 11:05:31 / Modified: 11:06:58" itemprop="dateCreated datePublished" datetime="2020-04-16T11:05:31+00:00">2020-04-16</time>
+              <time title="Created: 2020-04-16 11:05:31" itemprop="dateCreated datePublished" datetime="2020-04-16T11:05:31+00:00">2020-04-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-02 12:40:54" itemprop="dateModified" datetime="2020-06-02T12:40:54+00:00">2020-06-02</time>
+              </span>
 
           
   
@@ -211,7 +217,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="REAL-WORLD-CTF-2018-kidvm"><a href="#REAL-WORLD-CTF-2018-kidvm" class="headerlink" title="REAL WORLD CTF 2018 - kidvm"></a>REAL WORLD CTF 2018 - kidvm</h1><h2 id="analyze"><a href="#analyze" class="headerlink" title="analyze"></a>analyze</h2><p>kvm으로 vm을 구현해놓았다. </p>
+        <h1 id="REAL-WORLD-CTF-2018-kidvm"><a href="#REAL-WORLD-CTF-2018-kidvm" class="headerlink" title="REAL WORLD CTF 2018 - kidvm"></a>REAL WORLD CTF 2018 - kidvm</h1><a id="more"></a>
+<h2 id="analyze"><a href="#analyze" class="headerlink" title="analyze"></a>analyze</h2><p>kvm으로 vm을 구현해놓았다. </p>
 <p>kvm 으로 <a href="https://lwn.net/Articles/658511/" target="_blank" rel="noopener">vm 제작</a><br>kvm api의 예제는 <a href="https://github.com/dpw/kvm-hello-world/blob/master/kvm-hello-world.c" target="_blank" rel="noopener">해당링크</a>를 참조.<br>해당 주소들을 참고해서 vm 분석</p>
 <p>처음에는 여러 초기화 과정을 거치며 vm을 위한 세팅을 하는 것을 볼 수 있다.</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">*v12 = qword_18E0[<span class="number">0</span>];</span><br><span class="line">  *(v12 + <span class="number">894</span>) = *(&amp;qword_18E0[<span class="number">111</span>] + <span class="number">6</span>);</span><br><span class="line">  qmemcpy(</span><br><span class="line">    ((v12 + <span class="number">1</span>) &amp; <span class="number">0xFFFFFFFFFFFFFFF8</span>LL),</span><br><span class="line">    (qword_18E0 - (v12 - ((v12 + <span class="number">1</span>) &amp; <span class="number">0xFFFFFFFFFFFFFFF8</span>LL))),</span><br><span class="line">    <span class="number">8L</span>L * (((v12 - ((v12 + <span class="number">8</span>) &amp; <span class="number">0xFFFFFFF8</span>) + <span class="number">902</span>) &amp; <span class="number">0xFFFFFFF8</span>) &gt;&gt; <span class="number">3</span>));</span><br></pre></td></tr></table></figure>
@@ -263,7 +270,10 @@
     <a href="/2020/04/04/phpopcode/" rel="prev" title="PHP OPCODE">
       <i class="fa fa-chevron-left"></i> PHP OPCODE
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/02/mipsbasic/" rel="next" title="MIPS ARCH">
+      MIPS ARCH <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -346,7 +356,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -355,7 +365,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
